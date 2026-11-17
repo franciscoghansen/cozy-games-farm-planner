@@ -85,8 +85,13 @@ export function Materials({ game, plan, inventory, settings, saved, previous, on
             }}><option value="" disabled>Choose a configuration</option>
             {configurations.map(entry => <option key={entry.id} value={entry.id}>{entry.name}</option>)}
           </select></label>}
+          {configId && <button className="secondary" onClick={() => {
+            onConfigurations(configurations.filter(entry => entry.id !== configId))
+            setConfigId('')
+            setConfigName('')
+          }}>Delete configuration</button>}
         </details>
-        <OwnedStock game={game} inventory={inventory} onInventory={onInventory} />
+        {settings.mode !== 'scratch' && <OwnedStock game={game} inventory={inventory} onInventory={onInventory} />}
       </aside>
       <div className="feature-content">
         {computed.error && <p className="feature-warning" role="alert"><TriangleAlert size={17} />{computed.error}</p>}

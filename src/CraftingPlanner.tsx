@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Hammer, Plus, Trash2, TriangleAlert } from 'lucide-react'
+import { ArrowLeft, Hammer, Plus, Trash2, TriangleAlert } from 'lucide-react'
 import { prepareBom } from './bom.ts'
 import { BomView, OwnedStock, RecipeChoices, inputQuantity } from './BomView.tsx'
 import type { BomDisplayCatalog } from './BomView.tsx'
@@ -7,22 +7,30 @@ import { quantityLimit } from './crafting-types.ts'
 import type { CraftingCatalog, Inventory } from './crafting-types.ts'
 import type { CraftingWorkspace } from './crafting-plans.ts'
 
-export function CraftingPlanner({ game, workspace, inventory, onChange, onInventory }: {
+export function CraftingPlanner({ game, workspace, inventory, onChange, onInventory, onBack }: {
   game: BomDisplayCatalog & CraftingCatalog & { game: { name: string } }
   workspace: CraftingWorkspace
   inventory: Inventory
   onChange: (update: (previous: CraftingWorkspace) => CraftingWorkspace) => void
   onInventory: (id: string, count: number) => void
+  onBack: () => void
 }) {
   const { draft, saved, active } = workspace
   const [query, setQuery] = useState('')
   const [picked, setPicked] = useState('')
-  const [addQuantity, setAddQuantity] = useState(1)
+  const [addQuantity, setAddQuantity] = useState('1')
+  const [quantityError, setQuantityError] = useState('')
+  const quantity = Number(addQuantity)
   const [name, setName] = useState(() => saved.find(plan => plan.id === active)?.name ?? '')
   const [status, setStatus] = useState('')
   const needle = query.trim().toLowerCase()
   const matches = game.items.filter(item => (item.name + ' ' + item.id).toLowerCase().includes(needle))
-  const chosen = matches.some(item => item.id === picked) ? picked : matches[0]?.id ?? ''
+  const craftable = new Set(game.recipes.map(recipe => recipe.output.itemId))
+  const groups = ['Equipment', 'Craftable', 'Raw resources', 'Other items'].map((label, index) => ({
+    label, items: matches.filter(item => (item.category === 'equipment' ? 0 : craftable.has(item.id) ? 1 :
+      item.category === 'raw_resource' ? 2 : 3) === index),
+  }))
+  const chosen = matches.some(item => item.id === picked) ? picked : groups.find(group => group.items.length)?.items[0]?.id ?? ''
   const compiled = useMemo(() => {
     try { return { engine: prepareBom(game, { selections: draft.selections }) } }
     catch (error) { return { error: error instanceof Error ? error.message : String(error) } }
@@ -34,34 +42,41 @@ export function CraftingPlanner({ game, workspace, inventory, onChange, onInvent
   }, [compiled, draft.targets, draft.useInventory, inventory])
 
   return <main className="materials-page">
-    <header className="feature-heading"><div><h2>Crafting Planner</h2><p>{game.game.name}</p></div></header>
+    <header className="feature-heading"><div><button className="back-link" onClick={onBack}><ArrowLeft size={15} /> Farm layout</button><h2>Crafting Planner</h2><p>{game.game.name}</p></div></header>
     <div className="feature-grid">
       <aside className="feature-card materials-settings">
         <h3><Hammer size={17} /> Crafting targets</h3>
         <form className="materials-settings" onSubmit={event => {
           event.preventDefault()
-          if (!chosen || addQuantity < 1) return
+          if (!chosen) return
+          if (!Number.isInteger(quantity) || quantity < 1) { setQuantityError('Enter a whole quantity of at least 1.'); return }
           const existing = draft.targets.find(target => target.itemId === chosen)
-          if ((existing?.quantity ?? 0) + addQuantity > quantityLimit) {
-            setStatus('The total quantity exceeds the limit for this item.')
+          if ((existing?.quantity ?? 0) + quantity > quantityLimit) {
+            setQuantityError('The total quantity exceeds the limit for this item.')
             return
           }
           onChange(current => ({
             ...current, draft: { ...current.draft, targets: existing
               ? current.draft.targets.map(target => target.itemId === chosen
-                ? { ...target, quantity: target.quantity + addQuantity } : target)
-              : [...current.draft.targets, { itemId: chosen, quantity: addQuantity }] },
+                ? { ...target, quantity: target.quantity + quantity } : target)
+              : [...current.draft.targets, { itemId: chosen, quantity }] },
           }))
           setStatus('')
-        }}>
+          setQuantityError('')
+        }} noValidate>
           <label className="stack">Search catalog<input type="search" value={query} onChange={event => setQuery(event.target.value)} /></label>
-          <label className="stack">Item to add<select value={chosen} onChange={event => setPicked(event.target.value)} disabled={!matches.length}>
+          <label className="stack">Item to add<select value={chosen} onChange={event => { setPicked(event.target.value); setQuantityError('') }} disabled={!matches.length}>
             {!matches.length && <option value="">No matching items</option>}
-            {matches.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
+            {groups.filter(group => group.items.length).map(group => <optgroup key={group.label} label={group.label}>
+              {group.items.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
+            </optgroup>)}
           </select></label>
           <label className="stack">Quantity to add<input type="number" min="1" max={quantityLimit} value={addQuantity}
-            onChange={event => setAddQuantity(inputQuantity(event.target.value))} /></label>
-          <button className="primary" disabled={!chosen || addQuantity < 1}><Plus size={15} /> Add target</button>
+            aria-invalid={Boolean(quantityError)} aria-describedby={quantityError ? 'quantity-error' : undefined}
+            onChange={event => { setAddQuantity(event.target.value); setQuantityError('') }} />
+            {quantityError && <small id="quantity-error" role="alert">{quantityError}</small>}
+          </label>
+          <button className="primary" disabled={!chosen}><Plus size={15} /> Add target</button>
         </form>
         {draft.targets.length > 0 && <ul className="crafting-targets">{draft.targets.map(({ itemId, quantity }) => {
           const label = game.catalog.get(itemId)?.name ?? itemId

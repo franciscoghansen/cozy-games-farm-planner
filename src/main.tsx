@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BarChart3, Boxes, ChevronDown, Database, Download, Droplets, Eye, FolderOpen, Grid2X2, Hammer, Layers3, Redo2,
+import { BarChart3, Boxes, ChevronDown, Coffee, Database, Download, Droplets, Eye, FolderOpen, Grid2X2, Hammer, Layers3, Redo2,
   Settings2, ShieldCheck, Sprout, Undo2, X } from 'lucide-react'
 import { coverage, statistics } from './coverage.ts'
 import { gameFor, isItem, registerGame } from './equipment.ts'
@@ -8,9 +8,9 @@ import { adaptGame, quantityLimit } from './game.ts'
 import type { GamePackage } from './game.ts'
 import { FarmGrid } from './FarmGrid.tsx'
 import type { GridHandle, Overlays } from './FarmGrid.tsx'
-import { itemId, resize, unlockedItems, usable } from './model.ts'
+import { itemId, mergedInventory, resize, unlockedItems, usable } from './model.ts'
 import type { Plan, Tile } from './model.ts'
-import { changes } from './optimizer.ts'
+import { changes, optimizerFeedback } from './optimizer.ts'
 import type { optimize } from './optimizer.ts'
 import { Controls, legend, Statistics } from './Panels.tsx'
 import type { Comparison, EditorTool } from './Panels.tsx'
@@ -37,6 +37,12 @@ const overlayButtons = [
 ] as const
 const defaultOverlays: Overlays = { combined: true, water: false, guard: false, equipment: false, coords: false }
 type Started = Awaited<ReturnType<typeof bootstrap>>
+const viewTitles = { planner: 'Farm Planner', materials: 'Materials', crafting: 'Crafting Planner', data: 'Game data' }
+type View = keyof typeof viewTitles
+const readView = (): View => {
+  const hash = location.hash.slice(1)
+  return hash === 'materials' || hash === 'crafting' || hash === 'data' ? hash : 'planner'
+}
 
 function App({ session, switchGame, replaceGame, switching, removeInvalid, reloadRequired }: {
   session: Started; switchGame: (id: string) => Promise<void>; switching: boolean
@@ -50,8 +56,7 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   const [plan, setPlan] = useState(initial.current)
   const current = useRef(plan)
   const [previous, setPrevious] = useState<Plan>()
-  const [view, setView] = useState<'planner' | 'materials' | 'data' | 'crafting'>(() =>
-    location.hash === '#crafting' ? 'crafting' : 'planner')
+  const [view, setView] = useState(readView)
   const [showCraftPlan, setShowCraftPlan] = useState(false)
   const [crafting, setCrafting] = useState<FarmBom>()
   const [craftingWorkspace, setCraftingWorkspace] = useState(() => state.crafting ?? emptyCrafting())
@@ -88,7 +93,9 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   const maps = useMemo(() => editing ? coverage(plan) : null, [editing, plan, adapter])
   const stats = useMemo(() => maps ? statistics(plan, maps) : null, [plan, maps])
   const busy = progress !== null
-  const stock = useMemo(() => ({ ...materials, ...plan.inventory }), [materials, plan.inventory])
+  const stock = useMemo(() => mergedInventory(materials, plan.inventory), [materials, plan.inventory])
+  const equipmentInventory = useMemo(() => Object.fromEntries(adapter.placables.map(item =>
+    [item.id, stock[item.id] ?? 0])), [adapter, stock])
   const savedPlan = saved.find(entry => entry.id === active)?.plan
   const dirty = savedPlan && plan !== savedPlan && JSON.stringify(plan) !== JSON.stringify(savedPlan)
 
@@ -100,9 +107,31 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
       .catch(() => setSaveFailed(true))
   }, [db, gameId, plan, active, saved, materials, bom, configurations, craftingWorkspace, overlays, manualLock, reloadRequired])
   useEffect(() => {
-    if (view === 'crafting') history.replaceState(history.state, '', '#crafting')
-    else if (location.hash === '#crafting') history.replaceState(history.state, '', location.pathname + location.search)
+    const onNavigation = () => {
+      setView(readView())
+      setNotice('')
+      setWarning('')
+      setBackupStatus('')
+    }
+    window.addEventListener('popstate', onNavigation)
+    window.addEventListener('hashchange', onNavigation)
+    return () => {
+      window.removeEventListener('popstate', onNavigation)
+      window.removeEventListener('hashchange', onNavigation)
+    }
+  }, [])
+  useEffect(() => {
+    document.title = view === 'planner' ? viewTitles.planner : viewTitles[view] + ' · Farm Planner'
   }, [view])
+
+  function navigate(next: View) {
+    if (next === view) return
+    history.pushState(null, '', location.pathname + location.search + (next === 'planner' ? '' : '#' + next))
+    setNotice('')
+    setWarning('')
+    setBackupStatus('')
+    setView(next)
+  }
   useEffect(() => {
     const element = modal.current!
     if (dialog && !element.open) element.showModal()
@@ -111,6 +140,8 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   useEffect(() => () => worker.current?.terminate(), [])
 
   function update(next: Plan) {
+    if (isItem(tool, gameId) && !unlockedItems(next).some(item => item.id === tool)) setTool('crop')
+    setNotice('')
     current.current = next
     setPlan(next)
     setCrafting(undefined)
@@ -147,7 +178,7 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
       if (!(event.ctrlKey || event.metaKey) || !(event.target instanceof HTMLElement) ||
-        event.target.closest('input, textarea, select, [contenteditable]') || modal.current?.open) return
+        event.target.closest('input:not([type=checkbox]), textarea, [contenteditable]') || view !== 'planner' || modal.current?.open) return
       if (event.key.toLowerCase() === 'z') { event.preventDefault(); if (event.shiftKey) redo(); else undo() }
       if (event.key.toLowerCase() === 'y') { event.preventDefault(); redo() }
     }
@@ -190,6 +221,13 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   function startOptimization(upgrade: boolean) {
     if (worker.current) return
     const before = current.current
+    const feedback = optimizerFeedback(before, stock)
+    setComparison(null)
+    if (feedback.missing) {
+      setNotice('')
+      setWarning([feedback.missing, ...feedback.warnings].join('\n'))
+      return
+    }
     const agent = new Worker(new URL('./optimizer.worker.ts', import.meta.url), { type: 'module' })
     worker.current = agent
     setProgress(0)
@@ -203,22 +241,31 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
     agent.onmessage = (event: MessageEvent<{ progress?: number; error?: string; result?: ReturnType<typeof optimize> }>) => {
       const { progress, result, error } = event.data
       if (progress !== undefined) setProgress(progress)
-      if (error) { finish(); setWarning(error) }
+      if (error) {
+        finish()
+        if (readView() === 'planner') setWarning([error, ...feedback.warnings].join('\n'))
+      }
       if (!result) return
       finish()
-      if (before.tiles.some((tile, i) => tile !== result.plan.tiles[i])) {
+      const improved = before.tiles.some((tile, i) => tile !== result.plan.tiles[i])
+      if (improved) {
         commit(result.plan)
         setSelectedPreset('')
       }
-      if (upgrade) setComparison({ before: statistics(before), after: statistics(result.plan), edits: changes(before, result.plan) })
-      if (result.crafting || upgrade) {
+      if (upgrade && improved) setComparison({ before: statistics(before), after: statistics(result.plan), edits: changes(before, result.plan) })
+      if (result.crafting || (upgrade && improved)) {
         setBom(settings => ({ ...settings, mode: 'upgrade', base: 'snapshot', snapshot: before }))
       }
-      if (result.crafting) setCrafting(result.crafting)
-      if (result.shortfall) setWarning(`Found ${result.full.toLocaleString()} of ${before.target.toLocaleString()} target crops. The best layout found is short by ${result.shortfall.toLocaleString()}.`)
-      setNotice(`${upgrade ? 'Upgrade' : 'Optimization'} complete · ${result.full.toLocaleString()} fully covered crops.`)
+      if (readView() === 'planner') {
+        if (result.crafting) setCrafting(result.crafting)
+        const warnings = [...result.warnings]
+        if (result.shortfall) warnings.push(`Found ${result.full.toLocaleString()} of ${before.target.toLocaleString()} target crops. The best layout found is short by ${result.shortfall.toLocaleString()}.`)
+        setWarning(warnings.join('\n'))
+        setNotice(improved ? `${upgrade ? 'Upgrade' : 'Optimization'} complete · ${result.full.toLocaleString()} fully covered crops.`
+          : 'No better layout found with the selected equipment.')
+      }
     }
-    agent.onerror = () => { finish(); setWarning('The optimizer encountered a worker error.') }
+    agent.onerror = () => { finish(); if (readView() === 'planner') setWarning('The optimizer encountered a worker error.') }
     agent.postMessage({ plan: before, game: pack, options: { inventory: stock, selections: bom.selections } })
   }
 
@@ -272,9 +319,13 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   }
 
   function updateInventory(id: string, count: number) {
+    setNotice('')
+    setWarning('')
     const quantity = Math.min(quantityLimit, Math.max(0, Math.trunc(count)))
-    if (adapter.placedItems.has(id)) update({ ...current.current, inventory: { ...current.current.inventory, [id]: quantity } })
-    else {
+    if (adapter.placedItems.has(id)) {
+      setMaterials(previous => Object.fromEntries(Object.entries(previous).filter(([key]) => key !== id)))
+      update({ ...current.current, inventory: { ...current.current.inventory, [id]: quantity } })
+    } else {
       setMaterials(previous => ({ ...previous, [id]: quantity }))
       setCrafting(undefined)
     }
@@ -314,7 +365,7 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
       <a className="brand" href={location.pathname + location.search} aria-label="Farm Planner home" onClick={event => {
         if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
         event.preventDefault()
-        setView('planner')
+        navigate('planner')
       }}>
         <div className="brand-icon"><Sprout size={26} strokeWidth={1.8} aria-hidden="true" /></div>
         <div><h1><span>Farm Planner</span></h1><p>Plan crops, coverage, and equipment</p></div>
@@ -323,13 +374,15 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
         <label className="game-picker"><span>Game</span><select aria-label="Game" value={gameId} disabled={busy || switching} onChange={event => {
           void switchGame(event.target.value).catch(error => setNotice(error.message))
         }}>{[...session.games.values()].map(entry => <option key={entry.game.id} value={entry.game.id}>{entry.game.name}</option>)}</select></label>
-        <button className="secondary feature-nav" aria-pressed={view === 'materials'} disabled={busy} onClick={() => {
-          setShowCraftPlan(false)
-          setView(view === 'materials' ? 'planner' : 'materials')
-        }}><Boxes size={16} /> Materials</button>
-        <button className="secondary feature-nav" aria-pressed={view === 'crafting'} disabled={busy}
-          onClick={() => setView(view === 'crafting' ? 'planner' : 'crafting')}><Hammer size={16} /> Crafting Planner</button>
-        <button className="secondary feature-nav" aria-pressed={view === 'data'} disabled={busy} onClick={() => setView(view === 'data' ? 'planner' : 'data')}><Database size={15} /> Game data</button>
+        <nav className="feature-links" aria-label="Planner views">
+          <button className="secondary feature-nav" aria-pressed={view === 'materials'} disabled={busy} onClick={() => {
+            setShowCraftPlan(false)
+            navigate(view === 'materials' ? 'planner' : 'materials')
+          }}><Boxes size={16} /> Materials</button>
+          <button className="secondary feature-nav" aria-pressed={view === 'crafting'} disabled={busy}
+            onClick={() => navigate(view === 'crafting' ? 'planner' : 'crafting')}><Hammer size={16} /> Crafting Planner</button>
+          <button className="secondary feature-nav" aria-pressed={view === 'data'} disabled={busy} onClick={() => navigate(view === 'data' ? 'planner' : 'data')}><Database size={15} /> Game data</button>
+        </nav>
         <button className="secondary" disabled={busy} onClick={() => { setName(plan.name); setDialog(true) }}><FolderOpen size={16} /> Layouts</button>
         <details className="export-menu">
           <summary className="secondary"><Download size={15} /> Export <ChevronDown size={13} /></summary>
@@ -347,8 +400,8 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
             }}>Restore workspace backup</button>
           </div>
         </details>
-        <a className="kofi-button" href="https://ko-fi.com/Z3C12AU1YN" target="_blank" rel="noopener noreferrer">
-          <img src="https://storage.ko-fi.com/cdn/kofi6.png?v=6" height={36} alt="Buy Me a Coffee at ko-fi.com" referrerPolicy="no-referrer" />
+        <a className="secondary kofi-button" href="https://ko-fi.com/Z3C12AU1YN" target="_blank" rel="noopener noreferrer">
+          <Coffee size={15} /> Ko-fi
         </a>
         <input hidden ref={imported} type="file" accept=".json,application/json" onChange={e => {
           const file = e.target.files?.[0]
@@ -382,23 +435,26 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
     {view === 'materials' && <Materials game={adapter} plan={plan} inventory={stock} settings={bom} saved={saved}
       previous={previous} onSettings={patch => { setBom(value => ({ ...value, ...patch })); setCrafting(undefined) }}
       configurations={configurations} onConfigurations={setConfigurations}
-      onInventory={updateInventory} onBack={() => setView('planner')} showPlan={showCraftPlan} />}
+      onInventory={updateInventory} onBack={() => navigate('planner')} showPlan={showCraftPlan} />}
     {view === 'crafting' && <CraftingPlanner game={adapter} workspace={craftingWorkspace} inventory={stock}
-      onChange={setCraftingWorkspace} onInventory={updateInventory} />}
+      onChange={setCraftingWorkspace} onInventory={updateInventory} onBack={() => navigate('planner')} />}
     {view === 'data' && <GameData key={gameId} pack={pack} bundled={session.bundled.has(gameId)}
       customized={session.bundled.get(gameId) !== pack} onSave={replaceGame}
       onReset={async () => { await replaceGame(session.bundled.get(gameId)!, true); setPast([]); setFuture([]); setPrevious(undefined) }}
-      onBack={() => setView('planner')} />}
-    {view !== 'planner' && notice && <p className="feature-notice" role="status">{notice}</p>}
+      onBack={() => navigate('planner')} />}
     {view === 'planner' && maps && stats && <><div className="mobile-toggles">
       <button className="secondary" aria-expanded={showControls} onClick={() => setShowControls(!showControls)}><Settings2 size={15} /> Controls</button>
       <button className="secondary" aria-expanded={showStats} onClick={() => setShowStats(!showStats)}><BarChart3 size={15} /> Statistics</button>
     </div>
     <main className="workspace">
       <div className={'left-panel' + (showControls ? ' revealed' : '')}>
-        <Controls key={plan.width + 'x' + plan.height} plan={plan} stats={stats} selectedPreset={selectedPreset} tool={tool}
-          manualLock={manualLock} onTool={setTool} onLock={setManualLock}
-          onPlan={patch => commit({ ...current.current, ...patch })}
+        <Controls key={plan.width + 'x' + plan.height} plan={{ ...plan, inventory: equipmentInventory }} stats={stats} selectedPreset={selectedPreset} tool={tool}
+          manualLock={manualLock} onTool={setTool} onLock={value => { setManualLock(value); setNotice('') }}
+          onPlan={patch => {
+            if (patch.inventory) setMaterials(previous => Object.fromEntries(Object.entries(previous)
+              .filter(([id]) => !adapter.placedItems.has(id))))
+            commit({ ...current.current, ...patch })
+          }}
           onPreset={id => {
             const { inventory, limited } = current.current
             commit({ ...preset(id, gameId), inventory, limited })
@@ -420,10 +476,10 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
           </div>
         </div>
         <div className="overlay-bar" aria-label="Coverage overlays">
-          {overlayButtons.map(({ key, label, icon: Icon }) => <button key={key} aria-pressed={overlays[key]} onClick={() => setOverlays(value => ({
+          {overlayButtons.map(({ key, label, icon: Icon }) => <button key={key} aria-pressed={overlays[key]} onClick={() => { setNotice(''); setOverlays(value => ({
             ...value, [key]: !value[key], ...(key === 'combined' && !value.combined ? { water: false, guard: false } :
               (key === 'water' || key === 'guard') ? { combined: false } : {}),
-          }))}><Icon size={14} />{label}</button>)}
+          })) }}><Icon size={14} />{label}</button>)}
         </div>
         <FarmGrid ref={grid} plan={plan} maps={maps} overlays={overlays} tool={tool === 'erase' ? 'empty' : tool}
           disabled={busy} onPaint={paint} onEnd={finishStroke} />
@@ -433,12 +489,12 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
           <div><strong>{crafting.operations.toLocaleString()} crafting operations</strong>
             <p>{crafting.consumed.size ? 'Stock assigned · ' + [...crafting.consumed].map(([id, count]) =>
               (adapter.catalog.get(id)?.name ?? id) + ' × ' + count.toLocaleString()).join(', ') : 'No loose stock required.'}</p></div>
-          <button className="secondary" onClick={() => { setShowCraftPlan(true); setView('materials') }}><Boxes size={15} /> View crafting plan</button>
+          <button className="secondary" onClick={() => { setShowCraftPlan(true); navigate('materials') }}><Boxes size={15} /> View crafting plan</button>
         </div>}
         <div className="editor-notice" aria-live="polite">{notice}</div>
       </section>
       <div className={'right-panel' + (showStats ? ' revealed' : '')}>
-        <Statistics plan={plan} stats={stats} comparison={comparison} warning={warning} />
+        <Statistics plan={{ ...plan, inventory: equipmentInventory }} stats={stats} comparison={comparison} warning={warning} />
       </div>
     </main></>}
     <dialog ref={modal} onClose={() => setDialog(false)} className="layout-dialog">

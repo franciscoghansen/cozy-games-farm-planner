@@ -130,4 +130,3 @@ export function validateState(value: unknown, game: Game, repair = false): GameS
     ...((configurations || repair) && { configurations: configurations ?? [] }), ...(crafting && { crafting }), ...(preferences && { preferences }),
   }
 }
-

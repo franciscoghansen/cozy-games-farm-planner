@@ -104,7 +104,7 @@ export function Controls({ plan, stats, selectedPreset, tool, manualLock, onTool
       <Section title="Equipment inventory" icon={<Fence size={16} />} closed>
         <label className="check"><input type="checkbox" checked={plan.limited} onChange={e => onPlan({ limited: e.target.checked })} /> Limit to owned equipment</label>
         <div className="inventory-inputs">{equipment.map(item => <label key={item.id}>
-          <span>{item.name}<small>{stats.used[item.id]} used · {plan.limited ? Math.max(0, (plan.inventory[item.id] ?? 0) - stats.used[item.id]) : '∞'} left</small></span>
+          <span>{item.name}<small>{fmt(stats.used[item.id])} used</small></span>
           <input aria-label={item.name + ' available'} type="number" min="0" max={maxSize ** 2} value={plan.inventory[item.id] ?? 0}
             onChange={e => onPlan({ inventory: { ...plan.inventory, [item.id]: Math.min(maxSize ** 2, Math.max(0, Math.trunc(Number(e.target.value)))) } })} />
         </label>)}</div>
@@ -133,17 +133,19 @@ export const legend = [
 ]
 
 const fmt = (value: number) => value.toLocaleString()
-export const pct = (value: number) => value.toFixed(1) + '%'
+export const pct = (value: number) => (value === 100 ? 100 : Math.min(99.9, Math.trunc(value * 10) / 10)).toFixed(1) + '%'
 
 export function Statistics({ plan, stats, comparison, warning }: { plan: Plan; stats: Stats; comparison: Comparison | null; warning: string }) {
   const { game, placables: equipment } = gameFor(plan.gameId)
+  const [showAll, setShowAll] = useState(false)
+  const unlocked = new Set(unlockedItems(plan).map(item => item.id))
   const fullLabel = game.requiredCoverage?.length === 1 ? 'Meets coverage goal' : game.requiredCoverage?.length === 0 ? 'Crop tiles' : legend[0][0]
   const over = equipment.filter(item => plan.limited && stats.used[item.id] > (plan.inventory[item.id] ?? 0))
   return <aside className="sidebar stats">
     <div className="sidebar-title"><Leaf size={17} /><h2>Farm statistics</h2></div>
     {(warning || over.length > 0) && <div className="warning" role="status"><TriangleAlert size={16} /><div>
-      {warning && <p>{warning}</p>}
-      {over.map(item => <p key={item.id}>{item.name} exceeds inventory by {stats.used[item.id] - (plan.inventory[item.id] ?? 0)}.</p>)}
+      {warning.split('\n').filter(Boolean).map(message => <p key={message}>{message}</p>)}
+      {over.map(item => <p key={item.id}>{item.name} exceeds inventory by {fmt(stats.used[item.id] - (plan.inventory[item.id] ?? 0))}.</p>)}
     </div></div>}
     <section className="efficiency">
       <div className="efficiency-label"><Sprout size={17} /> Production efficiency</div>
@@ -157,9 +159,9 @@ export function Statistics({ plan, stats, comparison, warning }: { plan: Plan; s
         <div><dt>Crop tiles</dt><dd>{fmt(comparison.before.crops)} → {fmt(comparison.after.crops)}</dd></div>
         <div><dt>{fullLabel}</dt><dd>{fmt(comparison.before.full)} → {fmt(comparison.after.full)}</dd></div>
         <div><dt>Efficiency</dt><dd>{pct(comparison.before.efficiency)} → {pct(comparison.after.efficiency)}</dd></div>
-        <div><dt>Equipment added / removed</dt><dd>+{comparison.edits.added} / −{comparison.edits.removed}</dd></div>
-        <div><dt>Equipment moved</dt><dd>{comparison.edits.moved}</dd></div>
-        <div><dt>Net farmland reclaimed</dt><dd>{comparison.after.farmland - comparison.before.farmland}</dd></div>
+        <div><dt>Equipment added / removed</dt><dd>+{fmt(comparison.edits.added)} / −{fmt(comparison.edits.removed)}</dd></div>
+        <div><dt>Equipment moved</dt><dd>{fmt(comparison.edits.moved)}</dd></div>
+        <div><dt>Net farmland reclaimed</dt><dd>{fmt(comparison.after.farmland - comparison.before.farmland)}</dd></div>
       </dl>
     </section>}
     <section className="stat-card">
@@ -169,7 +171,7 @@ export function Statistics({ plan, stats, comparison, warning }: { plan: Plan; s
       <dl className="mini-stats">
         <div><dt><Droplets size={14} /> Total watered</dt><dd>{fmt(stats.watered)}</dd></div>
         <div><dt><ShieldCheck size={14} /> Total protected</dt><dd>{fmt(stats.protected)}</dd></div>
-        <div><dt>Overlap / wasted coverage</dt><dd>{fmt(stats.overlap)} / {fmt(stats.wasted)}</dd></div>
+        <div><dt title="Overlap counts extra coverage on crops. Wasted coverage counts applications on non-crop tiles.">Overlap / wasted coverage</dt><dd>{fmt(stats.overlap)} / {fmt(stats.wasted)}</dd></div>
       </dl>
     </section>
     <section className="stat-card">
@@ -183,15 +185,16 @@ export function Statistics({ plan, stats, comparison, warning }: { plan: Plan; s
     </section>
     <section className="stat-card equipment-stats">
       <h3><Fence size={16} /> Equipment usage</h3>
+      <label className="check"><input type="checkbox" checked={showAll} onChange={event => setShowAll(event.target.checked)} /> Show all</label>
       <div className="table-scroll"><table>
         <thead><tr><th>Equipment</th><th>Used</th><th>Own</th><th>Left</th></tr></thead>
-        <tbody>{equipment.map(item => <tr key={item.id}><th>{item.name}</th><td>{stats.used[item.id]}</td>
-          <td>{plan.limited ? plan.inventory[item.id] ?? 0 : '∞'}</td><td>{plan.limited ? Math.max(0, (plan.inventory[item.id] ?? 0) - stats.used[item.id]) : '∞'}</td></tr>)}</tbody>
+        <tbody>{equipment.filter(item => showAll || unlocked.has(item.id) || stats.used[item.id] > 0).map(item => <tr key={item.id}><th>{item.name}</th><td>{fmt(stats.used[item.id])}</td>
+          <td>{fmt(plan.inventory[item.id] ?? 0)}</td><td>{fmt(Math.max(0, (plan.inventory[item.id] ?? 0) - stats.used[item.id]))}</td></tr>)}</tbody>
       </table></div>
       <dl className="mini-stats">
-        <div><dt>Watering / protection</dt><dd>{stats.sprinklers} / {stats.scarecrows}</dd></div>
-        <div><dt>Full crops per watering item</dt><dd>{stats.perSprinkler.toFixed(1)}</dd></div>
-        <div><dt>Full crops per equipment</dt><dd>{stats.perEquipment.toFixed(1)}</dd></div>
+        <div><dt>Watering / protection</dt><dd>{fmt(stats.sprinklers)} / {fmt(stats.scarecrows)}</dd></div>
+        <div><dt>Full crops per watering item</dt><dd>{stats.perSprinkler.toLocaleString(undefined, { maximumFractionDigits: 1 })}</dd></div>
+        <div><dt>Full crops per equipment</dt><dd>{stats.perEquipment.toLocaleString(undefined, { maximumFractionDigits: 1 })}</dd></div>
       </dl>
     </section>
     {!warning && !over.length && (game.requiredCoverage?.length ?? 2) === 2 && (stats.waterOnly > 0 || stats.guardOnly > 0) && <p className="suggestion">
