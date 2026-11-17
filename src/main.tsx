@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BarChart3, Boxes, ChevronDown, Coffee, Database, Download, Droplets, Eye, FolderOpen, Grid2X2, Hammer, Layers3, Redo2,
+import { BarChart3, Boxes, ChevronDown, Database, Download, Droplets, Eye, FolderOpen, Github, Grid2X2, Hammer, Layers3, Redo2,
   Settings2, ShieldCheck, Sprout, Undo2, X } from 'lucide-react'
 import { coverage, statistics } from './coverage.ts'
 import { gameFor, isItem, registerGame } from './equipment.ts'
@@ -26,7 +26,10 @@ import { CraftingPlanner } from './CraftingPlanner.tsx'
 import { emptyCrafting } from './crafting-plans.ts'
 import { backupSizeLimit, exportBackup, parseBackup, restoreBackup } from './backup.ts'
 import { validateState } from './workspace-state.ts'
+import { initializeAnalytics } from './analytics.ts'
 import './styles.css'
+
+const repositoryUrl = 'https://github.com/franciscoghansen/cozy-games-farm-planner'
 
 const overlayButtons = [
   { key: 'combined', label: 'Combined', icon: Layers3 },
@@ -400,8 +403,13 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
             }}>Restore workspace backup</button>
           </div>
         </details>
+        <a className="secondary github-button" href={repositoryUrl} target="_blank" rel="noopener noreferrer"
+          aria-label="GitHub" title="View source code on GitHub">
+          <Github size={15} aria-hidden="true" /> <span>GitHub</span>
+        </a>
         <a className="secondary kofi-button" href="https://ko-fi.com/Z3C12AU1YN" target="_blank" rel="noopener noreferrer">
-          <Coffee size={15} /> Ko-fi
+          <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" width={20} height={20} referrerPolicy="no-referrer" />
+          Buy me a Coffee
         </a>
         <input hidden ref={imported} type="file" accept=".json,application/json" onChange={e => {
           const file = e.target.files?.[0]
@@ -591,3 +599,4 @@ const root = createRoot(document.getElementById('root')!)
 root.render(<p className="feature-notice" role="status">Loading game data…</p>)
 void bootstrap().then(initial => root.render(<Session initial={initial} />)).catch(error =>
   root.render(<p className="feature-warning" role="alert">The planner could not open. {error instanceof Error ? error.message : String(error)}</p>))
+initializeAnalytics()
