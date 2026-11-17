@@ -80,6 +80,8 @@ npm run preview
 
 Layouts, crafting plans, stock, and custom game data stay in IndexedDB on your device. The hosted and local copies use separate browser origins. Different browsers, profiles, hostnames, and ports have separate storage. Clearing site data removes the records for that origin.
 
+The public GitHub Pages site uses Cloudflare Web Analytics for anonymous traffic statistics. It does not set tracking cookies or receive your layouts, stock, crafting plans, or custom game data. Local copies do not load analytics.
+
 1. Choose **Export → Download workspace backup** to save all layouts, stock, crafting plans, preferences, and custom games in one JSON file.
 2. Open the destination copy of the planner, close its other planner tabs, then choose **Export → Restore workspace backup** and select the file. Confirm to replace the data for games in the backup. Local overrides for restored workspaces are removed if those overrides are absent from the backup. Other games stay in place. Backups with unknown item or recipe IDs are rejected before making changes. Backups are limited to 32 MiB, with up to 2,000 entries in each workspace list or inventory and each top-level game catalog list.
 3. To move one layout, choose **Export → Download JSON**, select the matching game in the destination, and use **Export → Import JSON**. To move a game definition alone, use **Game data → Export game** and **Import game**.
