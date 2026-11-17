@@ -320,6 +320,9 @@ function App({ session, switchGame, replaceGame, switching }: {
             }}>Restore workspace backup</button>
           </div>
         </details>
+        <a className="kofi-button" href="https://ko-fi.com/Z3C12AU1YN" target="_blank" rel="noopener noreferrer">
+          <img src="https://storage.ko-fi.com/cdn/kofi6.png?v=6" height={36} alt="Buy Me a Coffee at ko-fi.com" referrerPolicy="no-referrer" />
+        </a>
         <input hidden ref={imported} type="file" accept=".json,application/json" onChange={e => {
           const file = e.target.files?.[0]
           e.target.value = ''

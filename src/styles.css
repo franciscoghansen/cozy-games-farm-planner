@@ -209,6 +209,8 @@ summary::-webkit-details-marker { display: none; }
 
 .topbar { flex-wrap: wrap; }
 .top-actions { flex-wrap: wrap; }
+.kofi-button { display: inline-flex; flex: 0 0 auto; border-radius: 8px; }
+.kofi-button img { display: block; height: 36px; width: auto; border: 0; }
 .game-picker { display: flex; gap: 7px; align-items: center; font-size: 11px; font-weight: 750; color: var(--muted); }
 .game-picker select {
   max-width: 165px; min-height: 36px; padding: 0 8px; border: 1px solid var(--line);

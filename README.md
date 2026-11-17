@@ -2,6 +2,8 @@
 
 A browser-based farm layout editor and crafting calculator built with React, TypeScript, and Vite. Design a farm, calculate crop coverage, optimize equipment placement, or plan the materials for any item in a loaded game catalog. Coral Island is included, and you can import other game packages.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z3C12AU1YN)
+
 ## Play Online
 
 [Open Cozy Games Farm Planner](https://franciscoghansen.github.io/cozy-games-farm-planner/) once the repository owner enables GitHub Pages and the first deployment succeeds. The site runs in your browser without an account or install.
