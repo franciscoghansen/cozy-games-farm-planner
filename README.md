@@ -4,9 +4,9 @@ A browser-based farm layout editor and crafting calculator built with React, Typ
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z3C12AU1YN)
 
-## Play Online
+## Use Online
 
-[Open Cozy Games Farm Planner](https://franciscoghansen.github.io/cozy-games-farm-planner/) once the repository owner enables GitHub Pages and the first deployment succeeds. The site runs in your browser without an account or install.
+[Open Cozy Games Farm Planner](https://franciscoghansen.github.io/cozy-games-farm-planner/) to plan farm layouts and crafting projects in your browser. No account or installation is required.
 
 ## Run Locally
 
@@ -18,7 +18,7 @@ Download **Code → Download ZIP** from the [GitHub repository](https://github.c
 | macOS | Double-click **start.command**. If it lacks permission, open Terminal in the folder and run `chmod +x start.command` first. You can also run `sh ./start.sh` from Terminal. |
 | Linux | Open a terminal in the extracted folder and run `chmod +x start.sh` if needed, then run `./start.sh`. |
 
-The first launch installs dependencies from the included lockfile and needs internet access. Later launches reuse the installation until dependencies or the Node.js runtime change. The launcher prints the local address and opens your default browser. Keep the terminal open while you play and press Ctrl+C to stop the server.
+The first launch installs dependencies from the included lockfile and needs internet access. Later launches reuse the installation until dependencies or the Node.js runtime change. The launcher prints the local address and opens your default browser. Keep the terminal open while using the planner and press Ctrl+C to stop the server.
 
 ### Update and troubleshoot
 

@@ -64,7 +64,8 @@ export function dbWrite(db: IDBDatabase, store: Store, key: string, value: unkno
 }
 
 async function getJson(path: string) {
-  const response = await fetch(import.meta.env.BASE_URL + 'games/' + path)
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+  const response = await fetch(base + '/games/' + path)
   if (!response.ok) throw new Error('Could not load game data: ' + path)
   return response.json()
 }
