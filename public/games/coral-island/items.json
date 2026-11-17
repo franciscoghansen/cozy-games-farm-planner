@@ -511,8 +511,10 @@
     "name": "Coal",
     "category": "raw_resource",
     "acquisition": [
-      "mining"
-    ]
+      "mining",
+      "artisan_processing"
+    ],
+    "craftable": true
   },
   {
     "id": "any_flower",
@@ -754,6 +756,1401 @@
     "category": "raw_resource",
     "acquisition": [
       "farming"
+    ]
+  },
+  {
+    "id": "candied_tree_seed",
+    "name": "Candied Tree Seed",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "ball_of_goop",
+    "name": "Ball Of Goop",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "scuba_snack",
+    "name": "Scuba Snack",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "flower_bouquet",
+    "name": "Flower Bouquet",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "solar_core",
+    "name": "Solar Core",
+    "category": "crafted_component",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "warp_sesajen",
+    "name": "Warp Sesajen",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "weather_conch",
+    "name": "Weather Conch",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "lumina_sprinkler_i",
+    "name": "Lumina Sprinkler I",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "lumina_sprinkler_ii",
+    "name": "Lumina Sprinkler II",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "lumina_sprinkler_iii",
+    "name": "Lumina Sprinkler III",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "fertilizer_i",
+    "name": "Fertilizer I",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "fertilizer_ii",
+    "name": "Fertilizer II",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "fertilizer_iii",
+    "name": "Fertilizer III",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "flash_i",
+    "name": "Flash I",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "flash_ii",
+    "name": "Flash II",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "flash_iii",
+    "name": "Flash III",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hydro_i",
+    "name": "Hydro I",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hydro_ii",
+    "name": "Hydro II",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hydro_iii",
+    "name": "Hydro III",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "kiln",
+    "name": "Kiln",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "furnace",
+    "name": "Furnace",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "extractor",
+    "name": "Extractor",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "recycling_machine",
+    "name": "Recycling Machine",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "compost_bin",
+    "name": "Compost Bin",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "mason_jar",
+    "name": "Mason Jar",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "bee_house",
+    "name": "Bee House",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "tap",
+    "name": "Tap",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "dehydrator",
+    "name": "Dehydrator",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "mayonnaise_machine",
+    "name": "Mayonnaise Machine",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "keg",
+    "name": "Keg",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "cheese_press",
+    "name": "Cheese Press",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "mushroom_log",
+    "name": "Mushroom Log",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "loom",
+    "name": "Loom",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "solar_panel",
+    "name": "Solar Panel",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "oil_press",
+    "name": "Oil Press",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "aging_barrel",
+    "name": "Aging Barrel",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "slime_of_transmutation",
+    "name": "Slime Of Transmutation",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "slime_of_replication",
+    "name": "Slime Of Replication",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "makeshift_chest",
+    "name": "Makeshift Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "ocean_guardian_chest",
+    "name": "Ocean Guardian Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "ocean_explorer_chest",
+    "name": "Ocean Explorer Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "fungarian_chest",
+    "name": "Fungarian Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "stone_chest",
+    "name": "Stone Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wooden_chest",
+    "name": "Wooden Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "scrap_chest",
+    "name": "Scrap Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hay_chest",
+    "name": "Hay Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "small_fish_bait",
+    "name": "Small Fish Bait",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "medium_fish_bait",
+    "name": "Medium Fish Bait",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "large_fish_bait",
+    "name": "Large Fish Bait",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "ground_insect_scent",
+    "name": "Ground Insect Scent",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "crawling_critter_scent",
+    "name": "Crawling Critter Scent",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "flying_insect_scent",
+    "name": "Flying Insect Scent",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "floating_critter_scent",
+    "name": "Floating Critter Scent",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "monster_scent",
+    "name": "Monster Scent",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "monster_lure_scent",
+    "name": "Monster Lure Scent",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "monster_scent_ii",
+    "name": "Monster Scent II",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "monster_lure_scent_ii",
+    "name": "Monster Lure Scent II",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "ground_insect_trap",
+    "name": "Ground Insect Trap",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "crawler_trap",
+    "name": "Crawler Trap",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "flying_insect_trap",
+    "name": "Flying Insect Trap",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "float_trap",
+    "name": "Float Trap",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "bamboo_net_small",
+    "name": "Bamboo Net Small",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "bamboo_net_large",
+    "name": "Bamboo Net Large",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "decoy",
+    "name": "Decoy",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "slime_trap",
+    "name": "Slime Trap",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "spring_trap",
+    "name": "Spring Trap",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "glue_trap",
+    "name": "Glue Trap",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "shock_trap",
+    "name": "Shock Trap",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "spikes",
+    "name": "Spikes",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "makeshift_path",
+    "name": "Makeshift Path",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "makeshift_floor_tile",
+    "name": "Makeshift Floor Tile",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "makeshift_fence",
+    "name": "Makeshift Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "makeshift_gate",
+    "name": "Makeshift Gate",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "makeshift_arch",
+    "name": "Makeshift Arch",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "makeshift_sign",
+    "name": "Makeshift Sign",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hedge_fence",
+    "name": "Hedge Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hedge_gate",
+    "name": "Hedge Gate",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "stone_path",
+    "name": "Stone Path",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "stone_floor_tile",
+    "name": "Stone Floor Tile",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "stone_fence",
+    "name": "Stone Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "stone_gate",
+    "name": "Stone Gate",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "stone_arch",
+    "name": "Stone Arch",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "stone_sign",
+    "name": "Stone Sign",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "kelp_fence",
+    "name": "Kelp Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "kelp_arch",
+    "name": "Kelp Arch",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wood_path",
+    "name": "Wood Path",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wood_floor_tile",
+    "name": "Wood Floor Tile",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wooden_fence",
+    "name": "Wooden Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wooden_gate",
+    "name": "Wooden Gate",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wooden_arch",
+    "name": "Wooden Arch",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wood_sign",
+    "name": "Wood Sign",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "reef_fence",
+    "name": "Reef Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "reef_arch",
+    "name": "Reef Arch",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "scrap_path",
+    "name": "Scrap Path",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "scrap_floor_tile",
+    "name": "Scrap Floor Tile",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "scrap_fence",
+    "name": "Scrap Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "scrap_gate",
+    "name": "Scrap Gate",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "scrap_arch",
+    "name": "Scrap Arch",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "scrap_sign",
+    "name": "Scrap Sign",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "coral_fence",
+    "name": "Coral Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "coral_gate",
+    "name": "Coral Gate",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hay_path",
+    "name": "Hay Path",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hay_floor_tile",
+    "name": "Hay Floor Tile",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hay_fence",
+    "name": "Hay Fence",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hay_gate",
+    "name": "Hay Gate",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hay_arch",
+    "name": "Hay Arch",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "hay_sign",
+    "name": "Hay Sign",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "explosive_i",
+    "name": "Explosive I",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "explosive_ii",
+    "name": "Explosive II",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "explosive_iii",
+    "name": "Explosive III",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "vortexanator_i",
+    "name": "Vortexanator I",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "vortexanator_ii",
+    "name": "Vortexanator II",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "vortexanator_iii",
+    "name": "Vortexanator III",
+    "category": "consumable",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_seed",
+    "name": "Auto Seed",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_fertilizer",
+    "name": "Auto Fertilizer",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_harvest",
+    "name": "Auto Harvest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_sfh",
+    "name": "Auto SFH",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "anemone_auto_seed",
+    "name": "Anemone Auto Seed",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "anemone_auto_fertilizer",
+    "name": "Anemone Auto Fertilizer",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "anemone_auto_harvest",
+    "name": "Anemone Auto Harvest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "anemone_auto_sfh",
+    "name": "Anemone Auto SFH",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "temperature_machine",
+    "name": "Temperature Machine",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_feeder",
+    "name": "Auto Feeder",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_petter",
+    "name": "Auto Petter",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_collector",
+    "name": "Auto Collector",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "sturdy_computer",
+    "name": "Sturdy Computer",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_trash_collector",
+    "name": "Auto Trash Collector",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "auto_chest",
+    "name": "Auto Chest",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "architect_desk",
+    "name": "Architect Desk",
+    "category": "miscellaneous",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "any_tree_seed",
+    "name": "Any Tree Seed",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "solar_fragment",
+    "name": "Solar Fragment",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving"
+    ]
+  },
+  {
+    "id": "wind_essence",
+    "name": "Wind Essence",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "any_sea_scavengeable",
+    "name": "Any Sea Scavengeable",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "bronze_bar",
+    "name": "Bronze Bar",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "silver_bar",
+    "name": "Silver Bar",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "gold_bar",
+    "name": "Gold Bar",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "compost",
+    "name": "Compost",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "bronze_ore",
+    "name": "Bronze Ore",
+    "category": "raw_resource",
+    "acquisition": [
+      "mining"
+    ]
+  },
+  {
+    "id": "glass",
+    "name": "Glass",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "silver_kelp_essence",
+    "name": "Silver Kelp Essence",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "sea_salt",
+    "name": "Sea Salt",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving"
+    ]
+  },
+  {
+    "id": "osmium_kelp_essence",
+    "name": "Osmium Kelp Essence",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "morel",
+    "name": "Morel",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ]
+  },
+  {
+    "id": "any_insect",
+    "name": "Any Insect",
+    "category": "raw_resource",
+    "acquisition": [
+      "catching"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "any_small_fish",
+    "name": "Any Small Fish",
+    "category": "raw_resource",
+    "acquisition": [
+      "fishing"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "any_monster_essence",
+    "name": "Any Monster Essence",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "any_honey",
+    "name": "Any Honey",
+    "category": "raw_resource",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "any_dried_scavengeable",
+    "name": "Any Dried Scavengeable",
+    "category": "raw_resource",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "any_ore",
+    "name": "Any Ore",
+    "category": "raw_resource",
+    "acquisition": [
+      "mining"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "any_beach_scavengeable",
+    "name": "Any Beach Scavengeable",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "gold_kelp_essence",
+    "name": "Gold Kelp Essence",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "bronze_kelp_essence",
+    "name": "Bronze Kelp Essence",
+    "category": "refined_material",
+    "acquisition": [
+      "artisan_processing"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "flame_essence",
+    "name": "Flame Essence",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "any_wool",
+    "name": "Any Wool",
+    "category": "raw_resource",
+    "acquisition": [
+      "ranching"
+    ],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "any_organic_material",
+    "name": "Any Organic Material",
+    "category": "raw_resource",
+    "acquisition": [],
+    "description": "Enter eligible ingredients as stock under this group for crafting plans."
+  },
+  {
+    "id": "damaged_book",
+    "name": "Damaged Book",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
     ]
   }
 ]

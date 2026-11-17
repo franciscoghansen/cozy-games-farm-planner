@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "contentVersion": "1.1.0",
+  "contentVersion": "1.2.0",
   "id": "coral-island",
   "name": "Coral Island",
   "defaultPreset": "starter",
@@ -62,7 +62,8 @@
     "combat": "Combat",
     "farming": "Farming",
     "ranching": "Ranching",
-    "catching": "Bug catching"
+    "catching": "Bug catching",
+    "artisan_processing": "Artisan processing"
   },
   "stations": [
     {
@@ -80,6 +81,18 @@
     {
       "id": "mill",
       "name": "Mill"
+    },
+    {
+      "id": "compost_bin",
+      "name": "Compost Bin"
+    },
+    {
+      "id": "extractor",
+      "name": "Extractor"
+    },
+    {
+      "id": "kiln",
+      "name": "Kiln"
     }
   ]
 }
