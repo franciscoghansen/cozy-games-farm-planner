@@ -94,7 +94,7 @@ export async function dbWrite(db: WorkspaceDatabase, store: Store, key: IDBValid
 
 async function getJson(path: string) {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '')
-  const response = await fetch(base + '/games/' + path)
+  const response = await fetch(base + '/games/' + path, { cache: 'no-cache' })
   if (!response.ok) throw new Error('Could not load game data: ' + path)
   return response.json()
 }
