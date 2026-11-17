@@ -60,9 +60,9 @@ function App({ session, switchGame, replaceGame, switching }: {
   const [saved, setSaved] = useState(initial.saved)
   const [tool, setTool] = useState<EditorTool>('crop')
   const [manualLock, setManualLock] = useState(state.preferences?.manualLock ?? false)
-  const [selectedPreset, setSelectedPreset] = useState<PresetId | ''>(() => adapter.presets.find(entry =>
+  const [selectedPreset, setSelectedPreset] = useState<PresetId | ''>(() => (!initial.active && adapter.presets.find(entry =>
     entry.name === initial.current.name && entry.width === initial.current.width && entry.height === initial.current.height
-    && preset(entry.id, gameId).tiles.every((tile, i) => tile === initial.current.tiles[i]))?.id ?? '')
+    && preset(entry.id, gameId).tiles.every((tile, i) => tile === initial.current.tiles[i]))?.id) || '')
   const [overlays, setOverlays] = useState<Overlays>(state.preferences?.overlays ?? defaultOverlays)
   const [past, setPast] = useState<Plan[]>([])
   const [future, setFuture] = useState<Plan[]>([])
@@ -86,14 +86,15 @@ function App({ session, switchGame, replaceGame, switching }: {
   const stats = useMemo(() => maps ? statistics(plan, maps) : null, [plan, maps])
   const busy = progress !== null
   const stock = useMemo(() => ({ ...materials, ...plan.inventory }), [materials, plan.inventory])
-  const activeSaves = useMemo(() => saved.map(entry => entry.id === active ? { ...entry, plan } : entry), [saved, active, plan])
+  const savedPlan = saved.find(entry => entry.id === active)?.plan
+  const dirty = savedPlan && plan !== savedPlan && JSON.stringify(plan) !== JSON.stringify(savedPlan)
 
   useEffect(() => {
-    const workspace = { current: plan, active, saved: activeSaves }
+    const workspace = { current: plan, active, saved }
     void dbWrite(db, 'states', gameId, { workspace, materials, bom, configurations, crafting: craftingWorkspace,
       preferences: { overlays, manualLock } })
       .catch(() => setNotice('IndexedDB could not save your changes. Export JSON to keep a copy.'))
-  }, [db, gameId, plan, active, activeSaves, materials, bom, configurations, craftingWorkspace, overlays, manualLock])
+  }, [db, gameId, plan, active, saved, materials, bom, configurations, craftingWorkspace, overlays, manualLock])
   useEffect(() => {
     if (view === 'crafting') history.replaceState(history.state, '', '#crafting')
     else if (location.hash === '#crafting') history.replaceState(history.state, '', location.pathname + location.search)
@@ -224,6 +225,7 @@ function App({ session, switchGame, replaceGame, switching }: {
     const next = { ...current.current, name: value }
     setSaved(entries => [...entries.filter(entry => entry.id !== id), { id, plan: next }])
     setActive(id)
+    setSelectedPreset('')
     update(next)
     setDialog(false)
     setNotice(duplicate ? 'Layout duplicated.' : 'Layout saved.')
@@ -232,8 +234,6 @@ function App({ session, switchGame, replaceGame, switching }: {
   function openSaved(id: string) {
     const entry = saved.find(item => item.id === id)
     if (!entry) return
-    const previous = current.current
-    if (active) setSaved(entries => entries.map(item => item.id === active ? { ...item, plan: previous } : item))
     setActive(id)
     update(entry.plan)
     setPast([])
@@ -245,10 +245,21 @@ function App({ session, switchGame, replaceGame, switching }: {
     setDialog(false)
   }
 
+  function renameSaved(entry: typeof saved[number]) {
+    const title = window.prompt('Rename saved layout', entry.plan.name)?.trim()
+    if (!title || title.length > 100 || title === entry.plan.name) return
+    setSaved(entries => entries.map(item => item.id === entry.id ? { ...item, plan: { ...item.plan, name: title } } : item))
+    if (entry.id === active) {
+      update({ ...current.current, name: title })
+      setName(title)
+    }
+  }
+
   async function importFile(file: File) {
     try {
       const next = deserialize(await file.text(), gameId)
       commit(next)
+      setActive(null)
       setSelectedPreset('')
       setNotice('Layout imported.')
     } catch (error) {
@@ -340,7 +351,7 @@ function App({ session, switchGame, replaceGame, switching }: {
       </div>
     </header>
     {backupStatus && <p className="feature-notice" role="status">{backupStatus}</p>}
-    {view === 'materials' && <Materials game={adapter} plan={plan} inventory={stock} settings={bom} saved={activeSaves}
+    {view === 'materials' && <Materials game={adapter} plan={plan} inventory={stock} settings={bom} saved={saved}
       previous={previous} onSettings={patch => { setBom(value => ({ ...value, ...patch })); setCrafting(undefined) }}
       configurations={configurations} onConfigurations={setConfigurations}
       onInventory={updateInventory} onBack={() => setView('planner')} showPlan={showCraftPlan} />}
@@ -363,6 +374,7 @@ function App({ session, switchGame, replaceGame, switching }: {
           onPreset={id => {
             const { inventory, limited } = current.current
             commit({ ...preset(id, gameId), inventory, limited })
+            setActive(null)
             setSelectedPreset(id)
           }}
           onResize={(w, h) => { if (w !== plan.width || h !== plan.height) { commit(resize(current.current, w, h)); setSelectedPreset('') } }}
@@ -372,7 +384,7 @@ function App({ session, switchGame, replaceGame, switching }: {
       </div>
       <section className="editor" aria-label="Farm workspace">
         <div className="editor-heading">
-          <div><div className="map-label"><Grid2X2 size={13} /> Farm layout</div><h2>{plan.name}</h2></div>
+          <div><div className="map-label"><Grid2X2 size={13} /> Farm layout</div><h2>{plan.name}</h2>{dirty && <small role="status">Unsaved changes</small>}</div>
           <div className="editor-actions">
             <span className="size-badge">{plan.width} × {plan.height}</span>
             <button className="icon-button" title="Undo (Ctrl+Z)" aria-label="Undo" disabled={!past.length || busy} onClick={undo}><Undo2 size={17} /></button>
@@ -411,13 +423,22 @@ function App({ session, switchGame, replaceGame, switching }: {
       <h3>Saved layouts</h3>
       {saved.length ? <ul className="saved-layouts">{saved.map(entry => <li key={entry.id}>
         <button className="secondary" onClick={() => openSaved(entry.id)} disabled={entry.id === active}>
-          <span>{entry.id === active ? plan.name : entry.plan.name}</span><small>{entry.id === active ? 'Open' : `${entry.plan.width} × ${entry.plan.height}`}</small>
+          <span>{entry.plan.name}</span><small>{entry.id === active ? 'Open' : `${entry.plan.width} × ${entry.plan.height}`}</small>
         </button>
+        <div className="dialog-actions">
+          <button className="secondary" aria-label={'Rename ' + entry.plan.name} onClick={() => renameSaved(entry)}>Rename</button>
+          <button className="secondary" aria-label={'Delete ' + entry.plan.name} onClick={() => {
+            if (!window.confirm('Delete the saved layout “' + entry.plan.name + '”?')) return
+            setSaved(entries => entries.filter(item => item.id !== entry.id))
+            if (active === entry.id) setActive(null)
+          }}>Delete</button>
+        </div>
       </li>)}</ul> : <p>No named layouts saved yet.</p>}
       <button className="reset-button" onClick={() => {
+        if (!window.confirm('Clear the entire layout to crops? This removes equipment, paths and obstacles.')) return
         commit({ ...current.current, tiles: current.current.tiles.map(() => 'crop') })
-        setSelectedPreset(''); setDialog(false); setNotice('Layout reset. You can undo this change.')
-      }}>Reset layout</button>
+        setSelectedPreset(''); setDialog(false); setNotice('Layout cleared to crops. You can undo this change.')
+      }}>Clear to all crops</button>
     </dialog>
   </>
 }
