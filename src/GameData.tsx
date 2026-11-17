@@ -40,7 +40,15 @@ export function GameData({ pack, bundled, customized, onSave, onReset, onBack }:
     const value = JSON.parse(edit.json) as ItemDefinition | Recipe
     if (edit.id && value?.id !== edit.id) throw new Error('Keep the existing ID when editing. Add a new entry for a new ID.')
     const list = pack[edit.type]
-    const next = validatePackage({ ...pack, [edit.type]: edit.id ? list.map(row => row.id === edit.id ? value : row) : [...list, value] })
+    const index = edit.id ? list.findIndex(row => row.id === edit.id) : list.length
+    let next
+    try {
+      next = validatePackage({ ...pack, [edit.type]: edit.id ? list.map((row, i) => i === index ? value : row) : [...list, value] })
+    } catch (error) {
+      if (!(error instanceof Error)) throw error
+      const label = edit.type === 'items' ? item?.name ?? 'New item' : edit.id ?? 'New recipe'
+      throw new Error(error.message.replace(edit.type + '[' + index + ']', () => label))
+    }
     await onSave(next)
     setSelected(edit.type === 'items' ? value.id : (value as Recipe).output.itemId)
     setEdit(undefined)
@@ -100,11 +108,13 @@ export function GameData({ pack, bundled, customized, onSave, onReset, onBack }:
           })}>Add recipe</button></div>
           {item.recipeNote && !recipes.length && <p className="feature-warning">{item.recipeNote}</p>}
           {recipes.map(recipe => <div className="recipe-row" key={recipe.id}>
-            <div><strong>{recipe.name ?? recipe.id.replaceAll('_', ' ')} · {recipe.output.quantity} produced</strong>
+            <div><strong>{name(recipe.output.itemId)} · {recipe.output.quantity.toLocaleString()} produced</strong>
+              <p><small>{recipe.name && recipe.name + ' · '}<code>{recipe.id}</code></small></p>
               <p>{recipe.ingredients.map(entry => name(entry.itemId) + ' × ' + entry.quantity).join(' · ') || 'No consumable ingredients'}</p>
               {(recipe.stationId || recipe.unlock) && <p>{[station(recipe.stationId), recipe.unlock].filter(Boolean).join(' · ')}</p>}
               {recipe.byproducts?.length ? <p>Byproducts · {recipe.byproducts.map(entry => name(entry.itemId) + ' × ' + entry.quantity).join(' · ')}</p> : null}
-              {recipe.source && <p>Source · {recipe.source}</p>}
+              {recipe.source && <p>Source · {/^(https?):\/\//i.test(recipe.source)
+                ? <a href={recipe.source} target="_blank" rel="noopener noreferrer">{recipe.source}</a> : recipe.source}</p>}
               <CraftTree id={recipe.output.itemId} count={recipe.output.quantity} game={game}
                 recipes={new Map(compiled.chosen).set(recipe.output.itemId, recipe)} /></div>
             <button className="secondary" disabled={busy} onClick={() => begin('recipes', recipe, recipe.id)}>Override recipe</button>
@@ -115,7 +125,7 @@ export function GameData({ pack, bundled, customized, onSave, onReset, onBack }:
           event.preventDefault()
           void act(saveEdit, 'Saved locally.')
         }}>
-          <label className="stack">{edit.type === 'items' ? 'Item JSON' : 'Recipe JSON'}
+          <label className="stack">{edit.type === 'items' ? 'Advanced: Item JSON' : 'Advanced: Recipe JSON'}
             <textarea required rows={13} value={edit.json} spellCheck={false} onChange={event => setEdit({ ...edit, json: event.target.value })} /></label>
           <div className="data-actions"><button className="primary" disabled={busy}>Validate and save</button>
             <button className="secondary" disabled={busy} type="button" onClick={() => setEdit(undefined)}>Cancel</button></div>

@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useId, useLayoutEffect, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
 import { Crosshair, Hand, Maximize, Minus, Plus, RotateCcw } from 'lucide-react'
 import { gameFor } from './equipment.ts'
@@ -136,19 +136,26 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
   const [customView, setView] = useState<View | null>(null)
   const [hover, setHover] = useState(-1)
   const [space, setSpace] = useState(false)
+  const [touchPaint, setTouchPaint] = useState(false)
+  const [cursor, setCursor] = useState(-1)
+  const description = useId()
   const drag = useRef<{ id: number; pan: boolean; point: Point; last: Point } | null>(null)
   const fitted = { x: size.x / 2, y: size.y / 2, scale: Math.max(1, Math.min(56,
     (size.x - 46) / plan.width, (size.y - 46) / plan.height)) }
   const view = customView ?? fitted
 
-  useEffect(() => {
-    const observer = new ResizeObserver(([entry]) => {
-      setSize({ x: entry.contentRect.width, y: entry.contentRect.height })
-    })
-    observer.observe(area.current!)
+  useLayoutEffect(() => {
+    const node = area.current!
+    const measure = () => {
+      const { clientWidth: x, clientHeight: y } = node
+      setSize(previous => previous.x === x && previous.y === y ? previous : { x, y })
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(node)
     return () => observer.disconnect()
   }, [])
-  useEffect(() => { setView(null); setHover(-1) }, [plan.width, plan.height])
+  useLayoutEffect(() => { setView(null); setHover(-1); setCursor(previous => previous < 0 ? -1 : 0) }, [plan.width, plan.height])
   useEffect(() => {
     const down = (event: KeyboardEvent) => {
       if (event.code !== 'Space' || !(event.target instanceof HTMLElement) ||
@@ -168,7 +175,7 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
     }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const node = canvas.current!
     const dpr = window.devicePixelRatio || 1
     node.width = Math.round(size.x * dpr)
@@ -176,8 +183,8 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
     const ctx = node.getContext('2d')
     if (!ctx || !size.x || !size.y) return
     ctx.scale(dpr, dpr)
-    draw(ctx, plan, maps, overlays, view, size, hover)
-  }, [plan, maps, overlays, view.x, view.y, view.scale, size, hover])
+    draw(ctx, plan, maps, overlays, view, size, cursor >= 0 ? cursor : hover)
+  }, [plan, maps, overlays, view.x, view.y, view.scale, size, hover, cursor])
 
   useImperativeHandle(ref, () => ({
     downloadPng() {
@@ -227,7 +234,8 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
   }
   function onPointerDown(event: ReactPointerEvent<HTMLCanvasElement>) {
     if (drag.current || ![0, 1, 2].includes(event.button)) return
-    const pan = space || tool === 'pan' || event.button !== 0
+    setCursor(-1)
+    const pan = (event.pointerType === 'touch' && !touchPaint) || space || tool === 'pan' || event.button !== 0
     if (!pan && disabled) return
     event.currentTarget.setPointerCapture(event.pointerId)
     const point = local(event)
@@ -268,8 +276,32 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
   const hoveredItem = hoveredId ? gameFor(plan.gameId).placedItems.get(hoveredId) : undefined
 
   return <>
-    <div className="farm-surface" ref={area}>
-      <canvas ref={canvas} aria-label="Editable farm grid" style={{ cursor: space || tool === 'pan' ? 'grab' : 'crosshair' }}
+    <p id={description} className="sr-only">{plan.width} by {plan.height} grid with {plan.tiles.filter(tile => tile === 'crop').length.toLocaleString()} crop tiles.
+      Use the arrow keys to move and Enter to apply the placement tool.</p>
+    <div className={'farm-surface' + (touchPaint ? ' touch-paint' : '')} ref={area}>
+      <canvas ref={canvas} tabIndex={0} aria-label="Editable farm grid" aria-describedby={description}
+        onFocus={event => { if (event.currentTarget.matches(':focus-visible')) setCursor(0) }} onBlur={() => setCursor(-1)}
+        onKeyDown={event => {
+          const i = Math.max(0, cursor)
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            if (!disabled) { onPaint([i]); onEnd() }
+            return
+          }
+          const directions: Record<string, Point> = { ArrowLeft: { x: -1, y: 0 }, ArrowRight: { x: 1, y: 0 },
+            ArrowUp: { x: 0, y: -1 }, ArrowDown: { x: 0, y: 1 } }
+          const delta = directions[event.key]
+          if (!delta) return
+          event.preventDefault()
+          const x = Math.max(0, Math.min(plan.width - 1, i % plan.width + delta.x))
+          const y = Math.max(0, Math.min(plan.height - 1, Math.floor(i / plan.width) + delta.y))
+          setCursor(index({ x, y }))
+          const cx = view.x + (x + .5 - plan.width / 2) * view.scale
+          const cy = view.y + (y + .5 - plan.height / 2) * view.scale
+          if (cx < 0 || cx >= size.x || cy < 0 || cy >= size.y) {
+            setView({ ...view, x: view.x + size.x / 2 - cx, y: view.y + size.y / 2 - cy })
+          }
+        }} style={{ cursor: space || tool === 'pan' ? 'grab' : 'crosshair' }}
         onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={end} onPointerCancel={end}
         onLostPointerCapture={end} onPointerLeave={() => setHover(-1)} onContextMenu={event => event.preventDefault()} />
       <div className="grid-tools">
@@ -282,8 +314,13 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
       </div>
     </div>
     <div className="grid-status">
-      <span><Crosshair size={14} />{hover >= 0 ? `(${hover % plan.width}, ${Math.floor(hover / plan.width)})${hoveredItem ? ' · ' + hoveredItem.name : ''}` : 'Hover for coordinates'}</span>
-      <span><Hand size={14} /> Space + drag to pan</span>
+      <button className="secondary touch-mode" aria-pressed={touchPaint} onClick={() => setTouchPaint(value => !value)}>
+        Touch mode: {touchPaint ? 'Paint' : 'Pan'}
+      </button>
+      <span className="desktop-grid-hint"><Crosshair size={14} />{hover >= 0 ? `(${hover % plan.width}, ${Math.floor(hover / plan.width)})${hoveredItem ? ' · ' + hoveredItem.name : ''}` : 'Hover for coordinates'}</span>
+      <span className="desktop-grid-hint"><Hand size={14} /> Space + drag to pan</span>
+      <span className="touch-mode">{touchPaint ? 'Drag to paint' : 'Drag sideways to pan; swipe up or down to scroll'}</span>
+      {cursor >= 0 && <span className="sr-only" aria-live="polite">Column {cursor % plan.width + 1}, row {Math.floor(cursor / plan.width) + 1}</span>}
     </div>
   </>
 })

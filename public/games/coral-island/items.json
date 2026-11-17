@@ -145,7 +145,7 @@
       "solar_power",
       "purchasing"
     ],
-    "craftable": true,
+    "craftable": false,
     "purchasable": true
   },
   {

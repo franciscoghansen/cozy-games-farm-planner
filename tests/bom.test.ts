@@ -203,3 +203,9 @@ test('IndexedDB stores layouts, inventory, overrides, BOM settings and selected 
   assert.deepEqual(migrated.current, first.workspace.current)
   db.close()
 })
+
+test('packages reject byproducts that are consumed as recipe ingredients', () => {
+  const invalid = structuredClone(definition)
+  invalid.recipes[0].ingredients.push({ itemId: 'slag', quantity: 1 })
+  assert.throws(() => validatePackage(invalid), /byproduct slag is also used as a recipe ingredient/)
+})

@@ -23,7 +23,7 @@ export function validatePlan(value: unknown, fallbackGame?: string, adapter?: Ga
     !integer(p.width, 1, maxSize) || !integer(p.height, 1, maxSize)) {
     throw new Error('Invalid farm name or dimensions.')
   }
-  if (!Array.isArray(p.tiles) || p.tiles.length !== Number(p.width) * Number(p.height) ||
+  if (!Array.isArray(p.tiles) || p.tiles.length !== Number(p.width) * Number(p.height) || p.tiles.includes(undefined) ||
     !p.tiles.every(tile => typeof tile === 'string' &&
       (['crop', 'empty', 'rock', 'path'].includes(tile) || isItem(tile.startsWith('!') ? tile.slice(1) : tile)))) {
     throw new Error('Invalid farm tiles.')

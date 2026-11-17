@@ -156,6 +156,7 @@ export function validatePackage(value: unknown): GamePackage {
     return ref(entry.itemId, path + '.itemId', itemIds)
   }
   const edges = new Map<string, Set<string>>()
+  const byproducts = new Map<string, string>()
   const recipeRecords = records(pack.recipes, 'recipes')
   const recipeOutputs = new Map(recipeRecords.map(({ obj, at, key }) => [key, quantity(obj.output, at + '.output')]))
   for (const { obj, at, key } of recipeRecords) {
@@ -164,7 +165,9 @@ export function validatePackage(value: unknown): GamePackage {
     for (const value of array(obj.ingredients, at + '.ingredients')) edgesForOutput.add(quantity(value, at + '.ingredients'))
     edges.set(output, edgesForOutput)
     if (obj.byproducts !== undefined) for (const value of array(obj.byproducts, at + '.byproducts')) {
-      if (quantity(value, at + '.byproducts') === output) fail(at, 'list main output quantity under output')
+      const id = quantity(value, at + '.byproducts')
+      if (id === output) fail(at, 'list main output quantity under output')
+      byproducts.set(id, at + '.byproducts')
     }
     if (obj.alternativeIds !== undefined) for (const value of array(obj.alternativeIds, at + '.alternativeIds')) {
       const alternative = id(value, at + '.alternativeIds')
@@ -173,6 +176,10 @@ export function validatePackage(value: unknown): GamePackage {
     if (obj.stationId !== undefined) ref(obj.stationId, at + '.stationId', stationIds)
     optional(obj.seconds, at + '.seconds', (v, path) => number(v, path, 0))
     for (const field of ['unlock', 'source', 'name']) optional(obj[field], at + '.' + field, text)
+  }
+  for (const ingredients of edges.values()) for (const id of ingredients) {
+    const path = byproducts.get(id)
+    if (path) fail(path, 'byproduct ' + id + ' is also used as a recipe ingredient')
   }
   dependencyOrder(edges)
   return value as GamePackage

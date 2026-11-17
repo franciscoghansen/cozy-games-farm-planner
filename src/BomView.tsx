@@ -76,6 +76,7 @@ export function BomView({ game, bom, inventory, onInventory, useInventory, showP
   const station = (id?: string) => id ? game.game.stations.find(station => station.id === id)?.name : undefined
   const quantity = (rows: { required: number }[]) => rows.reduce((sum, row) => sum + row.required, 0)
   const remaining = (rows: { remaining: number }[]) => rows.reduce((sum, row) => sum + row.remaining, 0)
+  const [collection, setCollection] = useState<{ id: string; before: number; after: number }>()
   const resources = bom.shopping.filter(row => game.catalog.get(row.id)?.category !== 'equipment')
   const pending = bom.unresolved
   const intermediates = new Set(bom.intermediates.map(row => row.id))
@@ -125,6 +126,12 @@ export function BomView({ game, bom, inventory, onInventory, useInventory, showP
         </div>
       </div>
       {detail === 'list' && <>
+        {useInventory && collection && inventory[collection.id] === collection.after && <p className="feature-notice" role="status">
+          Marked {name(collection.id)} as collected. <button className="back-link" onClick={() => {
+            onInventory(collection.id, collection.before)
+            setCollection(undefined)
+          }}>Undo</button>
+        </p>}
         <div className="shopping-summary">
           <span><b>{number(quantity(bom.rawMaterials))}</b> raw resource units</span>
           <span><b>{number(totalOwnedMaterials)}</b> owned materials used</span>
@@ -135,13 +142,18 @@ export function BomView({ game, bom, inventory, onInventory, useInventory, showP
         {[...grouped].map(([method, rows]) => <div key={method} className="resource-group">
           <h4>{method}</h4>
           <div className="bom-scroll"><table className="bom-table">
-            <thead><tr><th>Resource</th><th>Total needed</th><th>Owned stock</th><th>Remaining</th><th>Collected</th></tr></thead>
+            <thead><tr><th>Resource</th><th>Total needed</th>{useInventory && <th>Owned stock</th>}<th>Remaining</th>{useInventory && <th>Collected</th>}</tr></thead>
             <tbody>{rows.map(row => <tr key={row.id}><th>{name(row.id)}</th><td>{number(row.required)}</td>
-              <td><input aria-label={name(row.id) + ' owned'} type="number" min="0" max={quantityLimit} value={inventory[row.id] ?? 0}
-                onChange={event => onInventory(row.id, inputQuantity(event.target.value))} /></td>
-              <td>{number(row.remaining)}</td><td><button className="icon-button" disabled={!row.remaining || !useInventory}
+              {useInventory && <td><input aria-label={name(row.id) + ' owned'} type="number" min="0" max={quantityLimit} value={inventory[row.id] ?? 0}
+                onChange={event => onInventory(row.id, inputQuantity(event.target.value))} /></td>}
+              <td>{number(row.remaining)}</td>{useInventory && <td><button className="icon-button" disabled={!row.remaining}
                 title={'Mark ' + name(row.id) + ' as collected'} aria-label={'Mark ' + name(row.id) + ' as collected'}
-                onClick={() => onInventory(row.id, (inventory[row.id] ?? 0) + row.remaining)}><Check size={15} /></button></td>
+                onClick={() => {
+                  const before = inventory[row.id] ?? 0
+                  const after = Math.min(quantityLimit, before + row.remaining)
+                  onInventory(row.id, after)
+                  setCollection({ id: row.id, before, after })
+                }}><Check size={15} /></button></td>}
             </tr>)}</tbody>
           </table></div>
         </div>)}
