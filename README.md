@@ -2,9 +2,31 @@
 
 A browser-based farm layout editor and crafting calculator built with React, TypeScript, and Vite. Design a farm, calculate crop coverage, optimize equipment placement, or plan the materials for any item in a loaded game catalog. Coral Island is included, and you can import other game packages.
 
-## Setup
+## Play Online
 
-You need Git, npm, and either Node.js 22.16 or later in the 22.x series or Node.js 24+. Use the same browser and local address when reopening a workspace.
+[Open Cozy Games Farm Planner](https://franciscoghansen.github.io/cozy-games-farm-planner/) once the repository owner enables GitHub Pages and the first deployment succeeds. The site runs in your browser without an account or install.
+
+## Run Locally
+
+Download **Code → Download ZIP** from the [GitHub repository](https://github.com/franciscoghansen/cozy-games-farm-planner) and extract it. Install [Node.js LTS](https://nodejs.org/en/download) if needed. The launcher supports Node.js 22.16+ in the 22.x series and Node.js 24+. Node.js includes npm.
+
+| System | Start the planner |
+| --- | --- |
+| Windows 10/11 | Open the extracted folder and double-click **start.bat**. |
+| macOS | Double-click **start.command**. If it lacks permission, open Terminal in the folder and run `chmod +x start.command` first. You can also run `sh ./start.sh` from Terminal. |
+| Linux | Open a terminal in the extracted folder and run `chmod +x start.sh` if needed, then run `./start.sh`. |
+
+The first launch installs dependencies from the included lockfile and needs internet access. Later launches reuse the installation until dependencies or the Node.js runtime change. The launcher prints the local address and opens your default browser. Keep the terminal open while you play and press Ctrl+C to stop the server.
+
+### Update and troubleshoot
+
+- **Updating a ZIP download.** Stop the server, download and extract the new ZIP, and launch from the new folder. Use the same browser and printed address to reopen your workspace. With a Git checkout, run `git pull` and relaunch.
+- **Node.js or npm is missing.** Install [Node.js LTS](https://nodejs.org/en/download), open a new terminal window, and check `node --version` and `npm --version`. If Finder cannot find a Node.js installation managed by your shell, run `sh ./start.sh` in your usual terminal.
+- **The dependency install fails.** Confirm the ZIP was extracted in full and the computer can reach the npm registry. Fix the first npm error shown, then rerun the launcher.
+- **The browser does not open or the page looks empty.** Copy the exact URL printed in the terminal and keep that terminal open. A second run may pick a different port, which has its own browser workspace.
+- **The app cannot open its database.** Use a regular browser window with site storage enabled. Close other planner tabs if the app reports a database upgrade is blocked.
+
+## Developer setup
 
 ### Clone and start
 
@@ -13,11 +35,10 @@ git clone https://github.com/franciscoghansen/cozy-games-farm-planner.git
 cd cozy-games-farm-planner
 node --version
 npm --version
-npm ci
-npm run dev
+npm run start:local
 ```
 
-Open the local address printed by Vite, normally `http://localhost:5173/`. If that port is taken, Vite prints another one. To open the Crafting Planner directly, append `#crafting` to the printed URL. Use Ctrl+C in the terminal to stop the server.
+The developer launcher uses the same startup script. Set `FARM_PLANNER_NO_BROWSER=1` to skip the browser handoff in a headless session. For the conventional development workflow, run `npm ci` and then `npm run dev`. Append `#crafting` to the printed URL to open the Crafting Planner directly.
 
 ### Test and preview the production build
 
@@ -55,7 +76,34 @@ npm run preview
 
 ### Browser storage and backups
 
-Layouts, crafting plans, stock, and custom game data are stored in IndexedDB and separated by game. The browser keeps separate workspaces for different profiles and addresses, including different ports and the distinction between `localhost` and `127.0.0.1`. Clearing site data removes those local records. Export important layouts through **Export → Download JSON** and back up game customizations through **Game data → Export game**. The layout export contains a single layout. Crafting plans currently remain in browser storage.
+Layouts, crafting plans, stock, and custom game data stay in IndexedDB on your device. The hosted and local copies use separate browser origins. Different browsers, profiles, hostnames, and ports have separate storage. Clearing site data removes the records for that origin.
+
+1. Choose **Export → Download workspace backup** to save all layouts, stock, crafting plans, preferences, and custom games in one JSON file.
+2. Open the destination copy of the planner, close its other planner tabs, then choose **Export → Restore workspace backup** and select the file. Confirm to replace the data for games in the backup. Other games stay in place.
+3. To move one layout, choose **Export → Download JSON**, select the matching game in the destination, and use **Export → Import JSON**. To move a game definition alone, use **Game data → Export game** and **Import game**.
+
+Keep backups somewhere private. Moving data between devices or between local and hosted copies requires an export and restore.
+
+## Enable GitHub Pages
+
+GitHub Free requires a public repository for Pages. GitHub Pro, Team, and Enterprise also support Pages from private repositories. Check the intended site visibility before enabling deployment. [GitHub Pages availability](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
+
+1. In the repository, open **Settings → Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Push to the default branch or open **Actions → Deploy GitHub Pages → Run workflow** on that branch.
+4. Once the workflow succeeds, open the URL shown on the deployment. It installs dependencies, runs tests, checks TypeScript, and publishes `dist/`. The repository path comes from Pages configuration. The Crafting Planner uses a URL fragment so refreshing it requests the same HTML page.
+
+See [GitHub's Pages setup guide](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) for repository settings and permissions.
+
+### Launch and deployment checks
+
+- On macOS, open `start.command` from Finder in a freshly extracted folder. Confirm the default browser opens, then run it again and check that dependencies are reused.
+- On Linux, run `./start.sh` in a freshly extracted folder on a desktop with a default browser. Confirm the browser opens or the launcher prints an address you can open yourself.
+- After the first Pages deployment, visit the URL in the deployment log, open and refresh `#crafting`, and test game JSON import and workspace backup restore with sample data.
+
+## Feedback and contributions
+
+Report bugs and request features through [GitHub Issues](https://github.com/franciscoghansen/cozy-games-farm-planner/issues/new/choose). See [CONTRIBUTING.md](CONTRIBUTING.md) for test steps and how to submit a game definition. The suggested license for the original application code is MIT, pending owner approval. Game names and assets belong to their respective owners.
 
 ## Layout and materials reference
 

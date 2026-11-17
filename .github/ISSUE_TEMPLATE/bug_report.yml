@@ -1,0 +1,31 @@
+name: Bug report
+description: Report something that breaks while starting or using the planner.
+body:
+  - type: dropdown
+    id: version
+    attributes:
+      label: Where did it happen?
+      options:
+        - GitHub Pages
+        - Local launcher
+        - Local development or preview
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Operating system and browser
+      placeholder: Windows 11, Firefox
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the game, the action, and any error text. Remove private layouts, workspace backups, and credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true

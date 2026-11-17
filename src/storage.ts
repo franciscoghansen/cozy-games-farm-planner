@@ -1,5 +1,6 @@
-import { gameFor, getLayoutV1Game, isItem } from './equipment.ts'
+import { gameFor, getLayoutV1Game } from './equipment.ts'
 import { quantityLimit } from './game.ts'
+import type { Game } from './game.ts'
 import { maxSize } from './model.ts'
 import type { Plan } from './model.ts'
 
@@ -7,26 +8,30 @@ const key = 'coral-island-farm-planner/v1'
 const integer = (value: unknown, min: number, max: number) =>
   typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max
 
-export function validatePlan(value: unknown, fallbackGame?: string): Plan {
+export function validatePlan(value: unknown, fallbackGame?: string, adapter?: Game): Plan {
   if (typeof value !== 'object' || !value) throw new Error('Expected a farm plan object.')
   const p = value as Record<string, unknown>
   if (p.gameId !== undefined && typeof p.gameId !== 'string') throw new Error('Invalid game ID.')
-  const game = gameFor((p.gameId as string | undefined) ?? fallbackGame)
+  const requestedGame = (p.gameId as string | undefined) ?? fallbackGame
+  const game = adapter ?? gameFor(requestedGame)
   const gameId = game.game.id
-  if (fallbackGame && gameId !== fallbackGame) throw new Error('This layout belongs to ' + game.game.name + '. Switch games before importing it.')
+  if ((requestedGame && gameId !== requestedGame) || (fallbackGame && gameId !== fallbackGame)) {
+    throw new Error('This layout belongs to ' + (p.gameId ?? game.game.name) + '. Switch games before importing it.')
+  }
+  const isItem = (id: string) => game.placedItems.has(id)
   if (typeof p.name !== 'string' || !p.name.trim() || p.name.length > 100 ||
     !integer(p.width, 1, maxSize) || !integer(p.height, 1, maxSize)) {
     throw new Error('Invalid farm name or dimensions.')
   }
   if (!Array.isArray(p.tiles) || p.tiles.length !== Number(p.width) * Number(p.height) ||
     !p.tiles.every(tile => typeof tile === 'string' &&
-      (['crop', 'empty', 'rock', 'path'].includes(tile) || isItem(tile.startsWith('!') ? tile.slice(1) : tile, gameId)))) {
+      (['crop', 'empty', 'rock', 'path'].includes(tile) || isItem(tile.startsWith('!') ? tile.slice(1) : tile)))) {
     throw new Error('Invalid farm tiles.')
   }
   if (!(p.progression === 'custom' || game.game.progressions.some(level => level.id === p.progression)) ||
-    !Array.isArray(p.unlocked) || !p.unlocked.every(id => typeof id === 'string' && isItem(id, gameId)) ||
+    !Array.isArray(p.unlocked) || !p.unlocked.every(id => typeof id === 'string' && isItem(id)) ||
     typeof p.limited !== 'boolean' || !p.inventory || typeof p.inventory !== 'object' || Array.isArray(p.inventory) ||
-    !Object.entries(p.inventory).every(([id, count]) => isItem(id, gameId) && integer(count, 0, quantityLimit)) ||
+    !Object.entries(p.inventory).every(([id, count]) => isItem(id) && integer(count, 0, quantityLimit)) ||
     !['maximum', 'low', 'balanced', 'rework', 'cost', 'materials'].includes(String(p.strategy)) ||
     !integer(p.target, 0, maxSize ** 2)) {
     throw new Error('Invalid equipment inventory or optimizer settings.')

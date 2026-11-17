@@ -24,6 +24,7 @@ import { GameData } from './GameData.tsx'
 import type { FarmBom } from './farm-bom.ts'
 import { CraftingPlanner } from './CraftingPlanner.tsx'
 import { emptyCrafting } from './crafting-plans.ts'
+import { exportBackup, parseBackup, restoreBackup } from './backup.ts'
 import './styles.css'
 
 const overlayButtons = [
@@ -73,6 +74,8 @@ function App({ session, switchGame, replaceGame, switching }: {
   const worker = useRef<Worker | null>(null)
   const grid = useRef<GridHandle>(null)
   const imported = useRef<HTMLInputElement>(null)
+  const backupInput = useRef<HTMLInputElement>(null)
+  const [backupStatus, setBackupStatus] = useState('')
   const [dialog, setDialog] = useState(false)
   const modal = useRef<HTMLDialogElement>(null)
   const [name, setName] = useState(plan.name)
@@ -262,6 +265,27 @@ function App({ session, switchGame, replaceGame, switching }: {
     }
   }
 
+  async function downloadWorkspace() {
+    try {
+      const data = await exportBackup(db, gameId)
+      download(new Blob([data], { type: 'application/json' }), 'farm-planner-backup.json')
+      setBackupStatus('Workspace backup downloaded.')
+    } catch {
+      setBackupStatus('Could not download the workspace backup. Try again or export individual layouts.')
+    }
+  }
+
+  async function importWorkspace(file: File) {
+    try {
+      const backup = parseBackup(await file.text(), session.bundled)
+      if (!window.confirm('Restore this workspace backup? Existing data for games in the backup will be replaced. Other games will be kept.')) return
+      await restoreBackup(db, backup)
+      location.reload()
+    } catch (error) {
+      setBackupStatus(error instanceof Error ? 'Backup restore failed. ' + error.message : 'Backup restore failed.')
+    }
+  }
+
   return <>
     <header className="topbar">
       <div className="brand">
@@ -286,6 +310,14 @@ function App({ session, switchGame, replaceGame, switching }: {
             <button onClick={event => { download(new Blob([serialize(plan)], { type: 'application/json' }), plan.name + '.json'); event.currentTarget.closest('details')!.open = false }}>Download JSON</button>
             <button onClick={event => { grid.current?.downloadPng(); event.currentTarget.closest('details')!.open = false }}>Download PNG</button>
             <button disabled={busy} onClick={event => { imported.current?.click(); event.currentTarget.closest('details')!.open = false }}>Import JSON</button>
+            <button disabled={busy || switching} onClick={event => {
+              event.currentTarget.closest('details')!.open = false
+              void downloadWorkspace()
+            }}>Download workspace backup</button>
+            <button disabled={busy || switching} onClick={event => {
+              backupInput.current?.click()
+              event.currentTarget.closest('details')!.open = false
+            }}>Restore workspace backup</button>
           </div>
         </details>
         <input hidden ref={imported} type="file" accept=".json,application/json" onChange={e => {
@@ -293,8 +325,14 @@ function App({ session, switchGame, replaceGame, switching }: {
           e.target.value = ''
           if (file) void importFile(file)
         }} />
+        <input hidden ref={backupInput} type="file" accept=".json,application/json" onChange={event => {
+          const file = event.target.files?.[0]
+          event.target.value = ''
+          if (file) void importWorkspace(file)
+        }} />
       </div>
     </header>
+    {backupStatus && <p className="feature-notice" role="status">{backupStatus}</p>}
     {view === 'materials' && <Materials game={adapter} plan={plan} inventory={stock} settings={bom} saved={activeSaves}
       previous={previous} onSettings={patch => { setBom(value => ({ ...value, ...patch })); setCrafting(undefined) }}
       configurations={configurations} onConfigurations={setConfigurations}

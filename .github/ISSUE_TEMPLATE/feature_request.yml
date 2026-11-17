@@ -1,0 +1,16 @@
+name: Feature request
+description: Suggest an improvement or request another game.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What would help?
+      description: For game requests, include the game version and reliable sources for layouts, items, or recipes.
+    validations:
+      required: true

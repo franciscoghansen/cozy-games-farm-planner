@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test tests/*.test.ts"
+    "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test tests/*.test.ts",
+    "start:local": "node scripts/start-local.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",
@@ -20,5 +21,8 @@
     "fake-indexeddb": "^6.2.8",
     "typescript": "^5.9.3",
     "vite": "^7.3.0"
+  },
+  "engines": {
+    "node": ">=22.16.0 <23 || >=24.0.0"
   }
 }
