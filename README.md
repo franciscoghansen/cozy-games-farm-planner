@@ -56,7 +56,7 @@ npm run preview
 
 ### Design and optimize a farm
 
-1. Select **Coral Island** in the header, then choose a **Layout preset** in **Farm setup**. **Efficient Starter** is a compact example with 20 fully watered and protected crop tiles. Enter your own width and height and click **Apply** for a custom board.
+1. New **Coral Island** workspaces open with **Efficient Starter**, a 5 × 5 layout with 20 fully watered and protected crop tiles. Choose another **Layout preset** in **Farm setup**, or enter your own width and height and click **Apply**.
 2. Pick a sprinkler or scarecrow in **Placement tools**, then click or drag across the grid. Use **Obstacle** and **Path** for tiles the optimizer must preserve. Enable **Lock newly placed equipment** or use **Toggle lock** to protect specific placements.
 3. Turn on the **Combined**, **Water**, or **Protection** overlay to inspect coverage. Scroll to zoom and use **Pan** or Space + drag to move the board. Hover over equipment to highlight its range.
 4. Choose a **Farming progression** and set owned quantities in **Equipment inventory**. To include specific shop, festival, merit, or DLC equipment, choose **Custom equipment** and check the items you have unlocked.
@@ -105,7 +105,11 @@ See [GitHub's Pages setup guide](https://docs.github.com/en/pages/getting-starte
 
 ## Feedback and contributions
 
-Report bugs and request features through [GitHub Issues](https://github.com/franciscoghansen/cozy-games-farm-planner/issues/new/choose). See [CONTRIBUTING.md](CONTRIBUTING.md) for test steps and how to submit a game definition. The suggested license for the original application code is MIT, pending owner approval. Game names and assets belong to their respective owners.
+Report bugs and request features through [GitHub Issues](https://github.com/franciscoghansen/cozy-games-farm-planner/issues/new/choose). See [CONTRIBUTING.md](CONTRIBUTING.md) for test steps and how to submit a game definition.
+
+## License
+
+The original application code and documentation are available under the [MIT License](LICENSE). Game names, assets, and other third-party material remain subject to their respective terms.
 
 ## Layout and materials reference
 

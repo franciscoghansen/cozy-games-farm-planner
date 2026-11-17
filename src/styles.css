@@ -27,7 +27,7 @@ svg { flex-shrink: 0; vertical-align: middle; }
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .brand, .top-actions, .editor-actions { display: flex; align-items: center; gap: 10px; }
-.brand { gap: 13px; }
+.brand { gap: 13px; color: inherit; text-decoration: none; border-radius: 14px; }
 .brand-icon {
   width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px;
   color: #f2f5d2; background: #315640; box-shadow: inset 0 0 0 4px #ffffff0a;
