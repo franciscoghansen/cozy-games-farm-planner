@@ -1,111 +1,19 @@
 import { adaptGame, validatePackage } from './game.ts'
-import type { Game, GamePackage } from './game.ts'
-import { quantityLimit } from './crafting-types.ts'
-import { validatePlan } from './storage.ts'
+import type { GamePackage } from './game.ts'
 import type { GameState } from './workspace-db.ts'
-import { dbGet } from './workspace-db.ts'
+import { dbGet, dbGetAll } from './workspace-db.ts'
+import type { WorkspaceDatabase } from './workspace-db.ts'
+import { list, record, text, unique, validateState } from './workspace-state.ts'
 
 const format = 'cozy-games-farm-planner'
 const stores = ['states', 'games', 'settings']
 
-function record(value: unknown, label: string): Record<string, unknown> {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid ' + label + '.')
-  return value as Record<string, unknown>
-}
-function list(value: unknown, label: string) {
-  if (!Array.isArray(value)) throw new Error('Invalid ' + label + '.')
-  return value as unknown[]
-}
-function text(value: unknown, label: string, empty = false) {
-  if (typeof value !== 'string' || value.length > 1000 || (!empty && !value.trim())) throw new Error('Invalid ' + label + '.')
-  return value
-}
-function integer(value: unknown, label: string) {
-  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0 || value > quantityLimit) {
-    throw new Error('Invalid ' + label + '.')
-  }
-  return value
-}
-function bool(value: unknown, label: string) {
-  if (typeof value !== 'boolean') throw new Error('Invalid ' + label + '.')
-  return value
-}
-function oneOf<T extends string>(value: unknown, options: readonly T[], label: string) {
-  if (!options.includes(value as T)) throw new Error('Invalid ' + label + '.')
-  return value as T
-}
-function unique<T>(rows: T[], key: (row: T) => string, label: string) {
-  if (new Set(rows.map(key)).size !== rows.length) throw new Error('Duplicate ' + label + '.')
-  return rows
-}
-function entries<T>(value: unknown, label: string, convert: (value: unknown, label: string) => T) {
-  return Object.fromEntries(Object.entries(record(value, label)).map(([key, value]) => [key, convert(value, label + ' ' + key)]))
-}
+export const backupSizeLimit = 32 * 1024 * 1024
 
-function validateState(value: unknown, game: Game): GameState {
-  const state = record(value, 'game workspace')
-  const farm = record(state.workspace, 'farm workspace')
-  const plan = (value: unknown) => validatePlan(value, game.game.id, game)
-  const saved = unique(list(farm.saved, 'saved layouts').map(value => {
-    const entry = record(value, 'saved layout')
-    return { id: text(entry.id, 'saved layout ID'), plan: plan(entry.plan) }
-  }), entry => entry.id, 'saved layout ID')
-  const settings = (value: unknown) => {
-    const bom = record(value, 'BOM settings')
-    return {
-      mode: oneOf(bom.mode, ['scratch', 'inventory', 'upgrade', 'custom'] as const, 'BOM mode'),
-      base: oneOf(bom.base, ['previous', 'saved', 'snapshot'] as const, 'BOM baseline type'),
-      baseId: text(bom.baseId, 'baseline ID', true),
-      targetId: text(bom.targetId, 'BOM target ID', true),
-      quantity: integer(bom.quantity, 'BOM target quantity'),
-      selections: entries(bom.selections, 'recipe choices', text),
-      ...(bom.snapshot !== undefined ? { snapshot: plan(bom.snapshot) } : {}),
-    }
-  }
-  const configurations = state.configurations === undefined ? undefined
-    : unique(list(state.configurations, 'BOM configurations').map(value => {
-      const entry = record(value, 'BOM configuration')
-      return { id: text(entry.id, 'BOM configuration ID'), name: text(entry.name, 'BOM name'), settings: settings(entry.settings) }
-    }), entry => entry.id, 'BOM configuration ID')
-  const draft = (value: unknown) => {
-    const entry = record(value, 'crafting draft')
-    return {
-      targets: unique(list(entry.targets, 'crafting targets').map(value => {
-        const target = record(value, 'crafting target')
-        return { itemId: text(target.itemId, 'crafting item ID'), quantity: integer(target.quantity, 'crafting quantity') }
-      }), entry => entry.itemId, 'crafting target'),
-      useInventory: bool(entry.useInventory, 'inventory setting'),
-      selections: entries(entry.selections, 'recipe choices', text),
-    }
-  }
-  let crafting: GameState['crafting']
-  if (state.crafting !== undefined) {
-    const entry = record(state.crafting, 'crafting workspace')
-    const saved = unique(list(entry.saved, 'saved crafting plans').map(value => {
-      const plan = record(value, 'saved crafting plan')
-      return { id: text(plan.id, 'crafting plan ID'), name: text(plan.name, 'crafting plan name'), draft: draft(plan.draft) }
-    }), plan => plan.id, 'crafting plan ID')
-    const active = text(entry.active, 'active crafting plan', true)
-    crafting = { draft: draft(entry.draft), saved, active: saved.some(plan => plan.id === active) ? active : '' }
-  }
-  let preferences: GameState['preferences']
-  if (state.preferences !== undefined) {
-    const entry = record(state.preferences, 'preferences')
-    const overlays = record(entry.overlays, 'coverage overlays')
-    preferences = { manualLock: bool(entry.manualLock, 'manual lock preference'), overlays: {
-      combined: bool(overlays.combined, 'combined overlay'), water: bool(overlays.water, 'water overlay'),
-      guard: bool(overlays.guard, 'protection overlay'), equipment: bool(overlays.equipment, 'equipment overlay'),
-      coords: bool(overlays.coords, 'coordinate overlay'),
-    } }
-  }
-  return {
-    workspace: { current: plan(farm.current), saved, active: saved.find(entry => entry.id === farm.active)?.id ?? null },
-    materials: entries(state.materials, 'materials inventory', integer), bom: settings(state.bom),
-    ...(configurations && { configurations }), ...(crafting && { crafting }), ...(preferences && { preferences }),
-  }
-}
-
-export async function exportBackup(db: IDBDatabase, activeGame: string) {
+export async function exportBackup(db: WorkspaceDatabase, activeGame: string) {
+  if (db instanceof Map) return JSON.stringify({
+    format, version: 1, activeGame, states: await dbGetAll(db, 'states'), games: await dbGetAll(db, 'games'),
+  }, null, 2)
   return new Promise<string>((resolve, reject) => {
     const tx = db.transaction(stores, 'readonly')
     const states = tx.objectStore('states').getAll()
@@ -118,9 +26,14 @@ export async function exportBackup(db: IDBDatabase, activeGame: string) {
 }
 
 export function parseBackup(source: string, bundled: ReadonlyMap<string, GamePackage>) {
+  if (source.length > backupSizeLimit || new Blob([source]).size > backupSizeLimit) throw new Error('Workspace backup exceeds 32 MiB.')
   const backup = record(JSON.parse(source), 'workspace backup')
   if (backup.format !== format || backup.version !== 1) throw new Error('Choose a supported Farm Planner backup file.')
-  const games = unique(list(backup.games, 'custom games').map(validatePackage), pack => pack.game.id, 'game ID')
+  const games = unique(list(backup.games, 'custom games').map(value => {
+    const pack = record(value, 'custom game')
+    for (const field of ['items', 'equipment', 'recipes', 'presets']) list(pack[field], 'game ' + field)
+    return validatePackage(value)
+  }), pack => pack.game.id, 'game ID')
   const definitions = new Map(bundled)
   for (const pack of games) definitions.set(pack.game.id, pack)
   const activeGame = text(backup.activeGame, 'selected game ID')

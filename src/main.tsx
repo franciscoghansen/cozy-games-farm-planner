@@ -16,15 +16,16 @@ import { Controls, legend, Statistics } from './Panels.tsx'
 import type { Comparison, EditorTool } from './Panels.tsx'
 import { preset } from './presets.ts'
 import type { PresetId } from './presets.ts'
-import { deserialize, download, serialize, validatePlan } from './storage.ts'
-import { bootstrap, dbGet, dbWrite, emptyState } from './workspace-db.ts'
+import { deserialize, download, serialize } from './storage.ts'
+import { bootstrap, dbGet, dbWrite, loadGameState } from './workspace-db.ts'
 import type { GameState } from './workspace-db.ts'
 import { Materials } from './Materials.tsx'
 import { GameData } from './GameData.tsx'
 import type { FarmBom } from './farm-bom.ts'
 import { CraftingPlanner } from './CraftingPlanner.tsx'
 import { emptyCrafting } from './crafting-plans.ts'
-import { exportBackup, parseBackup, restoreBackup } from './backup.ts'
+import { backupSizeLimit, exportBackup, parseBackup, restoreBackup } from './backup.ts'
+import { validateState } from './workspace-state.ts'
 import './styles.css'
 
 const overlayButtons = [
@@ -37,9 +38,10 @@ const overlayButtons = [
 const defaultOverlays: Overlays = { combined: true, water: false, guard: false, equipment: false, coords: false }
 type Started = Awaited<ReturnType<typeof bootstrap>>
 
-function App({ session, switchGame, replaceGame, switching }: {
+function App({ session, switchGame, replaceGame, switching, removeInvalid, reloadRequired }: {
   session: Started; switchGame: (id: string) => Promise<void>; switching: boolean
   replaceGame: (pack: GamePackage, reset?: boolean) => Promise<void>
+  removeInvalid: () => Promise<void>; reloadRequired: boolean
 }) {
   const { gameId, state, db } = session
   const adapter = gameFor(gameId)
@@ -76,6 +78,7 @@ function App({ session, switchGame, replaceGame, switching }: {
   const imported = useRef<HTMLInputElement>(null)
   const backupInput = useRef<HTMLInputElement>(null)
   const [backupStatus, setBackupStatus] = useState('')
+  const [saveFailed, setSaveFailed] = useState(false)
   const [dialog, setDialog] = useState(false)
   const modal = useRef<HTMLDialogElement>(null)
   const [name, setName] = useState(plan.name)
@@ -90,11 +93,12 @@ function App({ session, switchGame, replaceGame, switching }: {
   const dirty = savedPlan && plan !== savedPlan && JSON.stringify(plan) !== JSON.stringify(savedPlan)
 
   useEffect(() => {
+    if (reloadRequired) return
     const workspace = { current: plan, active, saved }
     void dbWrite(db, 'states', gameId, { workspace, materials, bom, configurations, crafting: craftingWorkspace,
       preferences: { overlays, manualLock } })
-      .catch(() => setNotice('IndexedDB could not save your changes. Export JSON to keep a copy.'))
-  }, [db, gameId, plan, active, saved, materials, bom, configurations, craftingWorkspace, overlays, manualLock])
+      .catch(() => setSaveFailed(true))
+  }, [db, gameId, plan, active, saved, materials, bom, configurations, craftingWorkspace, overlays, manualLock, reloadRequired])
   useEffect(() => {
     if (view === 'crafting') history.replaceState(history.state, '', '#crafting')
     else if (location.hash === '#crafting') history.replaceState(history.state, '', location.pathname + location.search)
@@ -278,7 +282,13 @@ function App({ session, switchGame, replaceGame, switching }: {
 
   async function downloadWorkspace() {
     try {
-      const data = await exportBackup(db, gameId)
+      const data = saveFailed || reloadRequired
+        ? await exportBackup(new Map<'states' | 'games', Map<string, unknown>>([
+          ['states', new Map([[gameId, { workspace: { current: plan, active, saved }, materials, bom, configurations,
+            crafting: craftingWorkspace, preferences: { overlays, manualLock } }]])],
+          ['games', new Map([...session.games].filter(([id, entry]) => session.bundled.get(id) !== entry))],
+        ]), gameId)
+        : await exportBackup(db, gameId)
       download(new Blob([data], { type: 'application/json' }), 'farm-planner-backup.json')
       setBackupStatus('Workspace backup downloaded.')
     } catch {
@@ -288,8 +298,10 @@ function App({ session, switchGame, replaceGame, switching }: {
 
   async function importWorkspace(file: File) {
     try {
+      if (db instanceof Map || reloadRequired) throw new Error('Workspace restore requires browser storage.')
+      if (file.size > backupSizeLimit) throw new Error('Workspace backup exceeds 32 MiB.')
       const backup = parseBackup(await file.text(), session.bundled)
-      if (!window.confirm('Restore this workspace backup? Existing data for games in the backup will be replaced. Other games will be kept.')) return
+      if (!window.confirm('Restore this workspace backup? Existing data for games in the backup will be replaced. Local game overrides for restored workspaces are removed if absent from the backup. Other games will be kept.')) return
       await restoreBackup(db, backup)
       location.reload()
     } catch (error) {
@@ -350,6 +362,22 @@ function App({ session, switchGame, replaceGame, switching }: {
         }} />
       </div>
     </header>
+    {(db instanceof Map || saveFailed || reloadRequired) && <p className="feature-warning" role="alert">
+      Changes won't be saved in this browser. Export JSON or a workspace backup to keep them.
+      {reloadRequired && <> The database changed in another tab. <button onClick={() => location.reload()}>Reload</button></>}
+    </p>}
+    {session.invalidOverrides.length > 0 && <p className="feature-warning" role="alert">
+      Some custom game overrides could not be loaded. <button onClick={() => {
+        void removeInvalid().catch(() => setBackupStatus('Could not remove the invalid game overrides.'))
+      }}>Remove invalid overrides</button>
+    </p>}
+    {session.repaired && <p className="feature-notice" role="status">Stored workspace data was repaired for this game.</p>}
+    {session.recovery !== undefined && <p className="feature-warning" role="alert">
+      This workspace could not be repaired. A default layout is open. <button onClick={() => download(
+        new Blob([JSON.stringify(session.recovery, (_, value) => typeof value === 'bigint' ? String(value) : value, 2)],
+          { type: 'application/json' }), gameId + '-recovery.json',
+      )}>Export original workspace</button>
+    </p>}
     {backupStatus && <p className="feature-notice" role="status">{backupStatus}</p>}
     {view === 'materials' && <Materials game={adapter} plan={plan} inventory={stock} settings={bom} saved={saved}
       previous={previous} onSettings={patch => { setBom(value => ({ ...value, ...patch })); setCrafting(undefined) }}
@@ -446,13 +474,37 @@ function App({ session, switchGame, replaceGame, switching }: {
 function Session({ initial }: { initial: Started }) {
   const [session, setSession] = useState(initial)
   const [switching, setSwitching] = useState(false)
+  const [reloadRequired, setReloadRequired] = useState(false)
+  const [otherTab, setOtherTab] = useState(false)
+  useEffect(() => {
+    if (session.db instanceof Map || typeof BroadcastChannel === 'undefined') return
+    let channel: BroadcastChannel
+    try { channel = new BroadcastChannel('farm-planner-tabs') } catch { return }
+    channel.onmessage = ({ data }) => {
+      if (data === 'hello' || data === 'present') setOtherTab(true)
+      if (data === 'hello') channel.postMessage('present')
+    }
+    channel.postMessage('hello')
+    return () => channel.close()
+  }, [session.db])
+  useEffect(() => {
+    const db = session.db
+    if (db instanceof Map) return
+    db.onversionchange = () => { db.close(); setReloadRequired(true) }
+    return () => { db.onversionchange = null }
+  }, [session.db])
+  async function removeInvalid() {
+    await Promise.all(session.invalidOverrides.map(key => dbWrite(session.db, 'games', key, undefined)))
+    setSession(value => ({ ...value, invalidOverrides: [] }))
+  }
   async function switchGame(id: string) {
     if (switching || id === session.gameId) return
     setSwitching(true)
     try {
-      const state = await dbGet<GameState>(session.db, 'states', id) ?? emptyState(id)
+      if (reloadRequired) throw new Error('Reload the planner before switching games.')
+      const loaded = await loadGameState(session.db, id)
       await dbWrite(session.db, 'settings', 'selected', id)
-      setSession(previous => ({ ...previous, gameId: id, state }))
+      setSession(previous => ({ ...previous, gameId: id, ...loaded }))
     } finally { setSwitching(false) }
   }
   async function replaceGame(pack: GamePackage, reset = false) {
@@ -461,11 +513,7 @@ function Session({ initial }: { initial: Started }) {
     registerGame(adaptGame(pack))
     try {
       const state = await dbGet<GameState>(session.db, 'states', id)
-      if (state) {
-        const plans = [state.workspace.current, ...state.workspace.saved.map(entry => entry.plan), state.bom.snapshot,
-          ...(state.configurations ?? []).map(entry => entry.settings.snapshot)]
-        for (const plan of plans) if (plan) validatePlan(plan, id)
-      }
+      if (state) validateState(state, gameFor(id))
       await dbWrite(session.db, 'games', id, reset ? undefined : pack)
     } catch (error) {
       if (previous) registerGame(adaptGame(previous))
@@ -473,7 +521,14 @@ function Session({ initial }: { initial: Started }) {
     }
     setSession(value => ({ ...value, games: new Map(value.games).set(id, pack) }))
   }
-  return <App key={session.gameId} session={session} switchGame={switchGame} switching={switching} replaceGame={replaceGame} />
+  return <>
+    {otherTab && <p className="feature-warning" role="alert">
+      The planner is open in another tab. Changes here may overwrite it.
+      <button className="back-link" onClick={() => setOtherTab(false)}>Dismiss</button>
+    </p>}
+    <App key={session.gameId} session={session} switchGame={switchGame} switching={switching} replaceGame={replaceGame}
+    removeInvalid={removeInvalid} reloadRequired={reloadRequired} />
+  </>
 }
 
 const root = createRoot(document.getElementById('root')!)
