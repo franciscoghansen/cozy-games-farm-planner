@@ -1,0 +1,211 @@
+{
+  "game": {
+    "schemaVersion": 1,
+    "contentVersion": "1",
+    "id": "meadow-test",
+    "name": "Meadow Test",
+    "requiredCoverage": [
+      "water",
+      "guard"
+    ],
+    "progressions": [],
+    "acquisitionMethods": {
+      "digging": "Digging",
+      "crafting": "Crafting",
+      "gathering": "Gathering"
+    },
+    "stations": [
+      {
+        "id": "kiln",
+        "name": "Kiln"
+      }
+    ]
+  },
+  "items": [
+    {
+      "id": "orb",
+      "name": "Water Orb",
+      "category": "equipment",
+      "acquisition": [
+        "crafting"
+      ]
+    },
+    {
+      "id": "tower",
+      "name": "Guard Tower",
+      "category": "equipment",
+      "acquisition": [
+        "crafting"
+      ]
+    },
+    {
+      "id": "deluxe",
+      "name": "Deluxe Orb",
+      "category": "equipment",
+      "acquisition": [
+        "crafting"
+      ]
+    },
+    {
+      "id": "unknown",
+      "name": "Unknown Beacon",
+      "category": "equipment",
+      "acquisition": []
+    },
+    {
+      "id": "ore",
+      "name": "Ore",
+      "category": "raw_resource",
+      "acquisition": [
+        "digging"
+      ]
+    },
+    {
+      "id": "wood",
+      "name": "Wood",
+      "category": "raw_resource",
+      "acquisition": [
+        "gathering"
+      ]
+    },
+    {
+      "id": "bar",
+      "name": "Bar",
+      "category": "refined_material",
+      "acquisition": [
+        "crafting"
+      ]
+    },
+    {
+      "id": "widget",
+      "name": "Widget",
+      "category": "crafted_component",
+      "acquisition": [
+        "crafting"
+      ]
+    },
+    {
+      "id": "slag",
+      "name": "Slag",
+      "category": "miscellaneous",
+      "acquisition": [
+        "gathering"
+      ]
+    }
+  ],
+  "equipment": [
+    {
+      "itemId": "orb",
+      "kind": "water",
+      "radius": 1,
+      "shape": "circle"
+    },
+    {
+      "itemId": "tower",
+      "kind": "guard",
+      "radius": 1,
+      "shape": "square"
+    },
+    {
+      "itemId": "deluxe",
+      "kind": "water",
+      "radius": 1,
+      "shape": "circle"
+    }
+  ],
+  "presets": [],
+  "recipes": [
+    {
+      "id": "make_orb",
+      "output": {
+        "itemId": "orb",
+        "quantity": 1
+      },
+      "ingredients": [
+        {
+          "itemId": "bar",
+          "quantity": 2
+        },
+        {
+          "itemId": "widget",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "make_tower",
+      "output": {
+        "itemId": "tower",
+        "quantity": 1
+      },
+      "ingredients": [
+        {
+          "itemId": "bar",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "make_deluxe",
+      "output": {
+        "itemId": "deluxe",
+        "quantity": 1
+      },
+      "ingredients": [
+        {
+          "itemId": "ore",
+          "quantity": 99
+        }
+      ]
+    },
+    {
+      "id": "smelt",
+      "output": {
+        "itemId": "bar",
+        "quantity": 3
+      },
+      "ingredients": [
+        {
+          "itemId": "ore",
+          "quantity": 3
+        }
+      ],
+      "stationId": "kiln",
+      "byproducts": [
+        {
+          "itemId": "slag",
+          "quantity": 1
+        }
+      ],
+      "alternativeIds": [
+        "whittle"
+      ]
+    },
+    {
+      "id": "whittle",
+      "output": {
+        "itemId": "bar",
+        "quantity": 3
+      },
+      "ingredients": [
+        {
+          "itemId": "wood",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "build_widget",
+      "output": {
+        "itemId": "widget",
+        "quantity": 1
+      },
+      "ingredients": [
+        {
+          "itemId": "bar",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}

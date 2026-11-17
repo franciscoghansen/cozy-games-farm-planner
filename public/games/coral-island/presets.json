@@ -1,0 +1,338 @@
+[
+  {
+    "id": "minimal",
+    "name": "Minimal Resources",
+    "width": 5,
+    "height": 5,
+    "fill": "empty",
+    "placements": [
+      {
+        "x": 1,
+        "y": 1,
+        "tile": "crop"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "tile": "crop"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "tile": "crop"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "tile": "crop"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "tile": "crop"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "tile": "crop"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "tile": "crop"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "tile": "s1"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "tile": "c1"
+      }
+    ]
+  },
+  {
+    "id": "starter",
+    "name": "Efficient Starter",
+    "width": 5,
+    "height": 5,
+    "placements": [
+      {
+        "x": 1,
+        "y": 1,
+        "tile": "s1"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "tile": "s1"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "tile": "s1"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "tile": "s1"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "tile": "c1"
+      }
+    ]
+  },
+  {
+    "id": "expanded",
+    "name": "Expanded Early Game",
+    "width": 15,
+    "height": 15,
+    "placements": [
+      {
+        "x": 1,
+        "y": 1,
+        "tile": "s1"
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "tile": "s1"
+      },
+      {
+        "x": 7,
+        "y": 1,
+        "tile": "s1"
+      },
+      {
+        "x": 10,
+        "y": 1,
+        "tile": "s1"
+      },
+      {
+        "x": 13,
+        "y": 1,
+        "tile": "s1"
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "tile": "s1"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "tile": "s1"
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "tile": "s1"
+      },
+      {
+        "x": 10,
+        "y": 4,
+        "tile": "s1"
+      },
+      {
+        "x": 13,
+        "y": 4,
+        "tile": "s1"
+      },
+      {
+        "x": 1,
+        "y": 7,
+        "tile": "s1"
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "tile": "s1"
+      },
+      {
+        "x": 10,
+        "y": 7,
+        "tile": "s1"
+      },
+      {
+        "x": 13,
+        "y": 7,
+        "tile": "s1"
+      },
+      {
+        "x": 1,
+        "y": 10,
+        "tile": "s1"
+      },
+      {
+        "x": 4,
+        "y": 10,
+        "tile": "s1"
+      },
+      {
+        "x": 7,
+        "y": 10,
+        "tile": "s1"
+      },
+      {
+        "x": 10,
+        "y": 10,
+        "tile": "s1"
+      },
+      {
+        "x": 13,
+        "y": 10,
+        "tile": "s1"
+      },
+      {
+        "x": 1,
+        "y": 13,
+        "tile": "s1"
+      },
+      {
+        "x": 4,
+        "y": 13,
+        "tile": "s1"
+      },
+      {
+        "x": 7,
+        "y": 13,
+        "tile": "s1"
+      },
+      {
+        "x": 10,
+        "y": 13,
+        "tile": "s1"
+      },
+      {
+        "x": 13,
+        "y": 13,
+        "tile": "s1"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "tile": "c1"
+      },
+      {
+        "x": 7,
+        "y": 2,
+        "tile": "c1"
+      },
+      {
+        "x": 12,
+        "y": 2,
+        "tile": "c1"
+      },
+      {
+        "x": 2,
+        "y": 7,
+        "tile": "c1"
+      },
+      {
+        "x": 7,
+        "y": 7,
+        "tile": "c1"
+      },
+      {
+        "x": 12,
+        "y": 7,
+        "tile": "c1"
+      },
+      {
+        "x": 2,
+        "y": 12,
+        "tile": "c1"
+      },
+      {
+        "x": 7,
+        "y": 12,
+        "tile": "c1"
+      },
+      {
+        "x": 12,
+        "y": 12,
+        "tile": "c1"
+      }
+    ]
+  },
+  {
+    "id": "mid",
+    "name": "Mid Game",
+    "width": 11,
+    "height": 11,
+    "progression": "mid",
+    "placements": [
+      {
+        "x": 2,
+        "y": 2,
+        "tile": "s2"
+      },
+      {
+        "x": 8,
+        "y": 2,
+        "tile": "s2"
+      },
+      {
+        "x": 2,
+        "y": 8,
+        "tile": "s2"
+      },
+      {
+        "x": 8,
+        "y": 8,
+        "tile": "s2"
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "tile": "c2"
+      }
+    ]
+  },
+  {
+    "id": "late",
+    "name": "Late Game",
+    "width": 19,
+    "height": 19,
+    "progression": "late",
+    "placements": [
+      {
+        "x": 4,
+        "y": 4,
+        "tile": "s3"
+      },
+      {
+        "x": 14,
+        "y": 4,
+        "tile": "s3"
+      },
+      {
+        "x": 4,
+        "y": 14,
+        "tile": "s3"
+      },
+      {
+        "x": 14,
+        "y": 14,
+        "tile": "s3"
+      },
+      {
+        "x": 9,
+        "y": 9,
+        "tile": "c3"
+      }
+    ]
+  },
+  {
+    "id": "custom",
+    "name": "Custom / Huge Farm",
+    "width": 100,
+    "height": 100,
+    "progression": "late",
+    "placements": []
+  }
+]

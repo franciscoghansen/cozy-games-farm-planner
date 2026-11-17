@@ -1,0 +1,823 @@
+[
+  {
+    "id": "craft_s1",
+    "output": {
+      "itemId": "s1",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      },
+      {
+        "itemId": "bronze_kelp",
+        "quantity": 5
+      },
+      {
+        "itemId": "silver_kelp",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Farming level 2",
+    "source": "https://coralisland.wiki/wiki/Crafting"
+  },
+  {
+    "id": "craft_s2",
+    "output": {
+      "itemId": "s2",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      },
+      {
+        "itemId": "silver_kelp",
+        "quantity": 7
+      },
+      {
+        "itemId": "gold_kelp",
+        "quantity": 7
+      }
+    ],
+    "unlock": "Farming level 6",
+    "source": "https://coralisland.wiki/wiki/Crafting"
+  },
+  {
+    "id": "craft_s3",
+    "output": {
+      "itemId": "s3",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      },
+      {
+        "itemId": "gold_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "osmium_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "battery",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Farming level 9",
+    "source": "https://coralisland.wiki/wiki/Crafting"
+  },
+  {
+    "id": "recycle_trash",
+    "output": {
+      "itemId": "scrap",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "trash",
+        "quantity": 2
+      }
+    ],
+    "stationId": "recycler",
+    "alternativeIds": [
+      "recycle_flyer"
+    ],
+    "source": "https://www.coralisland.wiki/wiki/Resource_Equipment"
+  },
+  {
+    "id": "recycle_flyer",
+    "output": {
+      "itemId": "scrap",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "flyer",
+        "quantity": 2
+      }
+    ],
+    "stationId": "recycler",
+    "alternativeIds": [
+      "recycle_trash"
+    ],
+    "source": "https://www.coralisland.wiki/wiki/Resource_Equipment"
+  },
+  {
+    "id": "craft_c1",
+    "output": {
+      "itemId": "c1",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 15
+      },
+      {
+        "itemId": "trash",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Reach Farming level 1",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_c2",
+    "output": {
+      "itemId": "c2",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "fiber",
+        "quantity": 20
+      },
+      {
+        "itemId": "sap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Reach Farming level 4 or read the Library book at Town Rank D",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_c3",
+    "output": {
+      "itemId": "c3",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hardwood",
+        "quantity": 10
+      },
+      {
+        "itemId": "battery",
+        "quantity": 2
+      },
+      {
+        "itemId": "resin",
+        "quantity": 1
+      },
+      {
+        "itemId": "osmium_bar",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Develop at Ling’s Laboratory at Town Rank C",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_alien_scarecrow",
+    "output": {
+      "itemId": "alien_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "slime_goop",
+        "quantity": 5
+      },
+      {
+        "itemId": "resin",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Buy at the Empty Cabin after harvesting a meteor or satellite",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_chef_scarecrow",
+    "output": {
+      "itemId": "chef_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "cotton",
+        "quantity": 1
+      },
+      {
+        "itemId": "maple_syrup",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Buy at the Empty Cabin after earning Chef de Cuisine",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_chieftain_scarecrow",
+    "output": {
+      "itemId": "chieftain_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hardwood",
+        "quantity": 5
+      },
+      {
+        "itemId": "gold_ore",
+        "quantity": 2
+      },
+      {
+        "itemId": "any_flower",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Buy at the Empty Cabin after completing Petrified Giant IV",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_coral_hero_scarecrow",
+    "output": {
+      "itemId": "coral_hero_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "hay",
+        "quantity": 10
+      },
+      {
+        "itemId": "osmium_ore",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_fish_kite_scarecrow",
+    "output": {
+      "itemId": "fish_kite_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "rope",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_fish",
+        "quantity": 3
+      }
+    ],
+    "unlock": "Buy at the Empty Cabin after earning Marine Observer",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_gingerbread_scarecrow",
+    "output": {
+      "itemId": "gingerbread_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wheat_flour",
+        "quantity": 3
+      },
+      {
+        "itemId": "ginger",
+        "quantity": 1
+      },
+      {
+        "itemId": "sugar",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_egg",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_humpty_scarecrow",
+    "output": {
+      "itemId": "humpty_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "large_egg",
+        "quantity": 1
+      },
+      {
+        "itemId": "resin",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_jolly_stalk_scarecrow",
+    "output": {
+      "itemId": "jolly_stalk_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "large_wool",
+        "quantity": 1
+      },
+      {
+        "itemId": "tea_berry",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_kunti_ghost_scarecrow",
+    "output": {
+      "itemId": "kunti_ghost_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "dark_essence",
+        "quantity": 2
+      },
+      {
+        "itemId": "cotton_cloth",
+        "quantity": 1
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Buy at the Spooky Day Festival shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_mermaid_scarecrow",
+    "output": {
+      "itemId": "mermaid_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "seaweed",
+        "quantity": 20
+      },
+      {
+        "itemId": "water_essence",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Buy at the Empty Cabin after unlocking the merfolk blessing specials",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_monster_scarecrow",
+    "output": {
+      "itemId": "monster_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "monster_essence",
+        "quantity": 2
+      },
+      {
+        "itemId": "wool_cloth",
+        "quantity": 1
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Buy at the Empty Cabin after earning Untouchable",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_mummy_scarecrow",
+    "output": {
+      "itemId": "mummy_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "hay",
+        "quantity": 10
+      },
+      {
+        "itemId": "silky_fur",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Buy at the Empty Cabin after attending the Spooky Day Festival",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_ocean_explorer_scarecrow",
+    "output": {
+      "itemId": "ocean_explorer_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "fiber",
+        "quantity": 20
+      },
+      {
+        "itemId": "sap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Ocean Explorer DLC",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_ocean_guardian_scarecrow",
+    "output": {
+      "itemId": "ocean_guardian_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "trash",
+        "quantity": 30
+      },
+      {
+        "itemId": "stone",
+        "quantity": 20
+      },
+      {
+        "itemId": "sap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Ocean Guardian DLC",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_ondel_ondel_handsome_scarecrow",
+    "output": {
+      "itemId": "ondel_ondel_handsome_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "wood",
+        "quantity": 5
+      },
+      {
+        "itemId": "cotton_cloth",
+        "quantity": 1
+      },
+      {
+        "itemId": "larkspur",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_ondel_ondel_pretty_scarecrow",
+    "output": {
+      "itemId": "ondel_ondel_pretty_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "wood",
+        "quantity": 5
+      },
+      {
+        "itemId": "cotton_cloth",
+        "quantity": 1
+      },
+      {
+        "itemId": "jepun",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List",
+    "name": "Scarecrow list (1 Cotton Cloth)",
+    "alternativeIds": [
+      "craft_pretty_crafting_table"
+    ]
+  },
+  {
+    "id": "craft_pretty_crafting_table",
+    "output": {
+      "itemId": "ondel_ondel_pretty_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "wood",
+        "quantity": 5
+      },
+      {
+        "itemId": "cotton_cloth",
+        "quantity": 10
+      },
+      {
+        "itemId": "jepun",
+        "quantity": 1
+      }
+    ],
+    "name": "Crafting table (10 Cotton Cloth)",
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Crafting#Farming",
+    "alternativeIds": [
+      "craft_ondel_ondel_pretty_scarecrow"
+    ]
+  },
+  {
+    "id": "craft_pino_scarecrow",
+    "output": {
+      "itemId": "pino_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "hardwood",
+        "quantity": 1
+      },
+      {
+        "itemId": "cricket",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_poci_ghost_scarecrow",
+    "output": {
+      "itemId": "poci_ghost_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bone",
+        "quantity": 2
+      },
+      {
+        "itemId": "cotton_cloth",
+        "quantity": 1
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Buy at the Spooky Day Festival shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_prankenstein_scarecrow",
+    "output": {
+      "itemId": "prankenstein_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "tough_meat",
+        "quantity": 5
+      },
+      {
+        "itemId": "silver_ore",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_scrap_scarecrow",
+    "output": {
+      "itemId": "scrap_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 40
+      },
+      {
+        "itemId": "sap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Buy one at the Beach Cleanup Day booth",
+    "source": "https://coralisland.fandom.com/wiki/Scrap_scarecrow"
+  },
+  {
+    "id": "craft_undead_scarecrow",
+    "output": {
+      "itemId": "undead_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "hay",
+        "quantity": 10
+      },
+      {
+        "itemId": "cursed_fragment",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "craft_walnutcracker_scarecrow",
+    "output": {
+      "itemId": "walnutcracker_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hardwood",
+        "quantity": 5
+      },
+      {
+        "itemId": "hay",
+        "quantity": 10
+      },
+      {
+        "itemId": "silver_ore",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Redeem Merit Points at the Community Center shop",
+    "source": "https://coralisland.fandom.com/wiki/Scarecrow#List"
+  },
+  {
+    "id": "smelt_osmium_bar",
+    "output": {
+      "itemId": "osmium_bar",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "osmium_ore",
+        "quantity": 5
+      },
+      {
+        "itemId": "coal",
+        "quantity": 1
+      }
+    ],
+    "stationId": "furnace",
+    "source": "https://coralisland.fandom.com/wiki/Osmium_bar"
+  },
+  {
+    "id": "weave_cotton_cloth",
+    "output": {
+      "itemId": "cotton_cloth",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "cotton",
+        "quantity": 1
+      }
+    ],
+    "stationId": "loom",
+    "source": "https://coralisland.fandom.com/wiki/Loom#Products"
+  },
+  {
+    "id": "weave_wool_cloth",
+    "output": {
+      "itemId": "wool_cloth",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wool",
+        "quantity": 1
+      }
+    ],
+    "stationId": "loom",
+    "source": "https://coralisland.fandom.com/wiki/Wool_cloth"
+  },
+  {
+    "id": "mill_wheat",
+    "output": {
+      "itemId": "wheat_flour",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wheat",
+        "quantity": 1
+      }
+    ],
+    "stationId": "mill",
+    "source": "https://coralisland.fandom.com/wiki/Mill#Products"
+  },
+  {
+    "id": "mill_sugarcane",
+    "output": {
+      "itemId": "sugar",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "sugarcane",
+        "quantity": 1
+      }
+    ],
+    "stationId": "mill",
+    "source": "https://coralisland.fandom.com/wiki/Mill#Products"
+  },
+  {
+    "id": "craft_rope",
+    "output": {
+      "itemId": "rope",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 199
+      }
+    ],
+    "unlock": "Reach Mining level 2",
+    "source": "https://coralisland.fandom.com/wiki/Rope"
+  }
+]

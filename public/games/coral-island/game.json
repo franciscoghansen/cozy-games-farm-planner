@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "1.1.0",
+  "id": "coral-island",
+  "name": "Coral Island",
+  "defaultPreset": "expanded",
+  "requiredCoverage": [
+    "water",
+    "guard"
+  ],
+  "progressions": [
+    {
+      "id": "early",
+      "name": "Early game",
+      "equipment": [
+        "s1",
+        "c1"
+      ]
+    },
+    {
+      "id": "mid",
+      "name": "Mid game",
+      "equipment": [
+        "s1",
+        "s2",
+        "c1",
+        "c2"
+      ]
+    },
+    {
+      "id": "late",
+      "name": "Late game",
+      "equipment": [
+        "s1",
+        "s2",
+        "s3",
+        "c1",
+        "c2",
+        "c3"
+      ]
+    }
+  ],
+  "defaultInventory": {
+    "s1": 24,
+    "s2": 4,
+    "s3": 4,
+    "c1": 9,
+    "c2": 1,
+    "c3": 1
+  },
+  "acquisitionMethods": {
+    "crafting": "Crafting",
+    "diving": "Diving",
+    "foraging": "Foraging",
+    "fishing": "Fishing",
+    "recycling": "Recycling",
+    "purchasing": "Purchasing",
+    "solar_power": "Solar power",
+    "woodcutting": "Woodcutting",
+    "mining": "Mining",
+    "tapping": "Tree tapping",
+    "combat": "Combat",
+    "farming": "Farming",
+    "ranching": "Ranching",
+    "catching": "Bug catching"
+  },
+  "stations": [
+    {
+      "id": "recycler",
+      "name": "Recycling Machine"
+    },
+    {
+      "id": "furnace",
+      "name": "Furnace"
+    },
+    {
+      "id": "loom",
+      "name": "Loom"
+    },
+    {
+      "id": "mill",
+      "name": "Mill"
+    }
+  ]
+}

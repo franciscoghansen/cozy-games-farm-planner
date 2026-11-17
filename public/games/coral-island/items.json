@@ -1,0 +1,759 @@
+[
+  {
+    "id": "s1",
+    "name": "Sprinkler I",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true,
+    "purchasable": false
+  },
+  {
+    "id": "s2",
+    "name": "Sprinkler II",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true,
+    "purchasable": false
+  },
+  {
+    "id": "s3",
+    "name": "Sprinkler III",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true,
+    "purchasable": false
+  },
+  {
+    "id": "c1",
+    "name": "Makeshift Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true,
+    "purchasable": false,
+    "unlock": "Reach Farming level 1"
+  },
+  {
+    "id": "c2",
+    "name": "Ordinary Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true,
+    "purchasable": false,
+    "unlock": "Reach Farming level 4 or read the Library book at Town Rank D"
+  },
+  {
+    "id": "c3",
+    "name": "Ultimate Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Develop at Ling’s Laboratory at Town Rank C"
+  },
+  {
+    "id": "scrap",
+    "name": "Scrap",
+    "category": "refined_material",
+    "acquisition": [
+      "recycling",
+      "foraging",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true
+  },
+  {
+    "id": "trash",
+    "name": "Trash",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving",
+      "foraging",
+      "fishing"
+    ],
+    "craftable": false,
+    "purchasable": false
+  },
+  {
+    "id": "flyer",
+    "name": "Flyer",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ],
+    "craftable": false,
+    "purchasable": false
+  },
+  {
+    "id": "bronze_kelp",
+    "name": "Bronze Kelp",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving"
+    ],
+    "craftable": false,
+    "purchasable": false
+  },
+  {
+    "id": "silver_kelp",
+    "name": "Silver Kelp",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving"
+    ],
+    "craftable": false,
+    "purchasable": false
+  },
+  {
+    "id": "gold_kelp",
+    "name": "Gold Kelp",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving"
+    ],
+    "craftable": false,
+    "purchasable": false
+  },
+  {
+    "id": "osmium_kelp",
+    "name": "Osmium Kelp",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving"
+    ],
+    "craftable": false,
+    "purchasable": false
+  },
+  {
+    "id": "battery",
+    "name": "Battery",
+    "category": "crafted_component",
+    "acquisition": [
+      "solar_power",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true
+  },
+  {
+    "id": "alien_scarecrow",
+    "name": "Alien Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Empty Cabin after harvesting a meteor or satellite"
+  },
+  {
+    "id": "chef_scarecrow",
+    "name": "Chef Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Empty Cabin after earning Chef de Cuisine"
+  },
+  {
+    "id": "chieftain_scarecrow",
+    "name": "Chieftain Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Empty Cabin after completing Petrified Giant IV"
+  },
+  {
+    "id": "coral_hero_scarecrow",
+    "name": "Coral Hero Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "fish_kite_scarecrow",
+    "name": "Fish Kite Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Empty Cabin after earning Marine Observer"
+  },
+  {
+    "id": "gingerbread_scarecrow",
+    "name": "Gingerbread Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "humpty_scarecrow",
+    "name": "Humpty Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "jolly_stalk_scarecrow",
+    "name": "Jolly Stalk Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "kunti_ghost_scarecrow",
+    "name": "Kunti Ghost Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Spooky Day Festival shop"
+  },
+  {
+    "id": "mermaid_scarecrow",
+    "name": "Mermaid Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Empty Cabin after unlocking the merfolk blessing specials"
+  },
+  {
+    "id": "monster_scarecrow",
+    "name": "Monster Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Empty Cabin after earning Untouchable"
+  },
+  {
+    "id": "mummy_scarecrow",
+    "name": "Mummy Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Empty Cabin after attending the Spooky Day Festival"
+  },
+  {
+    "id": "ocean_explorer_scarecrow",
+    "name": "Ocean Explorer Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true,
+    "purchasable": false,
+    "unlock": "Ocean Explorer DLC"
+  },
+  {
+    "id": "ocean_guardian_scarecrow",
+    "name": "Ocean Guardian Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true,
+    "purchasable": false,
+    "unlock": "Ocean Guardian DLC"
+  },
+  {
+    "id": "ondel_ondel_handsome_scarecrow",
+    "name": "Ondel-Ondel Handsome Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "ondel_ondel_pretty_scarecrow",
+    "name": "Ondel-Ondel Pretty Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "pino_scarecrow",
+    "name": "Pino Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "poci_ghost_scarecrow",
+    "name": "Poci Ghost Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy at the Spooky Day Festival shop"
+  },
+  {
+    "id": "prankenstein_scarecrow",
+    "name": "Prankenstein Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "scrap_scarecrow",
+    "name": "Scrap Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Buy one at the Beach Cleanup Day booth"
+  },
+  {
+    "id": "undead_scarecrow",
+    "name": "Undead Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "walnutcracker_scarecrow",
+    "name": "Walnutcracker Scarecrow",
+    "category": "equipment",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true,
+    "unlock": "Redeem Merit Points at the Community Center shop"
+  },
+  {
+    "id": "wood",
+    "name": "Wood",
+    "category": "raw_resource",
+    "acquisition": [
+      "woodcutting"
+    ]
+  },
+  {
+    "id": "hardwood",
+    "name": "Hardwood",
+    "category": "raw_resource",
+    "acquisition": [
+      "woodcutting"
+    ]
+  },
+  {
+    "id": "fiber",
+    "name": "Fiber",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ]
+  },
+  {
+    "id": "sap",
+    "name": "Sap",
+    "category": "raw_resource",
+    "acquisition": [
+      "woodcutting"
+    ]
+  },
+  {
+    "id": "resin",
+    "name": "Resin",
+    "category": "raw_resource",
+    "acquisition": [
+      "tapping"
+    ]
+  },
+  {
+    "id": "slime_goop",
+    "name": "Slime Goop",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "cotton",
+    "name": "Cotton",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "maple_syrup",
+    "name": "Maple Syrup",
+    "category": "raw_resource",
+    "acquisition": [
+      "tapping"
+    ]
+  },
+  {
+    "id": "gold_ore",
+    "name": "Gold Ore",
+    "category": "raw_resource",
+    "acquisition": [
+      "mining"
+    ]
+  },
+  {
+    "id": "silver_ore",
+    "name": "Silver Ore",
+    "category": "raw_resource",
+    "acquisition": [
+      "mining"
+    ]
+  },
+  {
+    "id": "osmium_ore",
+    "name": "Osmium Ore",
+    "category": "raw_resource",
+    "acquisition": [
+      "mining"
+    ]
+  },
+  {
+    "id": "stone",
+    "name": "Stone",
+    "category": "raw_resource",
+    "acquisition": [
+      "mining"
+    ]
+  },
+  {
+    "id": "coal",
+    "name": "Coal",
+    "category": "raw_resource",
+    "acquisition": [
+      "mining"
+    ]
+  },
+  {
+    "id": "any_flower",
+    "name": "Any Flower",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming",
+      "foraging"
+    ]
+  },
+  {
+    "id": "hay",
+    "name": "Hay",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming",
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "rope",
+    "name": "Rope",
+    "category": "crafted_component",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "purchasable": true,
+    "unlock": "Reach Mining level 2",
+    "craftable": true
+  },
+  {
+    "id": "any_fish",
+    "name": "Any Fish",
+    "category": "raw_resource",
+    "acquisition": [
+      "fishing"
+    ]
+  },
+  {
+    "id": "ginger",
+    "name": "Ginger",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ]
+  },
+  {
+    "id": "any_egg",
+    "name": "Any Egg",
+    "category": "raw_resource",
+    "acquisition": [
+      "ranching"
+    ]
+  },
+  {
+    "id": "large_egg",
+    "name": "Large Egg",
+    "category": "raw_resource",
+    "acquisition": [
+      "ranching"
+    ]
+  },
+  {
+    "id": "large_wool",
+    "name": "Large Wool",
+    "category": "raw_resource",
+    "acquisition": [
+      "ranching"
+    ]
+  },
+  {
+    "id": "wool",
+    "name": "Wool",
+    "category": "raw_resource",
+    "acquisition": [
+      "ranching"
+    ]
+  },
+  {
+    "id": "tea_berry",
+    "name": "Tea Berry",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ]
+  },
+  {
+    "id": "dark_essence",
+    "name": "Dark Essence",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "seaweed",
+    "name": "Seaweed",
+    "category": "raw_resource",
+    "acquisition": [
+      "diving"
+    ]
+  },
+  {
+    "id": "water_essence",
+    "name": "Water Essence",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "monster_essence",
+    "name": "Monster Essence",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "silky_fur",
+    "name": "Silky Fur",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "larkspur",
+    "name": "Larkspur",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ]
+  },
+  {
+    "id": "jepun",
+    "name": "Jepun",
+    "category": "raw_resource",
+    "acquisition": [
+      "foraging"
+    ]
+  },
+  {
+    "id": "cricket",
+    "name": "Cricket",
+    "category": "raw_resource",
+    "acquisition": [
+      "catching"
+    ]
+  },
+  {
+    "id": "bone",
+    "name": "Bone",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "tough_meat",
+    "name": "Tough Meat",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "cursed_fragment",
+    "name": "Cursed Fragment",
+    "category": "raw_resource",
+    "acquisition": [
+      "combat"
+    ]
+  },
+  {
+    "id": "osmium_bar",
+    "name": "Osmium Bar",
+    "category": "refined_material",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true
+  },
+  {
+    "id": "cotton_cloth",
+    "name": "Cotton Cloth",
+    "category": "refined_material",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wool_cloth",
+    "name": "Wool Cloth",
+    "category": "refined_material",
+    "acquisition": [
+      "crafting"
+    ],
+    "craftable": true
+  },
+  {
+    "id": "wheat_flour",
+    "name": "Wheat Flour",
+    "category": "refined_material",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true
+  },
+  {
+    "id": "wheat",
+    "name": "Wheat",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "sugar",
+    "name": "Sugar",
+    "category": "refined_material",
+    "acquisition": [
+      "crafting",
+      "purchasing"
+    ],
+    "craftable": true,
+    "purchasable": true
+  },
+  {
+    "id": "sugarcane",
+    "name": "Sugarcane",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  }
+]

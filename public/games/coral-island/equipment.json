@@ -1,0 +1,198 @@
+[
+  {
+    "itemId": "s1",
+    "kind": "water",
+    "radius": 1,
+    "shape": "square",
+    "label": "SI"
+  },
+  {
+    "itemId": "s2",
+    "kind": "water",
+    "radius": 2,
+    "shape": "square",
+    "label": "SII"
+  },
+  {
+    "itemId": "s3",
+    "kind": "water",
+    "radius": 4,
+    "shape": "square",
+    "label": "SIII"
+  },
+  {
+    "itemId": "c1",
+    "kind": "guard",
+    "radius": 2,
+    "shape": "square",
+    "label": "CI"
+  },
+  {
+    "itemId": "c2",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "CII"
+  },
+  {
+    "itemId": "c3",
+    "kind": "guard",
+    "radius": 9,
+    "shape": "square",
+    "label": "CIII"
+  },
+  {
+    "itemId": "alien_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "AL"
+  },
+  {
+    "itemId": "chef_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "CH"
+  },
+  {
+    "itemId": "chieftain_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "CF"
+  },
+  {
+    "itemId": "coral_hero_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "CO"
+  },
+  {
+    "itemId": "fish_kite_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "FK"
+  },
+  {
+    "itemId": "gingerbread_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "GB"
+  },
+  {
+    "itemId": "humpty_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "HU"
+  },
+  {
+    "itemId": "jolly_stalk_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "JS"
+  },
+  {
+    "itemId": "kunti_ghost_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "KG"
+  },
+  {
+    "itemId": "mermaid_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "ME"
+  },
+  {
+    "itemId": "monster_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "MO"
+  },
+  {
+    "itemId": "mummy_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "MU"
+  },
+  {
+    "itemId": "ocean_explorer_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "OE"
+  },
+  {
+    "itemId": "ocean_guardian_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "OG"
+  },
+  {
+    "itemId": "ondel_ondel_handsome_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "OH"
+  },
+  {
+    "itemId": "ondel_ondel_pretty_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "OP"
+  },
+  {
+    "itemId": "pino_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "PI"
+  },
+  {
+    "itemId": "poci_ghost_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "PG"
+  },
+  {
+    "itemId": "prankenstein_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "PR"
+  },
+  {
+    "itemId": "scrap_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "SC"
+  },
+  {
+    "itemId": "undead_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "UN"
+  },
+  {
+    "itemId": "walnutcracker_scarecrow",
+    "kind": "guard",
+    "radius": 5,
+    "shape": "square",
+    "label": "WC"
+  }
+]
