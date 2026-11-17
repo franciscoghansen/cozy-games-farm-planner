@@ -2,7 +2,7 @@
 
 A browser-based farm layout editor and crafting calculator built with React, TypeScript, and Vite. Design a farm, calculate crop coverage, optimize equipment placement, or plan the materials for any item in a loaded game catalog. Coral Island is included, and you can import other game packages.
 
-[Support the project on Ko-fi](https://ko-fi.com/Z3C12AU1YN)
+[![Buy me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20Coffee-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/Z3C12AU1YN)
 
 ## Use Online
 

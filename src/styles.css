@@ -318,6 +318,7 @@ summary::-webkit-details-marker { display: none; }
   .github-button span { display: none; }
   .feature-links { order: 1; flex: 1 0 100%; overflow-x: auto; padding: 3px; }
   .feature-links button { white-space: nowrap; }
+  .top-actions .kofi-button { order: 2; }
 }
 @media (pointer: coarse) {
   .farm-surface canvas { touch-action: pan-y pinch-zoom; }
