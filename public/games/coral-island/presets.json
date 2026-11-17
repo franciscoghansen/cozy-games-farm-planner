@@ -290,7 +290,27 @@
         "x": 5,
         "y": 5,
         "tile": "c2"
-      }
+      },
+      {"x": 5, "y": 0, "tile": "path"},
+      {"x": 5, "y": 1, "tile": "path"},
+      {"x": 5, "y": 2, "tile": "path"},
+      {"x": 5, "y": 3, "tile": "path"},
+      {"x": 5, "y": 4, "tile": "path"},
+      {"x": 0, "y": 5, "tile": "path"},
+      {"x": 1, "y": 5, "tile": "path"},
+      {"x": 2, "y": 5, "tile": "path"},
+      {"x": 3, "y": 5, "tile": "path"},
+      {"x": 4, "y": 5, "tile": "path"},
+      {"x": 6, "y": 5, "tile": "path"},
+      {"x": 7, "y": 5, "tile": "path"},
+      {"x": 8, "y": 5, "tile": "path"},
+      {"x": 9, "y": 5, "tile": "path"},
+      {"x": 10, "y": 5, "tile": "path"},
+      {"x": 5, "y": 6, "tile": "path"},
+      {"x": 5, "y": 7, "tile": "path"},
+      {"x": 5, "y": 8, "tile": "path"},
+      {"x": 5, "y": 9, "tile": "path"},
+      {"x": 5, "y": 10, "tile": "path"}
     ]
   },
   {

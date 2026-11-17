@@ -207,3 +207,7 @@ test('upgrade comparison reports relocated equipment separately', () => {
   after.tiles[18] = 's2'
   assert.deepEqual(changes(before, after), { added: 1, removed: 1, moved: 1 })
 })
+
+test('the Mid Game preset puts the unwatered cross outside usable farmland', () => {
+  assert.equal(statistics(preset('mid')).efficiency, 100)
+})
