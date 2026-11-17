@@ -819,5 +819,2871 @@
     ],
     "unlock": "Reach Mining level 2",
     "source": "https://coralisland.fandom.com/wiki/Rope"
+  },
+  {
+    "id": "craft_candied_tree_seed",
+    "output": {
+      "itemId": "candied_tree_seed",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "sap",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_tree_seed",
+        "quantity": 3
+      }
+    ],
+    "unlock": "Foraging level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_ball_of_goop",
+    "output": {
+      "itemId": "ball_of_goop",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "slime_goop",
+        "quantity": 3
+      }
+    ],
+    "unlock": "Combat level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scuba_snack",
+    "output": {
+      "itemId": "scuba_snack",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "seaweed",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Diving level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_flower_bouquet",
+    "output": {
+      "itemId": "flower_bouquet",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "fiber",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_flower",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Foraging level 2",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_solar_core",
+    "output": {
+      "itemId": "solar_core",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "solar_fragment",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Unlock the underwater farm",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_warp_sesajen",
+    "output": {
+      "itemId": "warp_sesajen",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "any_flower",
+        "quantity": 3
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_weather_conch",
+    "output": {
+      "itemId": "weather_conch",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "solar_core",
+        "quantity": 1
+      },
+      {
+        "itemId": "wind_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "water_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_sea_scavengeable",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Complete Song of the Sea",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_lumina_sprinkler_i",
+    "output": {
+      "itemId": "lumina_sprinkler_i",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_bar",
+        "quantity": 2
+      },
+      {
+        "itemId": "silver_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "solar_core",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Research at the Oracle Chamber",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_lumina_sprinkler_ii",
+    "output": {
+      "itemId": "lumina_sprinkler_ii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_bar",
+        "quantity": 2
+      },
+      {
+        "itemId": "gold_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "solar_core",
+        "quantity": 3
+      }
+    ],
+    "unlock": "Research at the Oracle Chamber",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_lumina_sprinkler_iii",
+    "output": {
+      "itemId": "lumina_sprinkler_iii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "gold_bar",
+        "quantity": 2
+      },
+      {
+        "itemId": "osmium_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "solar_core",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Research at the Oracle Chamber",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_fertilizer_i",
+    "output": {
+      "itemId": "fertilizer_i",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "compost",
+        "quantity": 2
+      },
+      {
+        "itemId": "sap",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Farming level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_fertilizer_ii",
+    "output": {
+      "itemId": "fertilizer_ii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "compost",
+        "quantity": 2
+      },
+      {
+        "itemId": "sap",
+        "quantity": 1
+      },
+      {
+        "itemId": "silver_kelp",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Farming level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_fertilizer_iii",
+    "output": {
+      "itemId": "fertilizer_iii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "compost",
+        "quantity": 3
+      },
+      {
+        "itemId": "sap",
+        "quantity": 1
+      },
+      {
+        "itemId": "osmium_kelp",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Farming level 8",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_flash_i",
+    "output": {
+      "itemId": "flash_i",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "compost",
+        "quantity": 2
+      },
+      {
+        "itemId": "any_sea_scavengeable",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Farming level 2",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_flash_ii",
+    "output": {
+      "itemId": "flash_ii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "compost",
+        "quantity": 2
+      },
+      {
+        "itemId": "silver_kelp",
+        "quantity": 2
+      },
+      {
+        "itemId": "any_sea_scavengeable",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Farming level 7",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_flash_iii",
+    "output": {
+      "itemId": "flash_iii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "compost",
+        "quantity": 2
+      },
+      {
+        "itemId": "gold_kelp",
+        "quantity": 2
+      },
+      {
+        "itemId": "any_sea_scavengeable",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Farming level 9",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hydro_i",
+    "output": {
+      "itemId": "hydro_i",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Farming level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hydro_ii",
+    "output": {
+      "itemId": "hydro_ii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 2
+      },
+      {
+        "itemId": "compost",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Farming level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hydro_iii",
+    "output": {
+      "itemId": "hydro_iii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 2
+      },
+      {
+        "itemId": "compost",
+        "quantity": 2
+      },
+      {
+        "itemId": "slime_goop",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Farming level 8",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_kiln",
+    "output": {
+      "itemId": "kiln",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_ore",
+        "quantity": 20
+      },
+      {
+        "itemId": "stone",
+        "quantity": 25
+      }
+    ],
+    "unlock": "Foraging level 2",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_furnace",
+    "output": {
+      "itemId": "furnace",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 40
+      },
+      {
+        "itemId": "bronze_ore",
+        "quantity": 20
+      }
+    ],
+    "unlock": "Mine Bronze Ore and receive the recipe from Pablo",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_extractor",
+    "output": {
+      "itemId": "extractor",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "bronze_kelp",
+        "quantity": 20
+      },
+      {
+        "itemId": "wood",
+        "quantity": 40
+      }
+    ],
+    "unlock": "Harvest Bronze Kelp",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_recycling_machine",
+    "output": {
+      "itemId": "recycling_machine",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "trash",
+        "quantity": 20
+      },
+      {
+        "itemId": "stone",
+        "quantity": 30
+      },
+      {
+        "itemId": "bronze_kelp",
+        "quantity": 15
+      }
+    ],
+    "unlock": "Diving level 2",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_compost_bin",
+    "output": {
+      "itemId": "compost_bin",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "trash",
+        "quantity": 5
+      },
+      {
+        "itemId": "sap",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Farming level 2",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_mason_jar",
+    "output": {
+      "itemId": "mason_jar",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 30
+      },
+      {
+        "itemId": "glass",
+        "quantity": 12
+      }
+    ],
+    "unlock": "Farming level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_bee_house",
+    "output": {
+      "itemId": "bee_house",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 50
+      },
+      {
+        "itemId": "bronze_ore",
+        "quantity": 15
+      }
+    ],
+    "unlock": "Catching level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_tap",
+    "output": {
+      "itemId": "tap",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 40
+      },
+      {
+        "itemId": "bronze_bar",
+        "quantity": 3
+      }
+    ],
+    "unlock": "Foraging level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_dehydrator",
+    "output": {
+      "itemId": "dehydrator",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 30
+      },
+      {
+        "itemId": "silver_kelp_essence",
+        "quantity": 2
+      },
+      {
+        "itemId": "sea_salt",
+        "quantity": 5
+      },
+      {
+        "itemId": "silver_bar",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Diving level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_mayonnaise_machine",
+    "output": {
+      "itemId": "mayonnaise_machine",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "bronze_bar",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Ranching level 2",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_keg",
+    "output": {
+      "itemId": "keg",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 30
+      },
+      {
+        "itemId": "bronze_bar",
+        "quantity": 2
+      },
+      {
+        "itemId": "silver_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      }
+    ],
+    "unlock": "Farming level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_cheese_press",
+    "output": {
+      "itemId": "cheese_press",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 30
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 30
+      },
+      {
+        "itemId": "bronze_bar",
+        "quantity": 2
+      },
+      {
+        "itemId": "silver_bar",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Ranching level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_mushroom_log",
+    "output": {
+      "itemId": "mushroom_log",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 25
+      },
+      {
+        "itemId": "compost",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Foraging level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_loom",
+    "output": {
+      "itemId": "loom",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 25
+      },
+      {
+        "itemId": "wood",
+        "quantity": 30
+      },
+      {
+        "itemId": "gold_bar",
+        "quantity": 4
+      }
+    ],
+    "unlock": "Ranching level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_solar_panel",
+    "output": {
+      "itemId": "solar_panel",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "gold_bar",
+        "quantity": 3
+      },
+      {
+        "itemId": "glass",
+        "quantity": 20
+      }
+    ],
+    "unlock": "Diving level 7",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_oil_press",
+    "output": {
+      "itemId": "oil_press",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 30
+      },
+      {
+        "itemId": "glass",
+        "quantity": 20
+      },
+      {
+        "itemId": "gold_bar",
+        "quantity": 2
+      },
+      {
+        "itemId": "hardwood",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Foraging level 8",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_aging_barrel",
+    "output": {
+      "itemId": "aging_barrel",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hardwood",
+        "quantity": 25
+      },
+      {
+        "itemId": "osmium_bar",
+        "quantity": 2
+      },
+      {
+        "itemId": "resin",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Farming level 10",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_slime_of_transmutation",
+    "output": {
+      "itemId": "slime_of_transmutation",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "slime_goop",
+        "quantity": 20
+      },
+      {
+        "itemId": "gold_bar",
+        "quantity": 5
+      },
+      {
+        "itemId": "osmium_bar",
+        "quantity": 2
+      },
+      {
+        "itemId": "glass",
+        "quantity": 30
+      }
+    ],
+    "unlock": "Combat level 8",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_slime_of_replication",
+    "output": {
+      "itemId": "slime_of_replication",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "slime_goop",
+        "quantity": 20
+      },
+      {
+        "itemId": "gold_bar",
+        "quantity": 5
+      },
+      {
+        "itemId": "osmium_kelp_essence",
+        "quantity": 2
+      },
+      {
+        "itemId": "glass",
+        "quantity": 30
+      }
+    ],
+    "unlock": "Combat level 10",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_makeshift_chest",
+    "output": {
+      "itemId": "makeshift_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 20
+      },
+      {
+        "itemId": "trash",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Available from the start",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_ocean_guardian_chest",
+    "output": {
+      "itemId": "ocean_guardian_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "trash",
+        "quantity": 50
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_ocean_explorer_chest",
+    "output": {
+      "itemId": "ocean_explorer_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_ore",
+        "quantity": 30
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_fungarian_chest",
+    "output": {
+      "itemId": "fungarian_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 30
+      },
+      {
+        "itemId": "morel",
+        "quantity": 1
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_stone_chest",
+    "output": {
+      "itemId": "stone_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 50
+      }
+    ],
+    "unlock": "Mining level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_wooden_chest",
+    "output": {
+      "itemId": "wooden_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 50
+      }
+    ],
+    "unlock": "Foraging level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scrap_chest",
+    "output": {
+      "itemId": "scrap_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 30
+      },
+      {
+        "itemId": "stone",
+        "quantity": 20
+      }
+    ],
+    "unlock": "Diving level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hay_chest",
+    "output": {
+      "itemId": "hay_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hay",
+        "quantity": 30
+      },
+      {
+        "itemId": "wood",
+        "quantity": 20
+      }
+    ],
+    "unlock": "Ranching level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_small_fish_bait",
+    "output": {
+      "itemId": "small_fish_bait",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_kelp",
+        "quantity": 1
+      },
+      {
+        "itemId": "seaweed",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Fishing level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_medium_fish_bait",
+    "output": {
+      "itemId": "medium_fish_bait",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "seaweed",
+        "quantity": 2
+      },
+      {
+        "itemId": "any_insect",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Fishing level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_large_fish_bait",
+    "output": {
+      "itemId": "large_fish_bait",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "seaweed",
+        "quantity": 2
+      },
+      {
+        "itemId": "any_small_fish",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Fishing level 8",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_ground_insect_scent",
+    "output": {
+      "itemId": "ground_insect_scent",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "sap",
+        "quantity": 5
+      },
+      {
+        "itemId": "any_flower",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Catching level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_crawling_critter_scent",
+    "output": {
+      "itemId": "crawling_critter_scent",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "seaweed",
+        "quantity": 5
+      },
+      {
+        "itemId": "any_flower",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Catching level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_flying_insect_scent",
+    "output": {
+      "itemId": "flying_insect_scent",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "fiber",
+        "quantity": 5
+      },
+      {
+        "itemId": "any_flower",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Catching level 7",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_floating_critter_scent",
+    "output": {
+      "itemId": "floating_critter_scent",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "sea_salt",
+        "quantity": 2
+      },
+      {
+        "itemId": "any_flower",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Catching level 9",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_monster_scent",
+    "output": {
+      "itemId": "monster_scent",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "fiber",
+        "quantity": 5
+      },
+      {
+        "itemId": "any_monster_essence",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Combat level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_monster_lure_scent",
+    "output": {
+      "itemId": "monster_lure_scent",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "any_monster_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_egg",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Combat level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_monster_scent_ii",
+    "output": {
+      "itemId": "monster_scent_ii",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "cursed_fragment",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_monster_essence",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Combat level 7",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_monster_lure_scent_ii",
+    "output": {
+      "itemId": "monster_lure_scent_ii",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "any_monster_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_honey",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Combat level 9",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_ground_insect_trap",
+    "output": {
+      "itemId": "ground_insect_trap",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "fiber",
+        "quantity": 5
+      },
+      {
+        "itemId": "wood",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Catching level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_crawler_trap",
+    "output": {
+      "itemId": "crawler_trap",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "seaweed",
+        "quantity": 5
+      },
+      {
+        "itemId": "wood",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Catching level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_flying_insect_trap",
+    "output": {
+      "itemId": "flying_insect_trap",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "gold_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "glass",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_honey",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Catching level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_float_trap",
+    "output": {
+      "itemId": "float_trap",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "gold_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "glass",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_dried_scavengeable",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Catching level 8",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_bamboo_net_small",
+    "output": {
+      "itemId": "bamboo_net_small",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_kelp",
+        "quantity": 3
+      },
+      {
+        "itemId": "fiber",
+        "quantity": 2
+      },
+      {
+        "itemId": "wood",
+        "quantity": 4
+      },
+      {
+        "itemId": "any_dried_scavengeable",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Fishing level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_bamboo_net_large",
+    "output": {
+      "itemId": "bamboo_net_large",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "gold_kelp",
+        "quantity": 3
+      },
+      {
+        "itemId": "fiber",
+        "quantity": 3
+      },
+      {
+        "itemId": "hardwood",
+        "quantity": 4
+      },
+      {
+        "itemId": "any_dried_scavengeable",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Fishing level 7",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_decoy",
+    "output": {
+      "itemId": "decoy",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "tough_meat",
+        "quantity": 1
+      },
+      {
+        "itemId": "silky_fur",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_ore",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Combat level 2",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_slime_trap",
+    "output": {
+      "itemId": "slime_trap",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "slime_goop",
+        "quantity": 2
+      },
+      {
+        "itemId": "any_ore",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Combat level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_spring_trap",
+    "output": {
+      "itemId": "spring_trap",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 5
+      },
+      {
+        "itemId": "any_ore",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Combat level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_glue_trap",
+    "output": {
+      "itemId": "glue_trap",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "sap",
+        "quantity": 5
+      },
+      {
+        "itemId": "dark_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_ore",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Combat level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_shock_trap",
+    "output": {
+      "itemId": "shock_trap",
+      "quantity": 3
+    },
+    "ingredients": [
+      {
+        "itemId": "battery",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_ore",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Combat level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_spikes",
+    "output": {
+      "itemId": "spikes",
+      "quantity": 2
+    },
+    "ingredients": [
+      {
+        "itemId": "any_ore",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Combat level 7",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_makeshift_path",
+    "output": {
+      "itemId": "makeshift_path",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "trash",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Available from the start",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_makeshift_floor_tile",
+    "output": {
+      "itemId": "makeshift_floor_tile",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 1
+      },
+      {
+        "itemId": "trash",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Farming level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_makeshift_fence",
+    "output": {
+      "itemId": "makeshift_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 1
+      },
+      {
+        "itemId": "trash",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Available from the start",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_makeshift_gate",
+    "output": {
+      "itemId": "makeshift_gate",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 2
+      },
+      {
+        "itemId": "trash",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Available from the start",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_makeshift_arch",
+    "output": {
+      "itemId": "makeshift_arch",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 1
+      },
+      {
+        "itemId": "trash",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Farming level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_makeshift_sign",
+    "output": {
+      "itemId": "makeshift_sign",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 2
+      },
+      {
+        "itemId": "trash",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Available from the start",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hedge_fence",
+    "output": {
+      "itemId": "hedge_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "fiber",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Foraging level 7",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hedge_gate",
+    "output": {
+      "itemId": "hedge_gate",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "fiber",
+        "quantity": 5
+      },
+      {
+        "itemId": "compost",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Foraging level 7",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_stone_path",
+    "output": {
+      "itemId": "stone_path",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Available from the start",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_stone_floor_tile",
+    "output": {
+      "itemId": "stone_floor_tile",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Mining level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_stone_fence",
+    "output": {
+      "itemId": "stone_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Mining level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_stone_gate",
+    "output": {
+      "itemId": "stone_gate",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Mining level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_stone_arch",
+    "output": {
+      "itemId": "stone_arch",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Mining level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_stone_sign",
+    "output": {
+      "itemId": "stone_sign",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Mining level 2",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_kelp_fence",
+    "output": {
+      "itemId": "kelp_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "seaweed",
+        "quantity": 1
+      },
+      {
+        "itemId": "stone",
+        "quantity": 1
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_kelp_arch",
+    "output": {
+      "itemId": "kelp_arch",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "seaweed",
+        "quantity": 10
+      },
+      {
+        "itemId": "stone",
+        "quantity": 5
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_wood_path",
+    "output": {
+      "itemId": "wood_path",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Available from the start",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_wood_floor_tile",
+    "output": {
+      "itemId": "wood_floor_tile",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Foraging level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_wooden_fence",
+    "output": {
+      "itemId": "wooden_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Foraging level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_wooden_gate",
+    "output": {
+      "itemId": "wooden_gate",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Foraging level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_wooden_arch",
+    "output": {
+      "itemId": "wooden_arch",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Foraging level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_wood_sign",
+    "output": {
+      "itemId": "wood_sign",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Foraging level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_reef_fence",
+    "output": {
+      "itemId": "reef_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 1
+      },
+      {
+        "itemId": "bone",
+        "quantity": 1
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_reef_arch",
+    "output": {
+      "itemId": "reef_arch",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      },
+      {
+        "itemId": "bone",
+        "quantity": 5
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scrap_path",
+    "output": {
+      "itemId": "scrap_path",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Diving level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scrap_floor_tile",
+    "output": {
+      "itemId": "scrap_floor_tile",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Diving level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scrap_fence",
+    "output": {
+      "itemId": "scrap_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Diving level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scrap_gate",
+    "output": {
+      "itemId": "scrap_gate",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Diving level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scrap_arch",
+    "output": {
+      "itemId": "scrap_arch",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Diving level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scrap_sign",
+    "output": {
+      "itemId": "scrap_sign",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Diving level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_coral_fence",
+    "output": {
+      "itemId": "coral_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "any_beach_scavengeable",
+        "quantity": 1
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_coral_gate",
+    "output": {
+      "itemId": "coral_gate",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "any_beach_scavengeable",
+        "quantity": 5
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hay_path",
+    "output": {
+      "itemId": "hay_path",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hay",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Ranching level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hay_floor_tile",
+    "output": {
+      "itemId": "hay_floor_tile",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hay",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Ranching level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hay_fence",
+    "output": {
+      "itemId": "hay_fence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hay",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Ranching level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hay_gate",
+    "output": {
+      "itemId": "hay_gate",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hay",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Ranching level 3",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hay_arch",
+    "output": {
+      "itemId": "hay_arch",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hay",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Ranching level 5",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_hay_sign",
+    "output": {
+      "itemId": "hay_sign",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "hay",
+        "quantity": 5
+      },
+      {
+        "itemId": "wood",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Ranching level 4",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_explosive_i",
+    "output": {
+      "itemId": "explosive_i",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_ore",
+        "quantity": 2
+      },
+      {
+        "itemId": "coal",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Mining level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_explosive_ii",
+    "output": {
+      "itemId": "explosive_ii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_ore",
+        "quantity": 3
+      },
+      {
+        "itemId": "coal",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Mining level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_explosive_iii",
+    "output": {
+      "itemId": "explosive_iii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "osmium_ore",
+        "quantity": 4
+      },
+      {
+        "itemId": "coal",
+        "quantity": 3
+      }
+    ],
+    "unlock": "Mining level 9",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_vortexanator_i",
+    "output": {
+      "itemId": "vortexanator_i",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_kelp",
+        "quantity": 2
+      },
+      {
+        "itemId": "glass",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Diving level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_vortexanator_ii",
+    "output": {
+      "itemId": "vortexanator_ii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_kelp",
+        "quantity": 3
+      },
+      {
+        "itemId": "glass",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Diving level 6",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_vortexanator_iii",
+    "output": {
+      "itemId": "vortexanator_iii",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "osmium_kelp",
+        "quantity": 4
+      },
+      {
+        "itemId": "glass",
+        "quantity": 3
+      }
+    ],
+    "unlock": "Diving level 9",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_seed",
+    "output": {
+      "itemId": "auto_seed",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "gold_kelp_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "gold_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "battery",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_fertilizer",
+    "output": {
+      "itemId": "auto_fertilizer",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "silver_kelp_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "gold_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "battery",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_harvest",
+    "output": {
+      "itemId": "auto_harvest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "gold_kelp_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "gold_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "battery",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_sfh",
+    "output": {
+      "itemId": "auto_sfh",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      },
+      {
+        "itemId": "osmium_kelp_essence",
+        "quantity": 1
+      },
+      {
+        "itemId": "osmium_bar",
+        "quantity": 1
+      },
+      {
+        "itemId": "battery",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_anemone_auto_seed",
+    "output": {
+      "itemId": "anemone_auto_seed",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "gold_kelp_essence",
+        "quantity": 3
+      },
+      {
+        "itemId": "slime_goop",
+        "quantity": 2
+      },
+      {
+        "itemId": "solar_core",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_sea_scavengeable",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Research at the Oracle Chamber",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_anemone_auto_fertilizer",
+    "output": {
+      "itemId": "anemone_auto_fertilizer",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_kelp_essence",
+        "quantity": 3
+      },
+      {
+        "itemId": "slime_goop",
+        "quantity": 2
+      },
+      {
+        "itemId": "solar_core",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_sea_scavengeable",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Research at the Oracle Chamber",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_anemone_auto_harvest",
+    "output": {
+      "itemId": "anemone_auto_harvest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_kelp_essence",
+        "quantity": 3
+      },
+      {
+        "itemId": "slime_goop",
+        "quantity": 2
+      },
+      {
+        "itemId": "solar_core",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_sea_scavengeable",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Research at the Oracle Chamber",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_anemone_auto_sfh",
+    "output": {
+      "itemId": "anemone_auto_sfh",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "osmium_kelp_essence",
+        "quantity": 3
+      },
+      {
+        "itemId": "slime_goop",
+        "quantity": 2
+      },
+      {
+        "itemId": "solar_core",
+        "quantity": 1
+      },
+      {
+        "itemId": "any_sea_scavengeable",
+        "quantity": 5
+      }
+    ],
+    "unlock": "Research at the Oracle Chamber",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_temperature_machine",
+    "output": {
+      "itemId": "temperature_machine",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "battery",
+        "quantity": 1
+      },
+      {
+        "itemId": "flame_essence",
+        "quantity": 2
+      },
+      {
+        "itemId": "water_essence",
+        "quantity": 2
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 20
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_feeder",
+    "output": {
+      "itemId": "auto_feeder",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "battery",
+        "quantity": 1
+      },
+      {
+        "itemId": "silver_kelp_essence",
+        "quantity": 3
+      },
+      {
+        "itemId": "hay",
+        "quantity": 20
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 50
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_petter",
+    "output": {
+      "itemId": "auto_petter",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "battery",
+        "quantity": 4
+      },
+      {
+        "itemId": "gold_kelp_essence",
+        "quantity": 3
+      },
+      {
+        "itemId": "large_wool",
+        "quantity": 3
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 50
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_collector",
+    "output": {
+      "itemId": "auto_collector",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "battery",
+        "quantity": 3
+      },
+      {
+        "itemId": "osmium_kelp_essence",
+        "quantity": 3
+      },
+      {
+        "itemId": "silver_ore",
+        "quantity": 15
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 50
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_sturdy_computer",
+    "output": {
+      "itemId": "sturdy_computer",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "battery",
+        "quantity": 10
+      },
+      {
+        "itemId": "silver_bar",
+        "quantity": 5
+      },
+      {
+        "itemId": "bronze_ore",
+        "quantity": 10
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 70
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_trash_collector",
+    "output": {
+      "itemId": "auto_trash_collector",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 100
+      },
+      {
+        "itemId": "gold_kelp_essence",
+        "quantity": 3
+      },
+      {
+        "itemId": "battery",
+        "quantity": 2
+      },
+      {
+        "itemId": "wind_essence",
+        "quantity": 2
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_auto_chest",
+    "output": {
+      "itemId": "auto_chest",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "battery",
+        "quantity": 3
+      },
+      {
+        "itemId": "osmium_kelp_essence",
+        "quantity": 2
+      },
+      {
+        "itemId": "osmium_bar",
+        "quantity": 3
+      }
+    ],
+    "unlock": "Research at Ling's Lab",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_architect_desk",
+    "output": {
+      "itemId": "architect_desk",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 100
+      }
+    ],
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_c1_v1_3",
+    "name": "Coral Guide (v1.3-1247)",
+    "output": {
+      "itemId": "c1",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 10
+      },
+      {
+        "itemId": "trash",
+        "quantity": 15
+      }
+    ],
+    "unlock": "Reach Farming level 1",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_scrap_scarecrow_v1_3",
+    "name": "Coral Guide (v1.3-1247)",
+    "output": {
+      "itemId": "scrap_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      },
+      {
+        "itemId": "trash",
+        "quantity": 10
+      },
+      {
+        "itemId": "sap",
+        "quantity": 10
+      }
+    ],
+    "unlock": "Buy one at the Beach Cleanup Day booth",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "craft_monster_scarecrow_v1_3",
+    "name": "Coral Guide (v1.3-1247)",
+    "output": {
+      "itemId": "monster_scarecrow",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "monster_essence",
+        "quantity": 2
+      },
+      {
+        "itemId": "scrap",
+        "quantity": 10
+      },
+      {
+        "itemId": "any_wool",
+        "quantity": 1
+      }
+    ],
+    "unlock": "Buy at the Empty Cabin after earning Untouchable",
+    "source": "https://coral.guide/crafting/inventory/"
+  },
+  {
+    "id": "compost_bin_compost_from_trash",
+    "output": {
+      "itemId": "compost",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "trash",
+        "quantity": 2
+      }
+    ],
+    "stationId": "compost_bin",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "compost_bin_compost_from_any_organic_material",
+    "output": {
+      "itemId": "compost",
+      "quantity": 5
+    },
+    "ingredients": [
+      {
+        "itemId": "any_organic_material",
+        "quantity": 1
+      }
+    ],
+    "stationId": "compost_bin",
+    "source": "https://coralisland.wiki/wiki/Resource_Equipment"
+  },
+  {
+    "id": "compost_bin_compost_from_flyer",
+    "output": {
+      "itemId": "compost",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "flyer",
+        "quantity": 2
+      }
+    ],
+    "stationId": "compost_bin",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "compost_bin_compost_from_damaged_book",
+    "output": {
+      "itemId": "compost",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "damaged_book",
+        "quantity": 2
+      }
+    ],
+    "stationId": "compost_bin",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "smelt_bronze_bar",
+    "output": {
+      "itemId": "bronze_bar",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_ore",
+        "quantity": 5
+      },
+      {
+        "itemId": "coal",
+        "quantity": 1
+      }
+    ],
+    "stationId": "furnace",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "smelt_silver_bar",
+    "output": {
+      "itemId": "silver_bar",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_ore",
+        "quantity": 5
+      },
+      {
+        "itemId": "coal",
+        "quantity": 1
+      }
+    ],
+    "stationId": "furnace",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "smelt_gold_bar",
+    "output": {
+      "itemId": "gold_bar",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "gold_ore",
+        "quantity": 5
+      },
+      {
+        "itemId": "coal",
+        "quantity": 1
+      }
+    ],
+    "stationId": "furnace",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "extract_bronze_kelp_essence",
+    "output": {
+      "itemId": "bronze_kelp_essence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "bronze_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "glass",
+        "quantity": 1
+      }
+    ],
+    "stationId": "extractor",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "extract_silver_kelp_essence",
+    "output": {
+      "itemId": "silver_kelp_essence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "silver_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "glass",
+        "quantity": 1
+      }
+    ],
+    "stationId": "extractor",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "extract_gold_kelp_essence",
+    "output": {
+      "itemId": "gold_kelp_essence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "gold_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "glass",
+        "quantity": 1
+      }
+    ],
+    "stationId": "extractor",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "extract_osmium_kelp_essence",
+    "output": {
+      "itemId": "osmium_kelp_essence",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "osmium_kelp",
+        "quantity": 10
+      },
+      {
+        "itemId": "glass",
+        "quantity": 1
+      }
+    ],
+    "stationId": "extractor",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "kiln_coal_from_wood",
+    "output": {
+      "itemId": "coal",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 2
+      }
+    ],
+    "stationId": "kiln",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "kiln_glass_from_stone",
+    "output": {
+      "itemId": "glass",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "stone",
+        "quantity": 10
+      }
+    ],
+    "stationId": "kiln",
+    "source": "https://coral.guide/crafting/artisan/"
+  },
+  {
+    "id": "kiln_glass_from_scrap",
+    "output": {
+      "itemId": "glass",
+      "quantity": 1
+    },
+    "ingredients": [
+      {
+        "itemId": "scrap",
+        "quantity": 3
+      }
+    ],
+    "stationId": "kiln",
+    "source": "https://coral.guide/crafting/artisan/"
   }
 ]
