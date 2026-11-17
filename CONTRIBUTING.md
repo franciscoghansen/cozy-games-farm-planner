@@ -21,4 +21,4 @@ Keep credentials, environment files, browser exports, and personal workspace bac
 
 ## Licensing
 
-The repository owner has yet to approve a software license. MIT is a suggested permissive license for the original application code. Any approval and license text should come from the owner. Game data, names, and third-party materials keep their respective terms.
+The project's original code and documentation are licensed under the [MIT License](LICENSE). Submit original code and documentation contributions under MIT. For third-party material, preserve applicable notices and document the source and redistribution terms.

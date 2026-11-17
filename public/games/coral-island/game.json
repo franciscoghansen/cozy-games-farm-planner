@@ -3,7 +3,7 @@
   "contentVersion": "1.1.0",
   "id": "coral-island",
   "name": "Coral Island",
-  "defaultPreset": "expanded",
+  "defaultPreset": "starter",
   "requiredCoverage": [
     "water",
     "guard"

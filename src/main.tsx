@@ -288,10 +288,14 @@ function App({ session, switchGame, replaceGame, switching }: {
 
   return <>
     <header className="topbar">
-      <div className="brand">
-        <div className="brand-icon"><Sprout size={26} strokeWidth={1.8} /></div>
+      <a className="brand" href={location.pathname + location.search} aria-label="Farm Planner home" onClick={event => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+        event.preventDefault()
+        setView('planner')
+      }}>
+        <div className="brand-icon"><Sprout size={26} strokeWidth={1.8} aria-hidden="true" /></div>
         <div><h1><span>Farm Planner</span></h1><p>Plan crops, coverage, and equipment</p></div>
-      </div>
+      </a>
       <div className="top-actions">
         <label className="game-picker"><span>Game</span><select aria-label="Game" value={gameId} disabled={busy || switching} onChange={event => {
           void switchGame(event.target.value).catch(error => setNotice(error.message))
