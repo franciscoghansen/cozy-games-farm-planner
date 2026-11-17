@@ -35,9 +35,13 @@ export function newPlan(width: number, height: number, name = 'My farm', gameId?
   return {
     gameId: game.id, name, width, height, tiles: Array<Tile>(width * height).fill('crop'),
     progression: first?.id ?? 'custom', unlocked: [...(first?.equipment ?? placables.map(item => item.id))],
-    limited: false, inventory: Object.fromEntries(placables.map(item => [item.id, game.defaultInventory?.[item.id] ?? 0])),
+    limited: false, inventory: Object.fromEntries(placables.map(item => [item.id, 0])),
     strategy: 'maximum', target: 100,
   }
+}
+
+export function mergedInventory(materials: Inventory, equipment: Inventory): Inventory {
+  return { ...materials, ...Object.fromEntries(Object.entries(equipment).filter(([id, count]) => count > 0 || !Object.hasOwn(materials, id))) }
 }
 
 export function unlockedItems(plan: Plan) {

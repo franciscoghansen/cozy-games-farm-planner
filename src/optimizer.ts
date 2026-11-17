@@ -3,7 +3,7 @@ import type { Item, ItemId } from './equipment.ts'
 import { createFarmMaterialService } from './farm-bom.ts'
 import type { Inventory } from './game.ts'
 import { coverage, statistics, visitCoverage } from './coverage.ts'
-import { countEquipment, itemId, unlockedItems, usable } from './model.ts'
+import { countEquipment, itemId, mergedInventory, unlockedItems, usable } from './model.ts'
 import type { Plan } from './model.ts'
 
 interface Candidate { index: number; item: Item; score: number }
@@ -56,14 +56,43 @@ export function changes(before: Plan, after: Plan) {
 
 export interface MaterialOptions { inventory?: Inventory; selections?: Record<string, string> }
 
+export function optimizerFeedback(plan: Plan, inventory = plan.inventory) {
+  const game = gameFor(plan.gameId)
+  const enabled = new Set(unlockedItems(plan).map(item => item.id))
+  const required = game.game.requiredCoverage ?? ['water', 'guard']
+  const labels = { water: 'watering', guard: 'protection' }
+  const missing = required.some(kind => !game.placables.some(item => item.kind === kind && enabled.has(item.id)))
+    ? 'Select at least one ' + required.map(kind => labels[kind]).join(' and one ') + ' item.'
+    : ''
+  const locked = countEquipment({ ...plan, tiles: plan.tiles.filter(tile => tile.startsWith('!')) })
+  const warnings = game.placables.flatMap(item => {
+    const count = inventory[item.id] ?? 0
+    const messages: string[] = []
+    if (!enabled.has(item.id) && locked[item.id]) messages.push(`${locked[item.id].toLocaleString()} manually locked ${item.name} kept despite being unavailable.`)
+    if (plan.limited && plan.strategy !== 'materials') {
+      if (enabled.has(item.id) && required.includes(item.kind) && !count) messages.push(`${item.name} is selected but you own 0.`)
+      if (!enabled.has(item.id) && count) {
+        const level = game.game.progressions.find(level => level.id === plan.progression)?.name ?? 'Custom equipment'
+        const available = game.game.progressions.find(level => level.equipment.includes(item.id))
+        messages.push(`You own ${count.toLocaleString()} ${item.name} not available in ${level}. Switch to ${available ? available.name + ' or ' : ''}Custom equipment to use them.`)
+      }
+    }
+    return messages
+  })
+  return { missing, warnings }
+}
+
 export function optimize(original: Plan, progress: (percent: number) => void = () => {}, options: MaterialOptions = {}) {
   const game = gameFor(original.gameId)
   const required = game.game.requiredCoverage ?? ['water', 'guard']
-  const unlocked = unlockedItems(original).filter(item => required.includes(item.kind))
+  const enabled = new Set(unlockedItems(original).map(item => item.id))
+  const unlocked = game.placables.filter(item => enabled.has(item.id) && required.includes(item.kind))
   const constrained = original.strategy === 'materials'
   const costMode = original.strategy === 'cost'
   const limited = original.limited && !constrained
-  const owned = { ...options.inventory, ...original.inventory }
+  const owned = mergedInventory(options.inventory ?? {}, original.inventory)
+  const { missing, warnings } = optimizerFeedback(original, owned)
+  if (missing) throw new Error(missing)
   const materials = constrained || costMode ? createFarmMaterialService(game, original, owned, options.selections) : undefined
   const costs = new Map(game.placables.map(item => {
     if (!costMode) return [item.id, 1]
@@ -71,7 +100,7 @@ export function optimize(original: Plan, progress: (percent: number) => void = (
     return [item.id, 1 + Math.log2(1 + list.reduce((sum, row) => sum + row.remaining * (row.unknown ? 100 : 1), 0))]
   }))
   const locked = countEquipment({ ...original, tiles: original.tiles.map(tile => tile.startsWith('!') ? tile : 'empty') })
-  const conflicts = Object.keys(locked).filter(id => limited && locked[id] > (original.inventory[id] ?? 0))
+  const conflicts = Object.keys(locked).filter(id => limited && enabled.has(id) && locked[id] > (owned[id] ?? 0))
   if (conflicts.length) throw new Error('Locked equipment exceeds inventory. Unlock items or increase the available quantities.')
 
   const old = statistics(original)
@@ -106,7 +135,8 @@ export function optimize(original: Plan, progress: (percent: number) => void = (
     }
   }
 
-  if (!limited || game.placables.every(item => old.used[item.id] <= (original.inventory[item.id] ?? 0))) {
+  if (game.placables.every(item => (enabled.has(item.id) || old.used[item.id] === locked[item.id])
+    && (!limited || old.used[item.id] <= Math.max(owned[item.id] ?? 0, locked[item.id])))) {
     consider(original)
   }
 
@@ -115,7 +145,7 @@ export function optimize(original: Plan, progress: (percent: number) => void = (
     const plan: Plan = { ...original, tiles: original.tiles.map((tile, i) => {
       const id = itemId(tile)
       if (!id || tile.startsWith('!')) return tile
-      if (preserve && (!limited || used[id] < (original.inventory[id] ?? 0))) {
+      if (preserve && enabled.has(id) && (!limited || used[id] < (owned[id] ?? 0))) {
         used[id]++
         return tile
       }
@@ -126,7 +156,7 @@ export function optimize(original: Plan, progress: (percent: number) => void = (
     const other = first === 'water' ? 'guard' : 'water'
     const visit = (index: number, item: Item, callback: (i: number) => void) =>
       visitCoverage(plan.width, plan.height, index, item.radius, callback, item.shape)
-    const available = (id: ItemId) => !limited || used[id] < (plan.inventory[id] ?? 0)
+    const available = (id: ItemId) => !limited || used[id] < (owned[id] ?? 0)
 
     function fill(kind: Item['kind'], seed: boolean, limit = Infinity) {
       const own = maps[kind]
@@ -225,9 +255,10 @@ export function optimize(original: Plan, progress: (percent: number) => void = (
     progress(Math.round(100 * (variantIndex + 1) / variants.length))
   }
 
-  const result = best!
+  if (!best) throw new Error('No feasible layout found with the locked equipment and available stock.')
+  const result = best
   return {
-    plan: result.plan, full: result.full,
+    plan: result.plan, full: result.full, warnings,
     shortfall: original.strategy === 'low' || costMode ? Math.max(0, original.target - result.full) : 0,
     crafting: constrained ? materials!.proposal(result.plan) : undefined,
   }
