@@ -1,0 +1,219 @@
+{
+  "src/BomView.tsx": {
+    "@eslint-react/no-array-index-key": {
+      "count": 1
+    }
+  },
+  "src/FarmGrid.tsx": {
+    "@eslint-react/naming-convention-id-name": {
+      "count": 1
+    },
+    "@eslint-react/naming-convention-ref-name": {
+      "count": 3
+    },
+    "@eslint-react/no-forward-ref": {
+      "count": 1
+    },
+    "@eslint-react/use-state": {
+      "count": 1
+    },
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 5
+    },
+    "@typescript-eslint/no-redundant-type-constituents": {
+      "count": 2
+    },
+    "@typescript-eslint/no-unnecessary-condition": {
+      "count": 1
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 2
+    }
+  },
+  "src/GameData.tsx": {
+    "@typescript-eslint/no-unnecessary-condition": {
+      "count": 1
+    }
+  },
+  "src/Panels.tsx": {
+    "@typescript-eslint/no-redundant-type-constituents": {
+      "count": 4
+    },
+    "@typescript-eslint/no-unnecessary-type-assertion": {
+      "count": 4
+    }
+  },
+  "src/backup.ts": {
+    "@typescript-eslint/prefer-promise-reject-errors": {
+      "count": 2
+    }
+  },
+  "src/bom.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 3
+    }
+  },
+  "src/crops/CropCalendar.tsx": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 5
+    },
+    "@typescript-eslint/no-unnecessary-condition": {
+      "count": 1
+    }
+  },
+  "src/crops/CropPlanner.tsx": {
+    "@eslint-react/naming-convention-ref-name": {
+      "count": 1
+    },
+    "@eslint-react/no-unnecessary-use-prefix": {
+      "count": 1
+    },
+    "@typescript-eslint/no-misused-promises": {
+      "count": 1
+    },
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 7
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    }
+  },
+  "src/crops/calendar.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 1
+    }
+  },
+  "src/crops/crop-layout-adapter.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 1
+    }
+  },
+  "src/crops/economics.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 1
+    }
+  },
+  "src/crops/optimizer.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 1
+    }
+  },
+  "src/game.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 2
+    }
+  },
+  "src/main.tsx": {
+    "@eslint-react/naming-convention-ref-name": {
+      "count": 7
+    },
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 11
+    },
+    "@typescript-eslint/no-redundant-type-constituents": {
+      "count": 1
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 2
+    },
+    "react-hooks/immutability": {
+      "count": 1
+    },
+    "react-hooks/set-state-in-effect": {
+      "count": 1
+    }
+  },
+  "src/model.ts": {
+    "@typescript-eslint/no-unnecessary-condition": {
+      "count": 4
+    }
+  },
+  "src/optimizer.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 13
+    },
+    "@typescript-eslint/no-unnecessary-type-assertion": {
+      "count": 1
+    }
+  },
+  "src/presets.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 1
+    }
+  },
+  "src/storage.ts": {
+    "@typescript-eslint/no-unsafe-assignment": {
+      "count": 2
+    }
+  },
+  "src/workspace-db.ts": {
+    "@typescript-eslint/no-base-to-string": {
+      "count": 2
+    },
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 3
+    },
+    "@typescript-eslint/no-unsafe-argument": {
+      "count": 1
+    },
+    "@typescript-eslint/prefer-promise-reject-errors": {
+      "count": 5
+    }
+  },
+  "src/workspace-state.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 1
+    }
+  },
+  "tests/backup.test.ts": {
+    "@typescript-eslint/no-unnecessary-condition": {
+      "count": 1
+    },
+    "@typescript-eslint/no-unsafe-assignment": {
+      "count": 2
+    },
+    "@typescript-eslint/no-unsafe-member-access": {
+      "count": 3
+    },
+    "@typescript-eslint/no-unused-vars": {
+      "count": 1
+    },
+    "@typescript-eslint/require-await": {
+      "count": 3
+    }
+  },
+  "tests/bom.test.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 3
+    },
+    "@typescript-eslint/no-unnecessary-condition": {
+      "count": 1
+    },
+    "@typescript-eslint/no-unused-vars": {
+      "count": 2
+    }
+  },
+  "tests/crafting-domain.test.ts": {
+    "@typescript-eslint/no-unnecessary-condition": {
+      "count": 2
+    }
+  },
+  "tests/crop-planner.test.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 2
+    }
+  },
+  "tests/optimizer-qa.test.ts": {
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 1
+    }
+  },
+  "tests/planner.test.ts": {
+    "@typescript-eslint/no-floating-promises": {
+      "count": 2
+    },
+    "@typescript-eslint/no-non-null-assertion": {
+      "count": 2
+    }
+  }
+}

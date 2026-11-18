@@ -19,5 +19,7 @@ export function gameFor(id = defaultId): Game {
 }
 
 export const isItem = (id: string, gameId?: string) => gameFor(gameId).placedItems.has(id)
-export const setLayoutV1Game = (id: string) => { layoutV1Game = id }
+export const setLayoutV1Game = (id: string) => {
+  layoutV1Game = id
+}
 export const getLayoutV1Game = () => layoutV1Game ?? gameFor().game.id

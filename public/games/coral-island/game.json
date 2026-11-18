@@ -5,40 +5,22 @@
   "id": "coral-island",
   "name": "Coral Island",
   "defaultPreset": "starter",
-  "requiredCoverage": [
-    "water",
-    "guard"
-  ],
+  "requiredCoverage": ["water", "guard"],
   "progressions": [
     {
       "id": "early",
       "name": "Early game",
-      "equipment": [
-        "s1",
-        "c1"
-      ]
+      "equipment": ["s1", "c1"]
     },
     {
       "id": "mid",
       "name": "Mid game",
-      "equipment": [
-        "s1",
-        "s2",
-        "c1",
-        "c2"
-      ]
+      "equipment": ["s1", "s2", "c1", "c2"]
     },
     {
       "id": "late",
       "name": "Late game",
-      "equipment": [
-        "s1",
-        "s2",
-        "s3",
-        "c1",
-        "c2",
-        "c3"
-      ]
+      "equipment": ["s1", "s2", "s3", "c1", "c2", "c3"]
     }
   ],
   "defaultInventory": {

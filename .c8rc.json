@@ -1,0 +1,9 @@
+{
+  "all": true,
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.d.ts", "src/analytics.ts", "src/optimizer.worker.ts"],
+  "extension": [".ts"],
+  "reporter": ["text", "json-summary", "lcovonly"],
+  "reportsDirectory": "coverage",
+  "tempDirectory": "coverage/.tmp"
+}

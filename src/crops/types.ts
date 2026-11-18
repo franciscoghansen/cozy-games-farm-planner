@@ -39,15 +39,34 @@ export interface Crop {
   note?: string
 }
 
-export interface CropCatalog { schemaVersion: 1; contentVersion: string; crops: Crop[] }
-export interface CropDate { year: number; season: string; day: number }
+export interface CropCatalog {
+  schemaVersion: 1
+  contentVersion: string
+  crops: Crop[]
+}
+export interface CropDate {
+  year: number
+  season: string
+  day: number
+}
 export const strategies = ['maximum', 'low-budget', 'fast', 'low-maintenance', 'balanced', 'custom'] as const
-export type Strategy = typeof strategies[number]
+export type Strategy = (typeof strategies)[number]
 export const harvestActivities = ['plant', 'harvest', 'regrowth', 'replant', 'expires'] as const
-export type Activity = typeof harvestActivities[number]
-export interface GrowthEvent { day: number; activity: Activity; quantity: number }
-export interface ScheduleEvent extends GrowthEvent { cropId: string; revenue: number; key: string }
-export interface Allocation { cropId: string; quantity: number }
+export type Activity = (typeof harvestActivities)[number]
+export interface GrowthEvent {
+  day: number
+  activity: Activity
+  quantity: number
+}
+export interface ScheduleEvent extends GrowthEvent {
+  cropId: string
+  revenue: number
+  key: string
+}
+export interface Allocation {
+  cropId: string
+  quantity: number
+}
 export interface CropSettings {
   date: CropDate
   horizon: 'remaining' | 'full' | 'multiple'
@@ -76,7 +95,8 @@ export interface CropPlan {
   schedule: ScheduleEvent[]
   completed: string[]
   pricing?: {
-    contentVersion: string; currency: string
+    contentVersion: string
+    currency: string
     crops: { cropId: string; seedCost: number; salePrice: number; includedExpense: number }[]
   }
 }

@@ -13,9 +13,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring"
-      ],
+      "seasons": ["spring"],
       "rank": "f",
       "growth": 4,
       "yield": 1,
@@ -39,9 +37,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring"
-      ],
+      "seasons": ["spring"],
       "rank": "f",
       "growth": 7,
       "yield": 1,
@@ -69,9 +65,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring"
-      ],
+      "seasons": ["spring"],
       "rank": "f",
       "growth": 4,
       "yield": 1,
@@ -95,9 +89,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring"
-      ],
+      "seasons": ["spring"],
       "rank": "f",
       "growth": 10,
       "yield": 1,
@@ -121,9 +113,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring"
-      ],
+      "seasons": ["spring"],
       "rank": "f",
       "growth": 4,
       "yield": 1,
@@ -147,9 +137,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring"
-      ],
+      "seasons": ["spring"],
       "rank": "e",
       "growth": 7,
       "yield": 1,
@@ -173,9 +161,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring"
-      ],
+      "seasons": ["spring"],
       "rank": "d",
       "growth": 5,
       "yield": 1,
@@ -199,9 +185,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring"
-      ],
+      "seasons": ["spring"],
       "rank": "d",
       "growth": 6,
       "yield": 1,
@@ -225,10 +209,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "spring",
-        "summer"
-      ],
+      "seasons": ["spring", "summer"],
       "rank": "e",
       "growth": 6,
       "yield": 1,
@@ -256,9 +237,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "f",
       "growth": 8,
       "yield": 1,
@@ -282,9 +261,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "f",
       "growth": 5,
       "yield": 1,
@@ -308,9 +285,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "f",
       "growth": 5,
       "yield": 1,
@@ -334,9 +309,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "f",
       "growth": 10,
       "regrowth": 4,
@@ -365,13 +338,8 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer",
-        "fall"
-      ],
-      "saleSeasons": [
-        "summer"
-      ],
+      "seasons": ["summer", "fall"],
+      "saleSeasons": ["summer"],
       "rank": "f",
       "growth": 7,
       "regrowth": 3,
@@ -400,9 +368,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "f",
       "growth": 12,
       "regrowth": 4,
@@ -427,9 +393,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "e",
       "growth": 12,
       "yield": 1,
@@ -453,9 +417,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "e",
       "growth": 8,
       "regrowth": 4,
@@ -480,9 +442,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "e",
       "growth": 10,
       "regrowth": 4,
@@ -507,9 +467,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "d",
       "growth": 11,
       "regrowth": 4,
@@ -534,9 +492,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "d",
       "growth": 9,
       "yield": 1,
@@ -560,9 +516,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "e",
       "growth": 13,
       "yield": 1,
@@ -586,9 +540,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "summer"
-      ],
+      "seasons": ["summer"],
       "rank": "d",
       "growth": 6,
       "yield": 1,
@@ -612,9 +564,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "fall"
-      ],
+      "seasons": ["fall"],
       "rank": "f",
       "growth": 8,
       "yield": 1,
@@ -638,9 +588,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "fall"
-      ],
+      "seasons": ["fall"],
       "rank": "e",
       "growth": 6,
       "yield": 1,
@@ -664,9 +612,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "fall"
-      ],
+      "seasons": ["fall"],
       "rank": "e",
       "growth": 5,
       "yield": 1,
@@ -690,9 +636,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "fall"
-      ],
+      "seasons": ["fall"],
       "rank": "d",
       "growth": 8,
       "yield": 1,
@@ -716,9 +660,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "fall"
-      ],
+      "seasons": ["fall"],
       "rank": "d",
       "growth": 4,
       "yield": 1,
@@ -742,9 +684,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "fall"
-      ],
+      "seasons": ["fall"],
       "rank": "e",
       "growth": 8,
       "regrowth": 5,
@@ -769,9 +709,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "fall"
-      ],
+      "seasons": ["fall"],
       "rank": "d",
       "growth": 8,
       "regrowth": 4,
@@ -796,9 +734,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "fall"
-      ],
+      "seasons": ["fall"],
       "rank": "d",
       "growth": 8,
       "yield": 1,
@@ -822,9 +758,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "winter"
-      ],
+      "seasons": ["winter"],
       "rank": "c",
       "growth": 11,
       "yield": 1,
@@ -852,9 +786,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "winter"
-      ],
+      "seasons": ["winter"],
       "rank": "c",
       "growth": 9,
       "yield": 1,
@@ -882,9 +814,7 @@
         "width": 1,
         "height": 1
       },
-      "seasons": [
-        "winter"
-      ],
+      "seasons": ["winter"],
       "rank": "c",
       "seedCost": 45,
       "prices": {

@@ -1,0 +1,104 @@
+name: Pull request CI
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, edited]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pull-request-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run validate:data
+
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run test:coverage
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: ${{ !cancelled() }}
+        with:
+          name: domain-coverage
+          path: |
+            coverage/coverage-summary.json
+            coverage/lcov.info
+          if-no-files-found: error
+          retention-days: 7
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps --only-shell chromium
+      - run: npm run test:e2e
+      - run: node scripts/bundle-size.mjs
+        if: ${{ !cancelled() && hashFiles('dist/index.html') != '' }}
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: failure()
+        with:
+          name: playwright-failure
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+
+  dependency-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - id: review
+        uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec # v5.0.1
+        with:
+          fail-on-severity: high
+      - name: Report medium and low dependency advisories
+        if: ${{ !cancelled() && steps.review.outputs.dependency-changes != '' }}
+        env:
+          DEPENDENCY_CHANGES: ${{ steps.review.outputs.dependency-changes }}
+        run: |
+          advisories=$(jq -r '
+            .[] | select(.change_type == "added") | . as $change
+            | .vulnerabilities[]?
+            | select(.severity == "medium" or .severity == "low")
+            | [$change.name, $change.version, .severity, .advisory_ghsa_id] | @tsv
+          ' <<< "$DEPENDENCY_CHANGES")
+          if [[ -n "$advisories" ]]; then
+            printf '\n### Medium and low dependency advisories\n\n```text\n%s\n```\n' "$advisories" >> "$GITHUB_STEP_SUMMARY"
+          fi

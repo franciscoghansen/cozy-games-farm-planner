@@ -2,7 +2,5 @@
   "schemaVersion": 1,
   "defaultGame": "coral-island",
   "layoutV1Game": "coral-island",
-  "games": [
-    "coral-island"
-  ]
+  "games": ["coral-island"]
 }

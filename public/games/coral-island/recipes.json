@@ -85,9 +85,7 @@
       }
     ],
     "stationId": "recycler",
-    "alternativeIds": [
-      "recycle_flyer"
-    ],
+    "alternativeIds": ["recycle_flyer"],
     "source": "https://www.coralisland.wiki/wiki/Resource_Equipment"
   },
   {
@@ -103,9 +101,7 @@
       }
     ],
     "stationId": "recycler",
-    "alternativeIds": [
-      "recycle_trash"
-    ],
+    "alternativeIds": ["recycle_trash"],
     "source": "https://www.coralisland.wiki/wiki/Resource_Equipment"
   },
   {
@@ -557,9 +553,7 @@
     "unlock": "Redeem Merit Points at the Community Center shop",
     "source": "https://coralisland.fandom.com/wiki/Scarecrow#List",
     "name": "Scarecrow list (1 Cotton Cloth)",
-    "alternativeIds": [
-      "craft_pretty_crafting_table"
-    ]
+    "alternativeIds": ["craft_pretty_crafting_table"]
   },
   {
     "id": "craft_pretty_crafting_table",
@@ -588,9 +582,7 @@
     "name": "Crafting table (10 Cotton Cloth)",
     "unlock": "Redeem Merit Points at the Community Center shop",
     "source": "https://coralisland.fandom.com/wiki/Crafting#Farming",
-    "alternativeIds": [
-      "craft_ondel_ondel_pretty_scarecrow"
-    ]
+    "alternativeIds": ["craft_ondel_ondel_pretty_scarecrow"]
   },
   {
     "id": "craft_pino_scarecrow",

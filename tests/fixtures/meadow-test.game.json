@@ -4,10 +4,7 @@
     "contentVersion": "1",
     "id": "meadow-test",
     "name": "Meadow Test",
-    "requiredCoverage": [
-      "water",
-      "guard"
-    ],
+    "requiredCoverage": ["water", "guard"],
     "progressions": [],
     "acquisitionMethods": {
       "digging": "Digging",
@@ -26,25 +23,19 @@
       "id": "orb",
       "name": "Water Orb",
       "category": "equipment",
-      "acquisition": [
-        "crafting"
-      ]
+      "acquisition": ["crafting"]
     },
     {
       "id": "tower",
       "name": "Guard Tower",
       "category": "equipment",
-      "acquisition": [
-        "crafting"
-      ]
+      "acquisition": ["crafting"]
     },
     {
       "id": "deluxe",
       "name": "Deluxe Orb",
       "category": "equipment",
-      "acquisition": [
-        "crafting"
-      ]
+      "acquisition": ["crafting"]
     },
     {
       "id": "unknown",
@@ -56,41 +47,31 @@
       "id": "ore",
       "name": "Ore",
       "category": "raw_resource",
-      "acquisition": [
-        "digging"
-      ]
+      "acquisition": ["digging"]
     },
     {
       "id": "wood",
       "name": "Wood",
       "category": "raw_resource",
-      "acquisition": [
-        "gathering"
-      ]
+      "acquisition": ["gathering"]
     },
     {
       "id": "bar",
       "name": "Bar",
       "category": "refined_material",
-      "acquisition": [
-        "crafting"
-      ]
+      "acquisition": ["crafting"]
     },
     {
       "id": "widget",
       "name": "Widget",
       "category": "crafted_component",
-      "acquisition": [
-        "crafting"
-      ]
+      "acquisition": ["crafting"]
     },
     {
       "id": "slag",
       "name": "Slag",
       "category": "miscellaneous",
-      "acquisition": [
-        "gathering"
-      ]
+      "acquisition": ["gathering"]
     }
   ],
   "equipment": [
@@ -177,9 +158,7 @@
           "quantity": 1
         }
       ],
-      "alternativeIds": [
-        "whittle"
-      ]
+      "alternativeIds": ["whittle"]
     },
     {
       "id": "whittle",
