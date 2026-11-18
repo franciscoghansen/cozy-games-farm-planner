@@ -5,11 +5,11 @@ import {
   Boxes,
   ChevronDown,
   Database,
+  CodeXml,
   Download,
   Droplets,
   Eye,
   FolderOpen,
-  Github,
   Grid2X2,
   Hammer,
   Layers3,
@@ -705,7 +705,7 @@ function App({
             aria-label="GitHub"
             title="View source code on GitHub"
           >
-            <Github size={15} aria-hidden="true" /> <span>GitHub</span>
+            <CodeXml size={15} aria-hidden="true" /> <span>GitHub</span>
           </a>
           <input
             hidden
