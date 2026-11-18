@@ -8,6 +8,19 @@ const key = 'coral-island-farm-planner/v1'
 const integer = (value: unknown, min: number, max: number) =>
   typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max
 
+export function validatePlots(value: unknown, game: Game, repair = false) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid crop plot assignments.')
+  const known = new Set(game.crops?.crops.map(crop => crop.id))
+  return Object.fromEntries(Object.entries(value).filter(([key, id]) => {
+    if (!/^(0|[1-9][0-9]*)$/.test(key) || Number(key) >= maxSize ** 2 || typeof id !== 'string') {
+      throw new Error('Invalid crop plot coordinates or crop ID.')
+    }
+    if (known.has(id)) return true
+    if (repair) return false
+    throw new Error('Unknown crop in plot assignments: ' + id)
+  })) as Record<string, string>
+}
+
 export function validatePlan(value: unknown, fallbackGame?: string, adapter?: Game): Plan {
   if (typeof value !== 'object' || !value) throw new Error('Expected a farm plan object.')
   const p = value as Record<string, unknown>
@@ -36,7 +49,9 @@ export function validatePlan(value: unknown, fallbackGame?: string, adapter?: Ga
     !integer(p.target, 0, maxSize ** 2)) {
     throw new Error('Invalid equipment inventory or optimizer settings.')
   }
+  const cropPlots = p.cropPlots === undefined ? undefined : validatePlots(p.cropPlots, game)
   return {
+    ...(cropPlots && { cropPlots }),
     gameId, name: p.name, width: p.width, height: p.height, tiles: p.tiles, progression: p.progression,
     unlocked: p.unlocked, limited: p.limited, inventory: Object.fromEntries(game.placables.map(item =>
       [item.id, (p.inventory as Record<string, unknown>)[item.id] ?? 0])), strategy: p.strategy, target: p.target,

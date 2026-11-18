@@ -74,13 +74,23 @@ npm run preview
 3. Open **Recipe alternatives** where available. View the **Shopping list**, **Aggregated materials**, **Dependency tree**, or **Checklist**.
 4. Open **Saved crafting plans**, enter a name, and select **Save crafting plan**. Use **Load crafting plan** to reopen one. The calculation uses your current stock when you reload a saved plan.
 
+### Plan a growing season
+
+1. Open **Crops** and choose your season, day, budget, and town rank. Enter a tile count or select **Use farm layout tile count**. Include manually watered tiles or require both sprinkler and scarecrow coverage.
+2. Compare yields and net profit in the crop catalog. Select a crop to inspect dates, update shared seed inventory, or enter a custom quantity. Choose a strategy and select **Recommend crops** for an estimated allocation. Enable **Replant when possible** if you want repeat plantings.
+3. Review seed purchases and the harvest calendar. **Show seed materials** uses the shared BOM and inventory, including any installed seed production recipes. Mark activities complete as you do them and download the schedule as CSV.
+4. Select **Apply crop plan to farm** to replace crop assignments in the eligible area. Open the **Farm layout** to inspect coverage or undo. Use **Assign crops** to paint, fill a rectangle, or clear annotations without changing equipment or terrain.
+5. Save the plan to keep its settings, plot positions, pricing, schedule, and completion checklist. A loaded plan shows its original calendar. Use **Recalculate schedule** to update it with current inputs, or **Restore saved plot positions** to apply its annotations explicitly.
+
+The projection assumes daily watering and same-day sales to finance future seed purchases. Starting-day plantings must fit the initial budget. Owned seeds have no purchase cost and remain in your inventory until you edit stock. Recommendations use a deterministic heuristic and reserve a distinct area per crop for the planning window, with optional repeat planting of that crop.
+
 ### Browser storage and backups
 
-Layouts, crafting plans, stock, and custom game data stay in IndexedDB on your device. The hosted and local copies use separate browser origins. Different browsers, profiles, hostnames, and ports have separate storage. Clearing site data removes the records for that origin.
+Layouts, crafting plans, crop plans, stock, and custom game data stay in IndexedDB on your device. The hosted and local copies use separate browser origins. Different browsers, profiles, hostnames, and ports have separate storage. Clearing site data removes the records for that origin.
 
 The public GitHub Pages site uses Cloudflare Web Analytics for anonymous traffic statistics. It does not set tracking cookies or receive your layouts, stock, crafting plans, or custom game data. Local copies do not load analytics.
 
-1. Choose **Export → Download workspace backup** to save all layouts, stock, crafting plans, preferences, and custom games in one JSON file.
+1. Choose **Export → Download workspace backup** to save all layouts, stock, crafting plans, crop plans, preferences, and custom games in one JSON file.
 2. Open the destination copy of the planner, close its other planner tabs, then choose **Export → Restore workspace backup** and select the file. Confirm to replace the data for games in the backup. Local overrides for restored workspaces are removed if those overrides are absent from the backup. Other games stay in place. Backups with unknown item or recipe IDs are rejected before making changes. Backups are limited to 32 MiB, with up to 2,000 entries in each workspace list or inventory and each top-level game catalog list.
 3. To move one layout, choose **Export → Download JSON**, select the matching game in the destination, and use **Export → Import JSON**. To move a game definition alone, use **Game data → Export game** and **Import game**.
 
@@ -191,6 +201,13 @@ The example is fictional. Each top-level value lives in its own file for bundled
 | `recipes.json` | Array of `id`, `output` and `ingredients`. Each quantity entry is `{ "itemId": "...", "quantity": 1 }` with a positive integer. Optional `name`, `stationId`, `unlock`, `alternativeIds`, `byproducts` (quantity entries), `seconds` (per batch), and `source`. Recipes sharing an output are alternatives. The first is the default, and optional `alternativeIds` must reference recipes for the same output. An empty ingredient list is valid only when the known recipe produces an item without consumable input. |
 | `presets.json` | Array of `id`, `name`, `width`, `height`, and `placements` (`x`, `y`, `tile`). Coordinates start at zero. Optional `fill` (`crop`, the default, or `empty`) and `progression` (level ID). Tile values are `crop`, `empty`, `rock`, `path`, an equipment ID, or `!<id>` for locked equipment. |
 
+A bundled package can opt in with `"cropData": true` in `game.json` and both optional files below. For a single-file import, provide the same definitions in the top-level `seasons` and `crops` properties. Games without crop data continue to load and can use the layout and crafting planners.
+
+| File | Fields |
+| --- | --- |
+| `seasons.json` | `schemaVersion: 1`, `contentVersion`, source URL, `currency`, `hasSeasons`, ordered `seasons` (`id`, `name`, `days`), `growthStart` (`planting-day` or `following-day`), `crossSeason` (`crop-specific` or `reset`), and ordered named lists for `environments`, `ranks`, and `qualities`. The first environment is the default planning area. Ranks run lowest to highest and quality definitions include `base`. For games without seasons, define one repeating calendar period. |
+| `crops.json` | `schemaVersion: 1`, `contentVersion`, and an array in `crops`. Each crop has a stable crop ID, existing `itemId` and `seedId`, name, category, environment ID, rectangular footprint, growing seasons, survival and replant flags, verification status, and source URL. Verified crops require growth days, yield, seed cost, and a base price. Optional fields cover shop seasons, rank, additional unlocks, regrowth, harvest limits, fixed-grade prices, and deterministic growth modifiers. See [the bundled crop catalog](public/games/coral-island/crops.json) for examples. |
+
 IDs use lowercase letters, digits, underscores and hyphens, start with a letter or digit, and have a maximum length of 64. Tile and editor tool names are reserved for equipment IDs. The validator rejects unsupported versions, duplicate IDs or placements, invalid shapes and quantities, missing references, and cycles in the recipe ingredient graph across possible alternatives. The fictional [Meadow Test package](tests/fixtures/meadow-test.game.json) provides a more complete import example. It is used by tests and does not ship in the game selector.
 
 ## Coral Island data
@@ -204,3 +221,9 @@ The sprinkler formulas were cross-checked against the [Coral Island crafting tab
 The Crafting Planner includes all 158 inventory crafting outputs listed by Coral Guide for Steam build v1.3-1247. New recipes use the game-data quantities and batch yields where the sources disagree. For example, the Furnace takes Stone, Scrap Chest takes both Scrap and Stone, and Fertilizer III takes Osmium Kelp. The Yogurt Machine is marked unavailable in the wiki. [Coral Island Wiki crafting table](https://coralisland.wiki/wiki/Crafting) · [Coral Guide inventory crafting data](https://coral.guide/crafting/inventory/)
 
 Existing scarecrow recipes keep their original IDs and defaults. Where the game-data formula differs, choose **Coral Guide (v1.3-1247)** under **Recipe choices**. Recipes that accept a class of ingredients use a shared stock entry such as **Any Ore** or **Any Small Fish**. Enter eligible stock under that entry for the planner to deduct it. The catalog also includes supporting processing recipes for Compost, Coal, Glass, metal bars, and kelp essences. [Resource Equipment reference](https://coralisland.wiki/wiki/Resource_Equipment) · [Coral Guide artisan processing data](https://coral.guide/crafting/artisan/)
+
+### Seasonal crop data
+
+The bundled crop catalog has 32 verified outdoor crop records and one incomplete record. It uses the community wiki snapshot dated November 18, 2026. Each entry links to its crop reference. Hot Pepper grows through Summer and Fall, with regular shop sales in Summer. Snowdrop remains visible with a data warning because the individual crop page and winter overview list different growth durations. [Crop reference](https://coralisland.wiki/wiki/Crop) · [Season reference](https://coralisland.wiki/wiki/Season) · [Hot Pepper](https://coralisland.wiki/wiki/Hot_pepper) · [Snowdrop](https://coralisland.wiki/wiki/Snowdrop) · [Winter](https://coralisland.wiki/wiki/Winter)
+
+The growth model assumes consecutive watered days and ordinary harvest yields. Fixed-quality comparisons use documented per-grade prices where bundled. Greenhouses, fruit plants and trees, underwater farming, fertilizer probabilities, bonus harvests, artisan processing, and rotations between different crops in one plot are outside this release.

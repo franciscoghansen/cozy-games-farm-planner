@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "wiki snapshot 2026-11-18",
+  "source": "https://coralisland.wiki/wiki/Season",
+  "hasSeasons": true,
+  "seasons": [
+    {
+      "id": "spring",
+      "name": "Spring",
+      "days": 28
+    },
+    {
+      "id": "summer",
+      "name": "Summer",
+      "days": 28
+    },
+    {
+      "id": "fall",
+      "name": "Fall",
+      "days": 28
+    },
+    {
+      "id": "winter",
+      "name": "Winter",
+      "days": 28
+    }
+  ],
+  "currency": "coins",
+  "growthStart": "following-day",
+  "crossSeason": "crop-specific",
+  "environments": [
+    {
+      "id": "land",
+      "name": "Outdoor land"
+    }
+  ],
+  "ranks": [
+    {
+      "id": "f",
+      "name": "F"
+    },
+    {
+      "id": "e",
+      "name": "E"
+    },
+    {
+      "id": "d",
+      "name": "D"
+    },
+    {
+      "id": "c",
+      "name": "C"
+    },
+    {
+      "id": "b",
+      "name": "B"
+    },
+    {
+      "id": "a",
+      "name": "A"
+    },
+    {
+      "id": "s",
+      "name": "S"
+    }
+  ],
+  "qualities": [
+    {
+      "id": "base",
+      "name": "Base"
+    },
+    {
+      "id": "bronze",
+      "name": "Bronze"
+    },
+    {
+      "id": "silver",
+      "name": "Silver"
+    },
+    {
+      "id": "gold",
+      "name": "Gold"
+    },
+    {
+      "id": "osmium",
+      "name": "Osmium"
+    }
+  ]
+}

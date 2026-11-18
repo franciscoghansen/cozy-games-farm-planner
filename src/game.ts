@@ -1,3 +1,4 @@
+import type { Calendar, CropCatalog } from './crops/types.ts'
 import { dependencyOrder, recipeAlternatives } from './bom.ts'
 import { categories, quantityLimit } from './crafting-types.ts'
 import type { Inventory, ItemDefinition, Recipe } from './crafting-types.ts'
@@ -15,11 +16,13 @@ export interface PresetDefinition {
 }
 export interface Metadata {
   schemaVersion: 1; contentVersion: string; id: string; name: string; description?: string
+  cropData?: boolean
   defaultPreset?: string; requiredCoverage?: CoverageKind[]; defaultInventory?: Inventory
   progressions: { id: string; name: string; equipment: string[] }[]
   acquisitionMethods: Record<string, string>; stations: { id: string; name: string }[]
 }
 export interface GamePackage {
+  seasons?: Calendar; crops?: CropCatalog
   game: Metadata; items: ItemDefinition[]; equipment: EquipmentDefinition[]; recipes: Recipe[]; presets: PresetDefinition[]
 }
 
@@ -79,6 +82,7 @@ export function validatePackage(value: unknown): GamePackage {
   text(meta.name, 'game.name')
   text(meta.contentVersion, 'game.contentVersion')
   optional(meta.description, 'game.description', text)
+  optional(meta.cropData, 'game.cropData', boolean)
   const methods = object(meta.acquisitionMethods, 'game.acquisitionMethods')
   for (const [key, name] of Object.entries(methods)) { id(key, 'acquisition method'); text(name, key) }
   const methodIds = new Set(Object.keys(methods))
@@ -181,8 +185,103 @@ export function validatePackage(value: unknown): GamePackage {
     const path = byproducts.get(id)
     if (path) fail(path, 'byproduct ' + id + ' is also used as a recipe ingredient')
   }
+  validateCropDefinitions(pack, meta, itemIds)
   dependencyOrder(edges)
   return value as GamePackage
+}
+
+
+function boolean(value: unknown, path: string) {
+  if (typeof value !== 'boolean') fail(path, 'expected a boolean')
+}
+function source(value: unknown, path: string) {
+  const url = text(value, path)
+  if (!/^https?:\/\/[^\s/]+(?:[/?#][^\s]*)?$/.test(url)) fail(path, 'expected an HTTP(S) source URL')
+}
+
+function validateCropDefinitions(pack: Record<string, unknown>, meta: Record<string, unknown>, itemIds: ReadonlySet<string>) {
+  if (!meta.cropData && pack.seasons === undefined && pack.crops === undefined) return
+  const calendar = object(pack.seasons, 'seasons')
+  const catalog = object(pack.crops, 'crops')
+  for (const [name, value] of Object.entries({ seasons: calendar, crops: catalog })) {
+    if (value.schemaVersion !== 1) fail(name, 'unsupported schema version')
+    text(value.contentVersion, name + '.contentVersion')
+  }
+  boolean(calendar.hasSeasons, 'seasons.hasSeasons')
+  choice(calendar.growthStart, 'seasons.growthStart', ['planting-day', 'following-day'])
+  choice(calendar.crossSeason, 'seasons.crossSeason', ['crop-specific', 'reset'])
+  text(calendar.currency, 'seasons.currency')
+  source(calendar.source, 'seasons.source')
+  function named(field: string, days = false) {
+    const entries = records(calendar[field], 'seasons.' + field)
+    if (entries.length > 24) fail(field, 'at most 24 entries')
+    return new Set(entries.map(({ obj, at, key }) => {
+      text(obj.name, at + '.name')
+      if (days) number(obj.days, at + '.days', 1, 366)
+      return key
+    }))
+  }
+  const seasons = named('seasons', true)
+  const environments = named('environments')
+  if (!environments.size) fail('seasons.environments', 'at least one environment is required')
+  const ranks = named('ranks')
+  const qualities = named('qualities')
+  if (!seasons.size || (!calendar.hasSeasons && seasons.size !== 1)) fail('seasons', 'invalid calendar periods')
+  if (!qualities.has('base')) fail('seasons.qualities', 'missing base quality')
+  const crops = records(catalog.crops, 'crops.crops')
+  if (crops.length > 2_000) fail('crops', 'too many crops')
+  for (const { obj, at } of crops) {
+    ref(obj.itemId, at + '.itemId', itemIds)
+    ref(obj.seedId, at + '.seedId', itemIds)
+    text(obj.name, at + '.name')
+    text(obj.category, at + '.category')
+    source(obj.source, at + '.source')
+    for (const field of ['icon', 'note', 'unlock']) optional(obj[field], at + '.' + field, text)
+    ref(obj.environment, at + '.environment', environments)
+    optional(obj.rank, at + '.rank', (value, path) => ref(value, path, ranks))
+    const footprint = object(obj.footprint, at + '.footprint')
+    number(footprint.width, at + '.footprint.width', 1, boardLimit)
+    number(footprint.height, at + '.footprint.height', 1, boardLimit)
+    const growing = array(obj.seasons, at + '.seasons')
+    if (calendar.hasSeasons && !growing.length) fail(at + '.seasons', 'at least one growing season is required')
+    for (const field of ['seasons', 'saleSeasons']) {
+      if (obj[field] === undefined) continue
+      const values = array(obj[field], at + '.' + field)
+      if (new Set(values).size !== values.length) fail(at + '.' + field, 'duplicate season')
+      for (const value of values) ref(value, at + '.' + field, seasons)
+    }
+    boolean(obj.survivesSeasonChange, at + '.survivesSeasonChange')
+    boolean(obj.replant, at + '.replant')
+    const status = choice(obj.status, at + '.status', ['verified', 'incomplete', 'unsupported'])
+    for (const field of ['growth', 'regrowth', 'maxHarvests', 'yield', 'seedCost']) {
+      if (status === 'verified' && ['growth', 'yield', 'seedCost'].includes(field) || obj[field] !== undefined) {
+        number(obj[field], at + '.' + field, field === 'seedCost' ? 0 : 1, field === 'seedCost' ? quantityLimit : 366)
+      }
+    }
+    if (obj.prices !== undefined || status === 'verified') {
+      const prices = object(obj.prices, at + '.prices')
+      if (status === 'verified' && prices.base === undefined) fail(at + '.prices', 'missing base price')
+      for (const [key, price] of Object.entries(prices)) {
+        ref(key, at + '.prices', qualities)
+        number(price, at + '.prices.' + key, 0)
+      }
+    }
+    if (obj.modifiers !== undefined) for (const modifier of records(obj.modifiers, at + '.modifiers')) {
+      text(modifier.obj.name, modifier.at + '.name')
+      number(modifier.obj.daysSaved, modifier.at + '.daysSaved', 0, 365)
+      number(modifier.obj.cost, modifier.at + '.cost', 0)
+    }
+  }
+}
+
+export function withBundledCrops(pack: GamePackage, bundled?: GamePackage) {
+  if (pack.game.cropData !== undefined || pack.crops || !bundled?.crops || !bundled.seasons) return pack
+  const used = new Set(bundled.crops.crops.flatMap(crop => [crop.itemId, crop.seedId]))
+  const existing = new Set(pack.items.map(item => item.id))
+  return validatePackage({
+    ...pack, crops: bundled.crops, seasons: bundled.seasons,
+    items: [...pack.items, ...bundled.items.filter(item => used.has(item.id) && !existing.has(item.id))],
+  })
 }
 
 export function validateManifest(value: unknown) {

@@ -1,4 +1,4 @@
-import { adaptGame, validatePackage } from './game.ts'
+import { adaptGame, validatePackage, withBundledCrops } from './game.ts'
 import type { GamePackage } from './game.ts'
 import type { GameState } from './workspace-db.ts'
 import { dbGet, dbGetAll } from './workspace-db.ts'
@@ -32,7 +32,8 @@ export function parseBackup(source: string, bundled: ReadonlyMap<string, GamePac
   const games = unique(list(backup.games, 'custom games').map(value => {
     const pack = record(value, 'custom game')
     for (const field of ['items', 'equipment', 'recipes', 'presets']) list(pack[field], 'game ' + field)
-    return validatePackage(value)
+    const validated = validatePackage(value)
+    return withBundledCrops(validated, bundled.get(validated.game.id))
   }), pack => pack.game.id, 'game ID')
   const definitions = new Map(bundled)
   for (const pack of games) definitions.set(pack.game.id, pack)

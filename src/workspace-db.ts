@@ -1,4 +1,4 @@
-import { adaptGame, validateManifest, validatePackage } from './game.ts'
+import { adaptGame, validateManifest, validatePackage, withBundledCrops } from './game.ts'
 import type { GamePackage, Inventory } from './game.ts'
 import { gameFor, registerGame, setLayoutV1Game } from './equipment.ts'
 import { loadWorkspace } from './storage.ts'
@@ -8,6 +8,7 @@ import { defaultBomSettings } from './farm-bom.ts'
 import type { BomConfiguration, BomSettings } from './farm-bom.ts'
 import type { CraftingWorkspace } from './crafting-plans.ts'
 import { validateState } from './workspace-state.ts'
+import type { CropPlan } from './crops/types.ts'
 import type { Overlays } from './FarmGrid.tsx'
 
 export interface GameState {
@@ -16,6 +17,7 @@ export interface GameState {
   bom: BomSettings
   configurations?: BomConfiguration[]
   crafting?: CraftingWorkspace
+  crops?: CropPlan[]
   preferences?: { overlays: Overlays; manualLock: boolean }
 }
 
@@ -125,7 +127,9 @@ export async function bootstrap(open = openDatabase, json = getJson) {
       const [game, items, equipment, recipes, presets] = await Promise.all(
         ['game', 'items', 'equipment', 'recipes', 'presets'].map(file => json(id + '/' + file + '.json')),
       )
-      const pack = validatePackage({ game, items, equipment, recipes, presets })
+      const cropData = (game as GamePackage['game'] | null)?.cropData === true
+      const [seasons, crops] = cropData ? await Promise.all(['seasons', 'crops'].map(file => json(id + '/' + file + '.json'))) : []
+      const pack = validatePackage({ game, items, equipment, recipes, presets, ...(cropData && { seasons, crops }) })
       if (pack.game.id !== id) throw new Error('Game ID does not match its manifest directory: ' + id)
       return pack
     })),
@@ -147,7 +151,7 @@ export async function bootstrap(open = openDatabase, json = getJson) {
     try {
       const validated = validatePackage(value)
       if (validated.game.id !== key) throw new Error('Invalid override key.')
-      games.set(validated.game.id, validated)
+      games.set(validated.game.id, withBundledCrops(validated, bundled.get(validated.game.id)))
     } catch { invalidOverrides.push(key) }
   }
   for (const pack of games.values()) registerGame(adaptGame(pack), pack.game.id === manifest.defaultGame)

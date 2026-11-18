@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Activity, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BarChart3, Boxes, ChevronDown, Database, Download, Droplets, Eye, FolderOpen, Github, Grid2X2, Hammer, Layers3, Redo2,
   Settings2, ShieldCheck, Sprout, Undo2, X } from 'lucide-react'
 import { coverage, statistics } from './coverage.ts'
 import { gameFor, isItem, registerGame } from './equipment.ts'
-import { adaptGame, quantityLimit } from './game.ts'
+import { adaptGame, boardLimit, quantityLimit, withBundledCrops } from './game.ts'
 import type { GamePackage } from './game.ts'
 import { FarmGrid } from './FarmGrid.tsx'
 import type { GridHandle, Overlays } from './FarmGrid.tsx'
@@ -23,6 +23,9 @@ import { Materials } from './Materials.tsx'
 import { GameData } from './GameData.tsx'
 import type { FarmBom } from './farm-bom.ts'
 import { CraftingPlanner } from './CraftingPlanner.tsx'
+import { CropPlanner } from './crops/CropPlanner.tsx'
+import { plotKey } from './crops/crop-layout-adapter.ts'
+import type { CropPlan } from './crops/types.ts'
 import { emptyCrafting } from './crafting-plans.ts'
 import { backupSizeLimit, exportBackup, parseBackup, restoreBackup } from './backup.ts'
 import { validateState } from './workspace-state.ts'
@@ -40,11 +43,11 @@ const overlayButtons = [
 ] as const
 const defaultOverlays: Overlays = { combined: true, water: false, guard: false, equipment: false, coords: false }
 type Started = Awaited<ReturnType<typeof bootstrap>>
-const viewTitles = { planner: 'Farm Planner', materials: 'Materials', crafting: 'Crafting Planner', data: 'Game data' }
+const viewTitles = { planner: 'Farm Planner', materials: 'Materials', crafting: 'Crafting Planner', crops: 'Crops', data: 'Game data' }
 type View = keyof typeof viewTitles
 const readView = (): View => {
   const hash = location.hash.slice(1)
-  return hash === 'materials' || hash === 'crafting' || hash === 'data' ? hash : 'planner'
+  return hash === 'materials' || hash === 'crafting' || hash === 'crops' || hash === 'data' ? hash : 'planner'
 }
 
 function App({ session, switchGame, replaceGame, switching, removeInvalid, reloadRequired }: {
@@ -60,9 +63,15 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   const current = useRef(plan)
   const [previous, setPrevious] = useState<Plan>()
   const [view, setView] = useState(readView)
+  const [cropVisited, setCropVisited] = useState(view === 'crops')
   const [showCraftPlan, setShowCraftPlan] = useState(false)
   const [crafting, setCrafting] = useState<FarmBom>()
   const [craftingWorkspace, setCraftingWorkspace] = useState(() => state.crafting ?? emptyCrafting())
+  const [cropPlans, setCropPlans] = useState<CropPlan[]>(state.crops ?? [])
+  const [cropMode, setCropMode] = useState(false)
+  const [cropBrush, setCropBrush] = useState('')
+  const [cropRectangle, setCropRectangle] = useState(false)
+  const [showCropPlots, setShowCropPlots] = useState(true)
   const [materials, setMaterials] = useState(state.materials)
   const [bom, setBom] = useState(state.bom)
   const [configurations, setConfigurations] = useState(state.configurations ?? [])
@@ -93,8 +102,25 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   const [showControls, setShowControls] = useState(false)
   const [showStats, setShowStats] = useState(false)
   const editing = view === 'planner'
-  const maps = useMemo(() => editing ? coverage(plan) : null, [editing, plan, adapter])
-  const stats = useMemo(() => maps ? statistics(plan, maps) : null, [plan, maps])
+  const maps = useMemo(() => editing ? coverage(plan) : null,
+    [editing, plan.tiles, plan.width, plan.height, adapter])
+  const assignableCrops = useMemo(() => adapter.crops?.crops.filter(crop => crop.environment === adapter.seasons?.environments[0]?.id &&
+    crop.footprint.width === 1 && crop.footprint.height === 1 && crop.status !== 'unsupported') ?? [], [adapter])
+  const cropWarnings = useMemo(() => {
+    let blocked = 0, dry = 0, exposed = 0
+    if (!maps) return { blocked, dry, exposed }
+    for (const key of Object.keys(plan.cropPlots ?? {})) {
+      const x = Number(key) % boardLimit, y = Math.floor(Number(key) / boardLimit)
+      const i = y * plan.width + x
+      if (x >= plan.width || y >= plan.height || plan.tiles[i] !== 'crop') blocked++
+      else {
+        if (!maps.water[i]) dry++
+        if (!maps.guard[i]) exposed++
+      }
+    }
+    return { blocked, dry, exposed }
+  }, [maps, plan])
+  const stats = useMemo(() => maps ? statistics(plan, maps) : null, [maps, plan.tiles])
   const busy = progress !== null
   const stock = useMemo(() => mergedInventory(materials, plan.inventory), [materials, plan.inventory])
   const equipmentInventory = useMemo(() => Object.fromEntries(adapter.placables.map(item =>
@@ -105,10 +131,10 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
   useEffect(() => {
     if (reloadRequired) return
     const workspace = { current: plan, active, saved }
-    void dbWrite(db, 'states', gameId, { workspace, materials, bom, configurations, crafting: craftingWorkspace,
+    void dbWrite(db, 'states', gameId, { workspace, materials, bom, configurations, crafting: craftingWorkspace, crops: cropPlans,
       preferences: { overlays, manualLock } })
       .catch(() => setSaveFailed(true))
-  }, [db, gameId, plan, active, saved, materials, bom, configurations, craftingWorkspace, overlays, manualLock, reloadRequired])
+  }, [db, gameId, plan, active, saved, materials, bom, configurations, craftingWorkspace, cropPlans, overlays, manualLock, reloadRequired])
   useEffect(() => {
     const onNavigation = () => {
       setView(readView())
@@ -124,6 +150,7 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
     }
   }, [])
   useEffect(() => {
+    if (view === 'crops') setCropVisited(true)
     document.title = view === 'planner' ? viewTitles.planner : viewTitles[view] + ' · Farm Planner'
   }, [view])
 
@@ -191,6 +218,19 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
 
   function paint(indices: number[]) {
     const before = current.current
+    if (cropMode && !busy) {
+      const changes = indices.map(i => [i, plotKey(i, before.width)] as const)
+        .filter(([i, key]) => cropBrush ? before.tiles[i] === 'crop' && before.cropPlots?.[key] !== cropBrush : before.cropPlots?.[key] !== undefined)
+      if (!changes.length) return
+      stroke.current ??= { before, seen: new Set<number>() }
+      const cropPlots = { ...before.cropPlots }
+      for (const [, key] of changes) {
+        if (cropBrush) cropPlots[key] = cropBrush
+        else delete cropPlots[key]
+      }
+      update({ ...before, cropPlots })
+      return
+    }
     const id = isItem(tool, gameId) ? tool : undefined
     if (tool === 'pan' || busy || (id && !unlockedItems(before).some(item => item.id === id))) return
     const editing = stroke.current ??= { before, seen: new Set<number>() }
@@ -339,7 +379,7 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
       const data = saveFailed || reloadRequired
         ? await exportBackup(new Map<'states' | 'games', Map<string, unknown>>([
           ['states', new Map([[gameId, { workspace: { current: plan, active, saved }, materials, bom, configurations,
-            crafting: craftingWorkspace, preferences: { overlays, manualLock } }]])],
+            crafting: craftingWorkspace, crops: cropPlans, preferences: { overlays, manualLock } }]])],
           ['games', new Map([...session.games].filter(([id, entry]) => session.bundled.get(id) !== entry))],
         ]), gameId)
         : await exportBackup(db, gameId)
@@ -384,6 +424,8 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
           }}><Boxes size={16} /> Materials</button>
           <button className="secondary feature-nav" aria-pressed={view === 'crafting'} disabled={busy}
             onClick={() => navigate(view === 'crafting' ? 'planner' : 'crafting')}><Hammer size={16} /> Crafting Planner</button>
+          <button className="secondary feature-nav" aria-pressed={view === 'crops'} disabled={busy}
+            onClick={() => navigate(view === 'crops' ? 'planner' : 'crops')}><Sprout size={16} /> Crops</button>
           <button className="secondary feature-nav" aria-pressed={view === 'data'} disabled={busy} onClick={() => navigate(view === 'data' ? 'planner' : 'data')}><Database size={15} /> Game data</button>
         </nav>
         <button className="secondary" disabled={busy} onClick={() => { setName(plan.name); setDialog(true) }}><FolderOpen size={16} /> Layouts</button>
@@ -442,6 +484,11 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
       onInventory={updateInventory} onBack={() => navigate('planner')} showPlan={showCraftPlan} />}
     {view === 'crafting' && <CraftingPlanner game={adapter} workspace={craftingWorkspace} inventory={stock}
       onChange={setCraftingWorkspace} onInventory={updateInventory} onBack={() => navigate('planner')} />}
+    {(cropVisited || view === 'crops') && <Activity mode={view === 'crops' ? 'visible' : 'hidden'}>
+      <CropPlanner key={adapter.crops?.contentVersion} game={adapter} farm={plan} inventory={stock} saved={cropPlans}
+        onSave={setCropPlans} onInventory={updateInventory} onBack={() => navigate('planner')}
+        onApply={cropPlots => { commit({ ...current.current, cropPlots }); setShowCropPlots(true) }} />
+    </Activity>}
     {view === 'data' && <GameData key={gameId} pack={pack} bundled={session.bundled.has(gameId)}
       customized={session.bundled.get(gameId) !== pack} onSave={replaceGame}
       onReset={async () => { await replaceGame(session.bundled.get(gameId)!, true); setPast([]); setFuture([]); setPrevious(undefined) }}
@@ -453,7 +500,7 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
     <main className="workspace">
       <div className={'left-panel' + (showControls ? ' revealed' : '')}>
         <Controls key={plan.width + 'x' + plan.height} plan={{ ...plan, inventory: equipmentInventory }} stats={stats} selectedPreset={selectedPreset} tool={tool}
-          manualLock={manualLock} onTool={setTool} onLock={value => { setManualLock(value); setNotice('') }}
+          manualLock={manualLock} onTool={next => { setCropMode(false); setTool(next) }} onLock={value => { setManualLock(value); setNotice('') }}
           onPlan={patch => {
             if (patch.inventory) setMaterials(previous => Object.fromEntries(Object.entries(previous)
               .filter(([id]) => !adapter.placedItems.has(id))))
@@ -485,10 +532,22 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
               (key === 'water' || key === 'guard') ? { combined: false } : {}),
           })) }}><Icon size={14} />{label}</button>)}
         </div>
-        <FarmGrid ref={grid} plan={plan} maps={maps} overlays={overlays} tool={tool === 'erase' ? 'empty' : tool}
-          disabled={busy} onPaint={paint} onEnd={finishStroke} />
+        {assignableCrops.length > 0 && <div className="crop-tools" aria-label="Crop assignment tools">
+          <button className="secondary" disabled={busy} aria-pressed={cropMode} onClick={() => { setCropMode(!cropMode); setShowCropPlots(true) }}><Sprout size={15} /> Assign crops</button>
+          {cropMode && <>
+            <select aria-label="Crop assignment brush" value={cropBrush} onChange={event => setCropBrush(event.target.value)}>
+              <option value="">Clear assignment</option>{assignableCrops.map(crop => <option key={crop.id} value={crop.id}>{crop.name}</option>)}
+            </select>
+            <label className="check"><input type="checkbox" checked={cropRectangle} onChange={event => setCropRectangle(event.target.checked)} /> Fill rectangle</label>
+          </>}
+          <label className="check"><input type="checkbox" checked={showCropPlots} onChange={event => setShowCropPlots(event.target.checked)} /> Crop colors and labels</label>
+        </div>}
+        <FarmGrid ref={grid} plan={plan} maps={maps} overlays={overlays} tool={cropMode ? 'crop' : tool === 'erase' ? 'empty' : tool}
+          showCropPlots={showCropPlots} rectangleMode={cropMode && cropRectangle} disabled={busy} onPaint={paint} onEnd={finishStroke} />
         <div className="legend">{legend.map(([name, color], index) => <span key={name}><i style={{ background: color }} />
           {index === 0 && (adapter.game.requiredCoverage?.length ?? 2) < 2 ? 'Meets coverage goal' : name}</span>)}</div>
+        {(cropWarnings.blocked > 0 || cropWarnings.dry > 0 || cropWarnings.exposed > 0) &&
+          <p className="crop-coverage-warning" role="status">Crop coverage · {cropWarnings.blocked} blocked or outside the board · {cropWarnings.dry} require manual watering · {cropWarnings.exposed} lack protection</p>}
         {crafting && <div className="craft-proposal">
           <div><strong>{crafting.operations.toLocaleString()} crafting operations</strong>
             <p>{crafting.consumed.size ? 'Stock assigned · ' + [...crafting.consumed].map(([id, count]) =>
@@ -569,6 +628,7 @@ function Session({ initial }: { initial: Started }) {
   }
   async function replaceGame(pack: GamePackage, reset = false) {
     const id = pack.game.id
+    pack = withBundledCrops(pack, session.bundled.get(id))
     const previous = session.games.get(id)
     registerGame(adaptGame(pack))
     try {

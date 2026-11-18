@@ -10,7 +10,7 @@ import { changes, optimize } from '../src/optimizer.ts'
 import { preset } from '../src/presets.ts'
 import { deserialize, loadWorkspace, saveWorkspace, serialize } from '../src/storage.ts'
 
-const bundled = Object.fromEntries(['game', 'items', 'equipment', 'recipes', 'presets'].map(name =>
+const bundled = Object.fromEntries(['game', 'items', 'equipment', 'recipes', 'presets', 'seasons', 'crops'].map(name =>
   [name, JSON.parse(readFileSync(new URL(`../public/games/coral-island/${name}.json`, import.meta.url), 'utf8'))]))
 const adapter = adaptGame(validatePackage(bundled))
 registerGame(adapter, true)

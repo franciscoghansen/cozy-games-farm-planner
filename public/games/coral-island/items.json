@@ -2152,5 +2152,551 @@
     "acquisition": [
       "foraging"
     ]
+  },
+
+  {
+    "id": "turnip",
+    "name": "Turnip",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "turnip_seed",
+    "name": "Turnip seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "carrot",
+    "name": "Carrot",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "carrot_seed",
+    "name": "Carrot seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "daisy",
+    "name": "Daisy",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "daisy_seed",
+    "name": "Daisy seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "cauliflower",
+    "name": "Cauliflower",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "cauliflower_seed",
+    "name": "Cauliflower seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "peony",
+    "name": "Peony",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "peony_seed",
+    "name": "Peony seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "poppy",
+    "name": "Poppy",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "poppy_seed",
+    "name": "Poppy seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "lettuce",
+    "name": "Lettuce",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "lettuce_seed",
+    "name": "Lettuce seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "chard",
+    "name": "Chard",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "chard_seed",
+    "name": "Chard seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "radish",
+    "name": "Radish",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "radish_seed",
+    "name": "Radish seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "sunflower",
+    "name": "Sunflower",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "sunflower_seed",
+    "name": "Sunflower seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "gardenia",
+    "name": "Gardenia",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "gardenia_seed",
+    "name": "Gardenia seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "wheat_seed",
+    "name": "Wheat seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "blueberry",
+    "name": "Blueberry",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "blueberry_seed",
+    "name": "Blueberry seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "hot_pepper",
+    "name": "Hot pepper",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "hot_pepper_seed",
+    "name": "Hot pepper seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "melon",
+    "name": "Melon",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "melon_seed",
+    "name": "Melon seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "bell_pepper",
+    "name": "Bell pepper",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "bell_pepper_seed",
+    "name": "Bell pepper seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "tomato",
+    "name": "Tomato",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "tomato_seed",
+    "name": "Tomato seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "blackberry",
+    "name": "Blackberry",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "blackberry_seed",
+    "name": "Blackberry seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "red_cabbage",
+    "name": "Red cabbage",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "red_cabbage_seed",
+    "name": "Red cabbage seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "starfruit",
+    "name": "Starfruit",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "starfruit_seed",
+    "name": "Starfruit seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "rose",
+    "name": "Rose",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "rose_seed",
+    "name": "Rose seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "orchid",
+    "name": "Orchid",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "orchid_seed",
+    "name": "Orchid seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "beet",
+    "name": "Beet",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "beet_seed",
+    "name": "Beet seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "basil",
+    "name": "Basil",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "basil_seed",
+    "name": "Basil seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "bok_choy",
+    "name": "Bok choy",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "bok_choy_seed",
+    "name": "Bok choy seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "blue_dahlia",
+    "name": "Blue dahlia",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "blue_dahlia_seed",
+    "name": "Blue dahlia seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "amaranth",
+    "name": "Amaranth",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "amaranth_seed",
+    "name": "Amaranth seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "artichoke",
+    "name": "Artichoke",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "artichoke_seed",
+    "name": "Artichoke seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "barley",
+    "name": "Barley",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "barley_seed",
+    "name": "Barley seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "tea_leaf",
+    "name": "Tea leaf",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "tea_leaf_seed",
+    "name": "Tea leaf seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "cotton_seed",
+    "name": "Cotton seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "snowdrop",
+    "name": "Snowdrop",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "snowdrop_seed",
+    "name": "Snowdrop seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
+  },
+  {
+    "id": "corn",
+    "name": "Corn",
+    "category": "raw_resource",
+    "acquisition": [
+      "farming"
+    ]
+  },
+  {
+    "id": "corn_seed",
+    "name": "Corn seeds",
+    "category": "consumable",
+    "acquisition": [
+      "purchasing"
+    ],
+    "purchasable": true
   }
 ]

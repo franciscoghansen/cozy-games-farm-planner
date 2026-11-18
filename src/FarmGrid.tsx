@@ -3,6 +3,7 @@ import type { PointerEvent as ReactPointerEvent } from 'react'
 import { Crosshair, Hand, Maximize, Minus, Plus, RotateCcw } from 'lucide-react'
 import { gameFor } from './equipment.ts'
 import { visitCoverage } from './coverage.ts'
+import { plotKey, rectangle } from './crops/crop-layout-adapter.ts'
 import { itemId } from './model.ts'
 import type { Plan, Tile } from './model.ts'
 import type { coverage } from './coverage.ts'
@@ -15,6 +16,7 @@ type View = Point & { scale: number }
 type Maps = ReturnType<typeof coverage>
 interface Props {
   plan: Plan; maps: Maps; overlays: Overlays; tool: Tile | 'pan' | 'lock'; disabled: boolean
+  showCropPlots?: boolean; rectangleMode?: boolean
   onPaint: (indices: number[]) => void; onEnd: () => void
 }
 
@@ -25,7 +27,7 @@ const colors = {
 export const palette = colors
 
 function draw(ctx: CanvasRenderingContext2D, plan: Plan, maps: Maps, overlays: Overlays,
-  view: View, size: Point, hover: number, decorations = true) {
+  view: View, size: Point, hover: number, showCropPlots: boolean, selection: [number, number] | null = null) {
   const cell = view.scale
   const ox = view.x - plan.width * cell / 2
   const oy = view.y - plan.height * cell / 2
@@ -38,7 +40,11 @@ function draw(ctx: CanvasRenderingContext2D, plan: Plan, maps: Maps, overlays: O
   const items = adapter.placedItems
   const goal = adapter.game.requiredCoverage ?? ['water', 'guard']
   const needsWater = goal.includes('water'), needsGuard = goal.includes('guard')
-  if (decorations && cell >= 8) {
+  const cropStyles = new Map(adapter.crops?.crops.map(({ id, name }) => {
+    const hash = [...id].reduce((value, letter) => (value * 31 + letter.charCodeAt(0)) | 0, 0)
+    return [id, { color: 'hsl(' + (Math.abs(hash) % 360) + ' 56% 76%)', label: name.slice(0, 2) }]
+  }))
+  if (cell >= 8) {
     ctx.fillStyle = '#96826344'
     ctx.fillRect(ox - 4, oy - 4, plan.width * cell + 8, plan.height * cell + 8)
     ctx.fillStyle = '#f7f1df'
@@ -98,6 +104,22 @@ function draw(ctx: CanvasRenderingContext2D, plan: Plan, maps: Maps, overlays: O
       ctx.arc(left + cell * .48, top + cell * .49, cell * .18, 0, Math.PI * 2)
       ctx.fill()
     }
+    const assigned = showCropPlots && plan.cropPlots?.[plotKey(i, plan.width)]
+    const style = assigned ? cropStyles.get(assigned) : undefined
+    if (style && tile === 'crop') {
+      ctx.fillStyle = style.color
+      ctx.fillRect(left + cell * .12, top + cell * .12, cell * .72, cell * .72)
+      if (cell >= 13) {
+        ctx.fillStyle = '#243a32'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.font = '700 ' + Math.min(13, cell * .53) + 'px sans-serif'
+        ctx.fillText(style.label, left + cell * .48, top + cell * .49, cell * .67)
+      }
+    } else if (style) {
+      ctx.fillStyle = '#9b2828'
+      ctx.fillRect(left, top + cell * .78, cell - gap, cell * .16)
+    }
     if (overlays.coords && cell >= 24 && !item) {
       ctx.fillStyle = '#243a32'
       ctx.font = '8px monospace'
@@ -105,6 +127,14 @@ function draw(ctx: CanvasRenderingContext2D, plan: Plan, maps: Maps, overlays: O
       ctx.textBaseline = 'top'
       ctx.fillText(`${x},${y}`, left + 2, top + 2)
     }
+  }
+  if (selection) {
+    const [a, b] = selection
+    const left = Math.min(a % plan.width, b % plan.width)
+    const top = Math.min(Math.floor(a / plan.width), Math.floor(b / plan.width))
+    ctx.fillStyle = '#355f3c42'
+    ctx.fillRect(ox + left * cell, oy + top * cell, (Math.abs(a % plan.width - b % plan.width) + 1) * cell,
+      (Math.abs(Math.floor(a / plan.width) - Math.floor(b / plan.width)) + 1) * cell)
   }
   if (hover >= 0) {
     const x = hover % plan.width
@@ -128,7 +158,7 @@ function draw(ctx: CanvasRenderingContext2D, plan: Plan, maps: Maps, overlays: O
 }
 
 export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
-  { plan, maps, overlays, tool, disabled, onPaint, onEnd }, ref,
+  { plan, maps, overlays, tool, disabled, showCropPlots = true, rectangleMode = false, onPaint, onEnd }, ref,
 ) {
   const area = useRef<HTMLDivElement>(null)
   const canvas = useRef<HTMLCanvasElement>(null)
@@ -138,8 +168,9 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
   const [space, setSpace] = useState(false)
   const [touchPaint, setTouchPaint] = useState(false)
   const [cursor, setCursor] = useState(-1)
+  const [selection, setSelection] = useState<[number, number] | null>(null)
   const description = useId()
-  const drag = useRef<{ id: number; pan: boolean; point: Point; last: Point } | null>(null)
+  const drag = useRef<{ id: number; pan: boolean; point: Point; last: Point; corner: number } | null>(null)
   const fitted = { x: size.x / 2, y: size.y / 2, scale: Math.max(1, Math.min(56,
     (size.x - 46) / plan.width, (size.y - 46) / plan.height)) }
   const view = customView ?? fitted
@@ -183,8 +214,8 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
     const ctx = node.getContext('2d')
     if (!ctx || !size.x || !size.y) return
     ctx.scale(dpr, dpr)
-    draw(ctx, plan, maps, overlays, view, size, cursor >= 0 ? cursor : hover)
-  }, [plan, maps, overlays, view.x, view.y, view.scale, size, hover, cursor])
+    draw(ctx, plan, maps, overlays, view, size, cursor >= 0 ? cursor : hover, showCropPlots, selection)
+  }, [plan, maps, overlays, view.x, view.y, view.scale, size, hover, cursor, showCropPlots, selection])
 
   useImperativeHandle(ref, () => ({
     downloadPng() {
@@ -196,10 +227,10 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
       ctx.fillStyle = '#f7f1df'
       ctx.fillRect(0, 0, output.width, output.height)
       const center = { x: output.width / 2, y: output.height / 2, scale }
-      draw(ctx, plan, maps, overlays, center, { x: output.width, y: output.height }, -1)
+      draw(ctx, plan, maps, overlays, center, { x: output.width, y: output.height }, -1, showCropPlots)
       output.toBlob(blob => { if (blob) download(blob, plan.name + '.png') })
     },
-  }), [plan, maps, overlays])
+  }), [plan, maps, overlays, showCropPlots])
 
   function zoom(factor: number, point: Point = { x: size.x / 2, y: size.y / 2 }) {
     setView(current => {
@@ -232,6 +263,9 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
     return point.x >= 0 && point.y >= 0 && point.x < plan.width && point.y < plan.height
       ? point.y * plan.width + point.x : -1
   }
+  function boundedIndex(point: Point) {
+    return index({ x: Math.max(0, Math.min(plan.width - 1, point.x)), y: Math.max(0, Math.min(plan.height - 1, point.y)) })
+  }
   function onPointerDown(event: ReactPointerEvent<HTMLCanvasElement>) {
     if (drag.current || ![0, 1, 2].includes(event.button)) return
     setCursor(-1)
@@ -240,9 +274,12 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
     event.currentTarget.setPointerCapture(event.pointerId)
     const point = local(event)
     const last = tileAt(point)
-    drag.current = { id: event.pointerId, pan, point, last }
     const i = index(last)
-    if (!pan && i >= 0) onPaint([i])
+    drag.current = { id: event.pointerId, pan, point, last, corner: rectangleMode ? i : -1 }
+    if (!pan && i >= 0) {
+      if (rectangleMode) setSelection([i, i])
+      else onPaint([i])
+    }
   }
   function onPointerMove(event: ReactPointerEvent<HTMLCanvasElement>) {
     const point = local(event)
@@ -257,6 +294,10 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
     }
     setHover(index(next))
     if (!current || current.id !== event.pointerId || disabled) return
+    if (rectangleMode) {
+      if (current.corner >= 0) setSelection([current.corner, boundedIndex(next)])
+      return
+    }
     const dx = next.x - current.last.x, dy = next.y - current.last.y
     const steps = Math.max(Math.abs(dx), Math.abs(dy))
     const indices: number[] = []
@@ -269,9 +310,20 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
   }
   function end(event: ReactPointerEvent<HTMLCanvasElement>) {
     if (drag.current?.id !== event.pointerId) return
-    if (!drag.current.pan) onEnd()
+    if (!drag.current.pan) {
+      if (event.type === 'pointerup' && rectangleMode && drag.current.corner >= 0) {
+        onPaint(rectangle(plan, drag.current.corner, boundedIndex(tileAt(local(event)))))
+      }
+      setSelection(null)
+      onEnd()
+    }
     drag.current = null
   }
+  const focusedCell = cursor >= 0 ? cursor : hover
+  const cropId = focusedCell >= 0 ? plan.cropPlots?.[plotKey(focusedCell, plan.width)] : undefined
+  const hoveredCrop = cropId && gameFor(plan.gameId).crops?.crops.find(crop => crop.id === cropId)
+  const cropHint = hoveredCrop ? hoveredCrop.name + (plan.tiles[focusedCell] === 'crop' ? '' : ' (blocked)') +
+    (hoveredCrop.growth ? ' · ' + hoveredCrop.growth + ' days to mature' : '') : ''
   const hoveredId = hover >= 0 ? itemId(plan.tiles[hover]) : undefined
   const hoveredItem = hoveredId ? gameFor(plan.gameId).placedItems.get(hoveredId) : undefined
 
@@ -317,10 +369,10 @@ export const FarmGrid = forwardRef<GridHandle, Props>(function FarmGrid(
       <button className="secondary touch-mode" aria-pressed={touchPaint} onClick={() => setTouchPaint(value => !value)}>
         Touch mode: {touchPaint ? 'Paint' : 'Pan'}
       </button>
-      <span className="desktop-grid-hint"><Crosshair size={14} />{hover >= 0 ? `(${hover % plan.width}, ${Math.floor(hover / plan.width)})${hoveredItem ? ' · ' + hoveredItem.name : ''}` : 'Hover for coordinates'}</span>
+      <span className="desktop-grid-hint"><Crosshair size={14} />{hover >= 0 ? `(${hover % plan.width}, ${Math.floor(hover / plan.width)})${hoveredItem ? ' · ' + hoveredItem.name : ''}` : 'Hover for coordinates'}{cropHint && ' · ' + cropHint}</span>
       <span className="desktop-grid-hint"><Hand size={14} /> Space + drag to pan</span>
       <span className="touch-mode">{touchPaint ? 'Drag to paint' : 'Drag sideways to pan; swipe up or down to scroll'}</span>
-      {cursor >= 0 && <span className="sr-only" aria-live="polite">Column {cursor % plan.width + 1}, row {Math.floor(cursor / plan.width) + 1}</span>}
+      {cursor >= 0 && <span className="sr-only" aria-live="polite">Column {cursor % plan.width + 1}, row {Math.floor(cursor / plan.width) + 1}{cropHint && ', ' + cropHint}</span>}
     </div>
   </>
 })

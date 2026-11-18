@@ -1,3 +1,4 @@
+import type { PlotAssignments } from './crops/types.ts'
 import { gameFor } from './equipment.ts'
 import { boardLimit, terrain } from './game.ts'
 import type { Inventory } from './game.ts'
@@ -13,6 +14,7 @@ export interface Plan {
   width: number
   height: number
   tiles: Tile[]
+  cropPlots?: PlotAssignments
   progression: string
   unlocked: string[]
   limited: boolean

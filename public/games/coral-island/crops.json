@@ -1,0 +1,900 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "wiki snapshot 2026-11-18",
+  "crops": [
+    {
+      "id": "turnip",
+      "itemId": "turnip",
+      "seedId": "turnip_seed",
+      "name": "Turnip",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring"
+      ],
+      "rank": "f",
+      "growth": 4,
+      "yield": 1,
+      "seedCost": 15,
+      "prices": {
+        "base": 40
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Turnip"
+    },
+    {
+      "id": "carrot",
+      "itemId": "carrot",
+      "seedId": "carrot_seed",
+      "name": "Carrot",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring"
+      ],
+      "rank": "f",
+      "growth": 7,
+      "yield": 1,
+      "seedCost": 35,
+      "prices": {
+        "base": 78,
+        "bronze": 90,
+        "silver": 101,
+        "gold": 117,
+        "osmium": 156
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Carrot"
+    },
+    {
+      "id": "daisy",
+      "itemId": "daisy",
+      "seedId": "daisy_seed",
+      "name": "Daisy",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring"
+      ],
+      "rank": "f",
+      "growth": 4,
+      "yield": 1,
+      "seedCost": 15,
+      "prices": {
+        "base": 40
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Daisy"
+    },
+    {
+      "id": "cauliflower",
+      "itemId": "cauliflower",
+      "seedId": "cauliflower_seed",
+      "name": "Cauliflower",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring"
+      ],
+      "rank": "f",
+      "growth": 10,
+      "yield": 1,
+      "seedCost": 70,
+      "prices": {
+        "base": 175
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Cauliflower"
+    },
+    {
+      "id": "peony",
+      "itemId": "peony",
+      "seedId": "peony_seed",
+      "name": "Peony",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring"
+      ],
+      "rank": "f",
+      "growth": 4,
+      "yield": 1,
+      "seedCost": 20,
+      "prices": {
+        "base": 42
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Peony"
+    },
+    {
+      "id": "poppy",
+      "itemId": "poppy",
+      "seedId": "poppy_seed",
+      "name": "Poppy",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring"
+      ],
+      "rank": "e",
+      "growth": 7,
+      "yield": 1,
+      "seedCost": 30,
+      "prices": {
+        "base": 82
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Poppy"
+    },
+    {
+      "id": "lettuce",
+      "itemId": "lettuce",
+      "seedId": "lettuce_seed",
+      "name": "Lettuce",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring"
+      ],
+      "rank": "d",
+      "growth": 5,
+      "yield": 1,
+      "seedCost": 20,
+      "prices": {
+        "base": 47
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Lettuce"
+    },
+    {
+      "id": "chard",
+      "itemId": "chard",
+      "seedId": "chard_seed",
+      "name": "Chard",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring"
+      ],
+      "rank": "d",
+      "growth": 6,
+      "yield": 1,
+      "seedCost": 50,
+      "prices": {
+        "base": 111
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Chard"
+    },
+    {
+      "id": "radish",
+      "itemId": "radish",
+      "seedId": "radish_seed",
+      "name": "Radish",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "spring",
+        "summer"
+      ],
+      "rank": "e",
+      "growth": 6,
+      "yield": 1,
+      "seedCost": 60,
+      "prices": {
+        "base": 119,
+        "bronze": 137,
+        "silver": 155,
+        "gold": 179,
+        "osmium": 238
+      },
+      "survivesSeasonChange": true,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Radish"
+    },
+    {
+      "id": "sunflower",
+      "itemId": "sunflower",
+      "seedId": "sunflower_seed",
+      "name": "Sunflower",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "f",
+      "growth": 8,
+      "yield": 1,
+      "seedCost": 20,
+      "prices": {
+        "base": 70
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Sunflower"
+    },
+    {
+      "id": "gardenia",
+      "itemId": "gardenia",
+      "seedId": "gardenia_seed",
+      "name": "Gardenia",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "f",
+      "growth": 5,
+      "yield": 1,
+      "seedCost": 20,
+      "prices": {
+        "base": 45
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Gardenia"
+    },
+    {
+      "id": "wheat",
+      "itemId": "wheat",
+      "seedId": "wheat_seed",
+      "name": "Wheat",
+      "category": "grain",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "f",
+      "growth": 5,
+      "yield": 1,
+      "seedCost": 15,
+      "prices": {
+        "base": 33
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Wheat"
+    },
+    {
+      "id": "blueberry",
+      "itemId": "blueberry",
+      "seedId": "blueberry_seed",
+      "name": "Blueberry",
+      "category": "fruit",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "f",
+      "growth": 10,
+      "regrowth": 4,
+      "yield": 1,
+      "seedCost": 50,
+      "prices": {
+        "base": 41,
+        "bronze": 47,
+        "silver": 53,
+        "gold": 62,
+        "osmium": 82
+      },
+      "survivesSeasonChange": false,
+      "replant": false,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Blueberry"
+    },
+    {
+      "id": "hot_pepper",
+      "itemId": "hot_pepper",
+      "seedId": "hot_pepper_seed",
+      "name": "Hot pepper",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer",
+        "fall"
+      ],
+      "saleSeasons": [
+        "summer"
+      ],
+      "rank": "f",
+      "growth": 7,
+      "regrowth": 3,
+      "yield": 1,
+      "seedCost": 40,
+      "prices": {
+        "base": 36,
+        "bronze": 41,
+        "silver": 47,
+        "gold": 54,
+        "osmium": 72
+      },
+      "survivesSeasonChange": true,
+      "replant": false,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Hot_pepper"
+    },
+    {
+      "id": "corn",
+      "itemId": "corn",
+      "seedId": "corn_seed",
+      "name": "Corn",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "f",
+      "growth": 12,
+      "regrowth": 4,
+      "yield": 1,
+      "seedCost": 25,
+      "prices": {
+        "base": 24
+      },
+      "survivesSeasonChange": false,
+      "replant": false,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Corn"
+    },
+    {
+      "id": "melon",
+      "itemId": "melon",
+      "seedId": "melon_seed",
+      "name": "Melon",
+      "category": "fruit",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "e",
+      "growth": 12,
+      "yield": 1,
+      "seedCost": 130,
+      "prices": {
+        "base": 233
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Melon"
+    },
+    {
+      "id": "bell_pepper",
+      "itemId": "bell_pepper",
+      "seedId": "bell_pepper_seed",
+      "name": "Bell pepper",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "e",
+      "growth": 8,
+      "regrowth": 4,
+      "yield": 1,
+      "seedCost": 70,
+      "prices": {
+        "base": 47
+      },
+      "survivesSeasonChange": false,
+      "replant": false,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Bell_pepper"
+    },
+    {
+      "id": "tomato",
+      "itemId": "tomato",
+      "seedId": "tomato_seed",
+      "name": "Tomato",
+      "category": "fruit",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "e",
+      "growth": 10,
+      "regrowth": 4,
+      "yield": 1,
+      "seedCost": 25,
+      "prices": {
+        "base": 34
+      },
+      "survivesSeasonChange": false,
+      "replant": false,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Tomato"
+    },
+    {
+      "id": "blackberry",
+      "itemId": "blackberry",
+      "seedId": "blackberry_seed",
+      "name": "Blackberry",
+      "category": "fruit",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "d",
+      "growth": 11,
+      "regrowth": 4,
+      "yield": 1,
+      "seedCost": 40,
+      "prices": {
+        "base": 41
+      },
+      "survivesSeasonChange": false,
+      "replant": false,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Blackberry"
+    },
+    {
+      "id": "red_cabbage",
+      "itemId": "red_cabbage",
+      "seedId": "red_cabbage_seed",
+      "name": "Red cabbage",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "d",
+      "growth": 9,
+      "yield": 1,
+      "seedCost": 45,
+      "prices": {
+        "base": 106
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Red_cabbage"
+    },
+    {
+      "id": "starfruit",
+      "itemId": "starfruit",
+      "seedId": "starfruit_seed",
+      "name": "Starfruit",
+      "category": "fruit",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "e",
+      "growth": 13,
+      "yield": 1,
+      "seedCost": 60,
+      "prices": {
+        "base": 108
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Starfruit"
+    },
+    {
+      "id": "rose",
+      "itemId": "rose",
+      "seedId": "rose_seed",
+      "name": "Rose",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "summer"
+      ],
+      "rank": "d",
+      "growth": 6,
+      "yield": 1,
+      "seedCost": 20,
+      "prices": {
+        "base": 51
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Rose"
+    },
+    {
+      "id": "orchid",
+      "itemId": "orchid",
+      "seedId": "orchid_seed",
+      "name": "Orchid",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "fall"
+      ],
+      "rank": "f",
+      "growth": 8,
+      "yield": 1,
+      "seedCost": 75,
+      "prices": {
+        "base": 130
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Orchid"
+    },
+    {
+      "id": "beet",
+      "itemId": "beet",
+      "seedId": "beet_seed",
+      "name": "Beet",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "fall"
+      ],
+      "rank": "e",
+      "growth": 6,
+      "yield": 1,
+      "seedCost": 20,
+      "prices": {
+        "base": 52
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Beet"
+    },
+    {
+      "id": "basil",
+      "itemId": "basil",
+      "seedId": "basil_seed",
+      "name": "Basil",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "fall"
+      ],
+      "rank": "e",
+      "growth": 5,
+      "yield": 1,
+      "seedCost": 20,
+      "prices": {
+        "base": 39
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Basil"
+    },
+    {
+      "id": "bok_choy",
+      "itemId": "bok_choy",
+      "seedId": "bok_choy_seed",
+      "name": "Bok choy",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "fall"
+      ],
+      "rank": "d",
+      "growth": 8,
+      "yield": 1,
+      "seedCost": 60,
+      "prices": {
+        "base": 126
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Bok_choy"
+    },
+    {
+      "id": "blue_dahlia",
+      "itemId": "blue_dahlia",
+      "seedId": "blue_dahlia_seed",
+      "name": "Blue dahlia",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "fall"
+      ],
+      "rank": "d",
+      "growth": 4,
+      "yield": 1,
+      "seedCost": 50,
+      "prices": {
+        "base": 80
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Blue_dahlia"
+    },
+    {
+      "id": "amaranth",
+      "itemId": "amaranth",
+      "seedId": "amaranth_seed",
+      "name": "Amaranth",
+      "category": "grain",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "fall"
+      ],
+      "rank": "e",
+      "growth": 8,
+      "regrowth": 5,
+      "yield": 1,
+      "seedCost": 25,
+      "prices": {
+        "base": 24
+      },
+      "survivesSeasonChange": false,
+      "replant": false,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Amaranth"
+    },
+    {
+      "id": "artichoke",
+      "itemId": "artichoke",
+      "seedId": "artichoke_seed",
+      "name": "Artichoke",
+      "category": "vegetable",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "fall"
+      ],
+      "rank": "d",
+      "growth": 8,
+      "regrowth": 4,
+      "yield": 1,
+      "seedCost": 45,
+      "prices": {
+        "base": 29
+      },
+      "survivesSeasonChange": false,
+      "replant": false,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Artichoke"
+    },
+    {
+      "id": "barley",
+      "itemId": "barley",
+      "seedId": "barley_seed",
+      "name": "Barley",
+      "category": "grain",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "fall"
+      ],
+      "rank": "d",
+      "growth": 8,
+      "yield": 1,
+      "seedCost": 100,
+      "prices": {
+        "base": 118
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Barley"
+    },
+    {
+      "id": "tea_leaf",
+      "itemId": "tea_leaf",
+      "seedId": "tea_leaf_seed",
+      "name": "Tea leaf",
+      "category": "herb",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "winter"
+      ],
+      "rank": "c",
+      "growth": 11,
+      "yield": 1,
+      "seedCost": 25,
+      "prices": {
+        "base": 68,
+        "bronze": 78,
+        "silver": 88,
+        "gold": 102,
+        "osmium": 136
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Tea_leaf"
+    },
+    {
+      "id": "cotton",
+      "itemId": "cotton",
+      "seedId": "cotton_seed",
+      "name": "Cotton",
+      "category": "resource",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "winter"
+      ],
+      "rank": "c",
+      "growth": 9,
+      "yield": 1,
+      "seedCost": 50,
+      "prices": {
+        "base": 105,
+        "bronze": 121,
+        "silver": 137,
+        "gold": 158,
+        "osmium": 210
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "verified",
+      "source": "https://coralisland.wiki/wiki/Cotton"
+    },
+    {
+      "id": "snowdrop",
+      "itemId": "snowdrop",
+      "seedId": "snowdrop_seed",
+      "name": "Snowdrop",
+      "category": "flower",
+      "environment": "land",
+      "footprint": {
+        "width": 1,
+        "height": 1
+      },
+      "seasons": [
+        "winter"
+      ],
+      "rank": "c",
+      "seedCost": 45,
+      "prices": {
+        "base": 125
+      },
+      "survivesSeasonChange": false,
+      "replant": true,
+      "status": "incomplete",
+      "source": "https://coralisland.wiki/wiki/Snowdrop",
+      "note": "Individual crop page lists 7 growth days while the seasonal table lists 12. Excluded until reconciled."
+    }
+  ]
+}
