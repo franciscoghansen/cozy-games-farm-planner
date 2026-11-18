@@ -22,14 +22,19 @@ export interface GameState {
 }
 
 export const emptyState = (gameId: string): GameState => ({
-  workspace: { active: null, current: defaultPlan(gameId), saved: [] }, materials: {}, bom: defaultBomSettings,
+  workspace: { active: null, current: defaultPlan(gameId), saved: [] },
+  materials: {},
+  bom: defaultBomSettings,
 })
 
 type Store = 'games' | 'states' | 'settings'
 export type WorkspaceDatabase = IDBDatabase | Map<Store, Map<string, unknown>>
-const memoryDatabase = (): WorkspaceDatabase => new Map([
-  ['games', new Map()], ['states', new Map()], ['settings', new Map()],
-])
+const memoryDatabase = (): WorkspaceDatabase =>
+  new Map([
+    ['games', new Map()],
+    ['states', new Map()],
+    ['settings', new Map()],
+  ])
 
 export function openDatabase(factory: IDBFactory = indexedDB) {
   return new Promise<IDBDatabase>((resolve, reject) => {
@@ -38,7 +43,10 @@ export function openDatabase(factory: IDBFactory = indexedDB) {
     request.onupgradeneeded = () => {
       for (const name of ['games', 'states', 'settings']) request.result.createObjectStore(name)
     }
-    request.onsuccess = () => { if (blocked) request.result.close(); else resolve(request.result) }
+    request.onsuccess = () => {
+      if (blocked) request.result.close()
+      else resolve(request.result)
+    }
     request.onerror = () => reject(request.error)
     request.onblocked = () => {
       blocked = true
@@ -102,19 +110,28 @@ async function getJson(path: string) {
 }
 
 function isValidState(raw: unknown, id: string) {
-  try { validateState(raw, gameFor(id)); return true } catch { return false }
+  try {
+    validateState(raw, gameFor(id))
+    return true
+  } catch {
+    return false
+  }
 }
 
 export async function loadGameState(db: WorkspaceDatabase, id: string) {
   const raw = await dbGet<unknown>(db, 'states', id)
-  if (raw === undefined) return { state: emptyState(id), recovery: await dbGet(db, 'settings', 'recovery:' + id), repaired: false }
+  if (raw === undefined)
+    return { state: emptyState(id), recovery: await dbGet(db, 'settings', 'recovery:' + id), repaired: false }
   try {
     const state = validateState(raw, gameFor(id), true)
-    return { state, recovery: await dbGet(db, 'settings', 'recovery:' + id),
-      repaired: !isValidState(raw, id) }
+    return {
+      state,
+      recovery: await dbGet(db, 'settings', 'recovery:' + id),
+      repaired: !isValidState(raw, id),
+    }
   } catch {
     // Keep the first unrecoverable copy until the user has had a chance to export it.
-    const recovery = await dbGet(db, 'settings', 'recovery:' + id) ?? { state: raw }
+    const recovery = (await dbGet(db, 'settings', 'recovery:' + id)) ?? { state: raw }
     await dbWrite(db, 'settings', 'recovery:' + id, recovery)
     return { state: emptyState(id), recovery, repaired: false }
   }
@@ -123,28 +140,47 @@ export async function loadGameState(db: WorkspaceDatabase, id: string) {
 export async function bootstrap(open = openDatabase, json = getJson) {
   const manifest = validateManifest(await json('manifest.json'))
   const [packages, stored] = await Promise.all([
-    Promise.all(manifest.games.map(async id => {
-      const [game, items, equipment, recipes, presets] = await Promise.all(
-        ['game', 'items', 'equipment', 'recipes', 'presets'].map(file => json(id + '/' + file + '.json')),
-      )
-      const cropData = (game as GamePackage['game'] | null)?.cropData === true
-      const [seasons, crops] = cropData ? await Promise.all(['seasons', 'crops'].map(file => json(id + '/' + file + '.json'))) : []
-      const pack = validatePackage({ game, items, equipment, recipes, presets, ...(cropData && { seasons, crops }) })
-      if (pack.game.id !== id) throw new Error('Game ID does not match its manifest directory: ' + id)
-      return pack
-    })),
+    Promise.all(
+      manifest.games.map(async (id) => {
+        const [game, items, equipment, recipes, presets] = await Promise.all(
+          ['game', 'items', 'equipment', 'recipes', 'presets'].map((file) => json(id + '/' + file + '.json')),
+        )
+        const cropData = (game as GamePackage['game'] | null)?.cropData === true
+        const [seasons, crops] = cropData
+          ? await Promise.all(['seasons', 'crops'].map((file) => json(id + '/' + file + '.json')))
+          : []
+        const pack = validatePackage({
+          game,
+          items,
+          equipment,
+          recipes,
+          presets,
+          ...(cropData && { seasons, crops }),
+        })
+        if (pack.game.id !== id) throw new Error('Game ID does not match its manifest directory: ' + id)
+        return pack
+      }),
+    ),
     (async () => {
       try {
         const db = await open()
         try {
-          const [custom, selected] = await Promise.all([dbEntries(db, 'games'), dbGet<string>(db, 'settings', 'selected')])
+          const [custom, selected] = await Promise.all([
+            dbEntries(db, 'games'),
+            dbGet<string>(db, 'settings', 'selected'),
+          ])
           return { db: db as WorkspaceDatabase, custom, selected }
-        } catch (error) { db.close(); throw error }
-      } catch { return { db: memoryDatabase(), custom: [], selected: undefined } }
+        } catch (error) {
+          db.close()
+          throw error
+        }
+      } catch {
+        return { db: memoryDatabase(), custom: [], selected: undefined }
+      }
     })(),
   ])
   let { db } = stored
-  const bundled = new Map(packages.map(pack => [pack.game.id, pack]))
+  const bundled = new Map(packages.map((pack) => [pack.game.id, pack]))
   const games = new Map(bundled)
   const invalidOverrides: IDBValidKey[] = []
   for (const [key, value] of stored.custom) {
@@ -152,7 +188,9 @@ export async function bootstrap(open = openDatabase, json = getJson) {
       const validated = validatePackage(value)
       if (validated.game.id !== key) throw new Error('Invalid override key.')
       games.set(validated.game.id, withBundledCrops(validated, bundled.get(validated.game.id)))
-    } catch { invalidOverrides.push(key) }
+    } catch {
+      invalidOverrides.push(key)
+    }
   }
   for (const pack of games.values()) registerGame(adaptGame(pack), pack.game.id === manifest.defaultGame)
 
@@ -160,16 +198,21 @@ export async function bootstrap(open = openDatabase, json = getJson) {
   setLayoutV1Game(legacyGame)
   const gameId = stored.selected && games.has(stored.selected) ? stored.selected : manifest.defaultGame
   async function load(db: WorkspaceDatabase) {
-    if (await dbGet(db, 'states', legacyGame) === undefined) {
+    if ((await dbGet(db, 'states', legacyGame)) === undefined) {
       const current = emptyState(legacyGame)
-      try { current.workspace = loadWorkspace(localStorage, current.workspace.current) } catch { /* Browser denies access. */ }
+      try {
+        current.workspace = loadWorkspace(localStorage, current.workspace.current)
+      } catch {
+        /* Browser denies access. */
+      }
       await dbWrite(db, 'states', legacyGame, current)
     }
     return loadGameState(db, gameId)
   }
   let loaded: Awaited<ReturnType<typeof load>>
-  try { loaded = await load(db) }
-  catch {
+  try {
+    loaded = await load(db)
+  } catch {
     if (!(db instanceof Map)) db.close()
     db = memoryDatabase()
     loaded = await load(db)

@@ -14,15 +14,21 @@ import { deserialize, loadWorkspace, serialize } from '../src/storage.ts'
 import { dbGet, dbGetAll, dbWrite, emptyState, openDatabase } from '../src/workspace-db.ts'
 import type { GameState } from '../src/workspace-db.ts'
 
-const definition = validatePackage(JSON.parse(readFileSync(new URL('./fixtures/meadow-test.game.json', import.meta.url), 'utf8')))
+const definition = validatePackage(
+  JSON.parse(readFileSync(new URL('./fixtures/meadow-test.game.json', import.meta.url), 'utf8')),
+)
 const game = adaptGame(definition)
 registerGame(game, true)
-const row = (result: ReturnType<typeof calculateBom>, id: string) => result.materials.find(row => row.id === id)!
+const row = (result: ReturnType<typeof calculateBom>, id: string) =>
+  result.materials.find((row) => row.id === id)!
 const plan = () => newPlan(5, 5, 'Meadow')
-const calculate = (counts: Record<string, number>, inventory = {}, selections = {}) => calculateBom({
-  ...game, targets: Object.entries(counts).map(([itemId, quantity]) => ({ itemId, quantity })),
-  inventory, options: { selections },
-})
+const calculate = (counts: Record<string, number>, inventory = {}, selections = {}) =>
+  calculateBom({
+    ...game,
+    targets: Object.entries(counts).map(([itemId, quantity]) => ({ itemId, quantity })),
+    inventory,
+    options: { selections },
+  })
 
 test('shared dependency demand is aggregated before batching and surplus is recorded', () => {
   const result = calculate({ orb: 1, tower: 1 })
@@ -35,7 +41,7 @@ test('shared dependency demand is aggregated before batching and surplus is reco
   assert.equal(result.surplus.get('slag'), 2)
   assert.equal(result.operations, 5)
   assert.deepEqual(result.stations, ['kiln'])
-  const order = result.steps.map(row => row.id)
+  const order = result.steps.map((row) => row.id)
   assert.ok(order.indexOf('bar') < order.indexOf('widget'))
   assert.ok(order.indexOf('widget') < order.indexOf('orb'))
   assert.ok(order.indexOf('bar') < order.indexOf('tower'))
@@ -59,7 +65,10 @@ test('alternative recipes change the bill and allow batch surplus on custom targ
   assert.equal(row(result, 'bar').produced, 9)
   assert.equal(result.surplus.get('bar'), 2)
   assert.equal(row(result, 'wood').remaining, 6)
-  assert.equal(result.shopping.some(row => row.id === 'ore'), false)
+  assert.equal(
+    result.shopping.some((row) => row.id === 'ore'),
+    false,
+  )
 })
 
 test('unknown requirements remain real shortages and externally sourced items are identified', () => {
@@ -81,12 +90,18 @@ test('scratch ignores stock while upgrades reuse relocated equipment without ref
   target.tiles[14] = 'tower'
   const stock = { tower: 1, bar: 3 }
   const scratch = layoutBom(game, target, stock, defaultBomSettings, base)
-  assert.equal(scratch.roots.find(row => row.id === 'orb')!.remaining, 2)
+  assert.equal(scratch.roots.find((row) => row.id === 'orb')!.remaining, 2)
   assert.equal(row(scratch, 'ore').required, 9)
   const upgrade = layoutBom(game, target, stock, { ...defaultBomSettings, mode: 'upgrade' }, base)
-  assert.deepEqual(farmLayoutToCraftingTargets(target, base), [{ itemId: 'orb', quantity: 1 }, { itemId: 'tower', quantity: 1 }])
-  assert.deepEqual(upgrade.roots.find(row => row.id === 'orb'), { id: 'orb', required: 2, reusable: 1, owned: 0, remaining: 1 })
-  assert.equal(upgrade.roots.find(row => row.id === 'tower')!.owned, 1)
+  assert.deepEqual(farmLayoutToCraftingTargets(target, base), [
+    { itemId: 'orb', quantity: 1 },
+    { itemId: 'tower', quantity: 1 },
+  ])
+  assert.deepEqual(
+    upgrade.roots.find((row) => row.id === 'orb'),
+    { id: 'orb', required: 2, reusable: 1, owned: 0, remaining: 1 },
+  )
+  assert.equal(upgrade.roots.find((row) => row.id === 'tower')!.owned, 1)
   assert.equal(upgrade.operations, 2)
   assert.equal(upgrade.consumed.get('bar'), 3)
   assert.equal(upgrade.shopping.length, 0)
@@ -100,9 +115,24 @@ test('standalone targets and the farm adapter return the same calculation for id
   target.tiles[1] = 'tower'
   const inventory = { bar: 1, wood: 2 }
   const selections = { bar: 'whittle' }
-  const standalone = calculateBom({ ...game, targets: farmLayoutToCraftingTargets(target), inventory, options: { selections } })
-  const { roots, ...farmResult } = layoutBom(game, target, inventory, { ...defaultBomSettings, mode: 'inventory', selections })
-  assert.deepEqual(roots.map(({ reusable, ...root }) => { assert.equal(reusable, 0); return root }), standalone.roots)
+  const standalone = calculateBom({
+    ...game,
+    targets: farmLayoutToCraftingTargets(target),
+    inventory,
+    options: { selections },
+  })
+  const { roots, ...farmResult } = layoutBom(game, target, inventory, {
+    ...defaultBomSettings,
+    mode: 'inventory',
+    selections,
+  })
+  assert.deepEqual(
+    roots.map(({ reusable, ...root }) => {
+      assert.equal(reusable, 0)
+      return root
+    }),
+    standalone.roots,
+  )
   const { roots: _targets, ...standaloneResult } = standalone
   assert.deepEqual(farmResult, standaloneResult)
 })
@@ -110,15 +140,27 @@ test('standalone targets and the farm adapter return the same calculation for id
 test('game JSON validates references, cycles, duplicate IDs, coverage and versions', () => {
   assert.deepEqual(validatePackage(JSON.parse(JSON.stringify(definition))), definition)
   assert.throws(() => validateManifest({ schemaVersion: 2 }), /unsupported schema/)
-  assert.throws(() => validatePackage({ ...definition, game: { ...definition.game, schemaVersion: 2 } }), /unsupported schema/)
-  assert.throws(() => validatePackage({ ...definition, items: [...definition.items, definition.items[0]] }), /duplicate ID/)
-  assert.throws(() => validatePackage({ ...definition, recipes: [...definition.recipes, definition.recipes[0]] }), /duplicate ID/)
+  assert.throws(
+    () => validatePackage({ ...definition, game: { ...definition.game, schemaVersion: 2 } }),
+    /unsupported schema/,
+  )
+  assert.throws(
+    () => validatePackage({ ...definition, items: [...definition.items, definition.items[0]] }),
+    /duplicate ID/,
+  )
+  assert.throws(
+    () => validatePackage({ ...definition, recipes: [...definition.recipes, definition.recipes[0]] }),
+    /duplicate ID/,
+  )
   const bad = structuredClone(definition)
   bad.recipes[0].ingredients[0].itemId = 'missing'
   assert.throws(() => validatePackage(bad), /unknown reference missing/)
   bad.recipes[0].ingredients[0].itemId = 'orb'
   assert.throws(() => validatePackage(bad), /circular recipe dependencies/)
-  assert.throws(() => calculateBom({ ...bad, targets: [{ itemId: 'orb', quantity: 1 }] }), /circular recipe dependencies/)
+  assert.throws(
+    () => calculateBom({ ...bad, targets: [{ itemId: 'orb', quantity: 1 }] }),
+    /circular recipe dependencies/,
+  )
   bad.recipes[0].ingredients[0].quantity = 0
   assert.throws(() => validatePackage(bad), /expected an integer/)
   const badShape = structuredClone(definition)
@@ -127,7 +169,12 @@ test('game JSON validates references, cycles, duplicate IDs, coverage and versio
 })
 
 test('circular coverage excludes diagonals and water-only games use their own coverage goal', () => {
-  const onlyWater = adaptGame(validatePackage({ ...definition, game: { ...definition.game, id: 'water-only', requiredCoverage: ['water'] } }))
+  const onlyWater = adaptGame(
+    validatePackage({
+      ...definition,
+      game: { ...definition.game, id: 'water-only', requiredCoverage: ['water'] },
+    }),
+  )
   registerGame(onlyWater)
   const layout = newPlan(5, 5, 'Water only', 'water-only')
   layout.tiles[12] = 'orb'
@@ -174,17 +221,31 @@ test('IndexedDB stores layouts, inventory, overrides, BOM settings and selected 
   const copy = { ...definition, game: { ...definition.game, id: 'other-farm', name: 'Other Farm' } }
   registerGame(adaptGame(copy))
   const db = await openDatabase(new IDBFactory())
-  const first = emptyState(game.game.id), other = emptyState(copy.game.id)
+  const first = emptyState(game.game.id),
+    other = emptyState(copy.game.id)
   first.workspace.current.tiles[2] = 'orb'
   first.workspace.current.tiles[3] = '!tower'
   first.workspace.saved.push({ id: 'farm-a', plan: first.workspace.current })
   first.materials.ore = 32
-  first.bom = { ...defaultBomSettings, mode: 'custom', targetId: 'bar', quantity: 4, selections: { bar: 'whittle' } }
+  first.bom = {
+    ...defaultBomSettings,
+    mode: 'custom',
+    targetId: 'bar',
+    quantity: 4,
+    selections: { bar: 'whittle' },
+  }
   first.configurations = [{ id: 'config-a', name: 'Wood route', settings: first.bom }]
-  first.preferences = { manualLock: true, overlays: { combined: true, water: false, guard: false, equipment: false, coords: true } }
+  first.preferences = {
+    manualLock: true,
+    overlays: { combined: true, water: false, guard: false, equipment: false, coords: true },
+  }
   other.materials.ore = 1
   first.crafting = emptyCrafting()
-  first.crafting.draft = { targets: [{ itemId: 'bar', quantity: 7 }], useInventory: true, selections: { bar: 'whittle' } }
+  first.crafting.draft = {
+    targets: [{ itemId: 'bar', quantity: 7 }],
+    useInventory: true,
+    selections: { bar: 'whittle' },
+  }
   first.crafting.saved = [{ id: 'craft-a', name: 'Seven bars', draft: first.crafting.draft }]
   other.crafting = emptyCrafting()
   other.crafting.draft.targets.push({ itemId: 'tower', quantity: 2 })
@@ -199,7 +260,10 @@ test('IndexedDB stores layouts, inventory, overrides, BOM settings and selected 
   assert.equal(gameFor(copy.game.id).game.name, 'Other Farm')
   assert.throws(() => deserialize(serialize(first.workspace.current), copy.game.id), /Switch games/)
   const { gameId, ...legacy } = first.workspace.current
-  const migrated = loadWorkspace({ getItem: () => JSON.stringify({ current: legacy, active: null, saved: [] }) }, first.workspace.current)
+  const migrated = loadWorkspace(
+    { getItem: () => JSON.stringify({ current: legacy, active: null, saved: [] }) },
+    first.workspace.current,
+  )
   assert.deepEqual(migrated.current, first.workspace.current)
   db.close()
 })

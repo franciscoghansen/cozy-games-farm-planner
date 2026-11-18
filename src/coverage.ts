@@ -3,7 +3,14 @@ import { countEquipment, itemId, usable } from './model.ts'
 import type { Shape } from './game.ts'
 import type { Plan } from './model.ts'
 
-export function visitCoverage(width: number, height: number, center: number, radius: number, visit: (index: number) => void, shape: Shape = 'square') {
+export function visitCoverage(
+  width: number,
+  height: number,
+  center: number,
+  radius: number,
+  visit: (index: number) => void,
+  shape: Shape = 'square',
+) {
   const cx = center % width
   const cy = Math.floor(center / width)
   for (let y = Math.max(0, cy - radius); y <= Math.min(height - 1, cy + radius); y++) {
@@ -24,7 +31,7 @@ export function coverage(plan: Plan) {
     if (!item) return
     const { kind, radius, shape } = item
     const counts = kind === 'water' ? water : guard
-    visitCoverage(plan.width, plan.height, center, radius, index => counts[index]++, shape)
+    visitCoverage(plan.width, plan.height, center, radius, (index) => counts[index]++, shape)
   })
   return { water, guard }
 }
@@ -35,8 +42,18 @@ export function statistics(plan: Plan, { water, guard } = coverage(plan)) {
   const needsWater = required.includes('water')
   const needsGuard = required.includes('guard')
   const stats = {
-    total: plan.tiles.length, farmland: 0, crops: 0, watered: 0, protected: 0, full: 0,
-    waterOnly: 0, guardOnly: 0, neither: 0, overlap: 0, wasted: 0, empty: 0,
+    total: plan.tiles.length,
+    farmland: 0,
+    crops: 0,
+    watered: 0,
+    protected: 0,
+    full: 0,
+    waterOnly: 0,
+    guardOnly: 0,
+    neither: 0,
+    overlap: 0,
+    wasted: 0,
+    empty: 0,
   }
   plan.tiles.forEach((tile, i) => {
     const w = water[i]
@@ -57,14 +74,18 @@ export function statistics(plan: Plan, { water, guard } = coverage(plan)) {
     stats.overlap += Math.max(0, w - 1) + Math.max(0, g - 1)
   })
   const used = countEquipment(plan)
-  let sprinklers = 0, scarecrows = 0
+  let sprinklers = 0,
+    scarecrows = 0
   for (const item of adapter.placables) {
     if (item.kind === 'water') sprinklers += used[item.id]
     else scarecrows += used[item.id]
   }
   return {
-    ...stats, used, sprinklers, scarecrows,
-    efficiency: stats.farmland ? 100 * stats.full / stats.farmland : 0,
+    ...stats,
+    used,
+    sprinklers,
+    scarecrows,
+    efficiency: stats.farmland ? (100 * stats.full) / stats.farmland : 0,
     perSprinkler: sprinklers ? stats.full / sprinklers : 0,
     perEquipment: sprinklers + scarecrows ? stats.full / (sprinklers + scarecrows) : 0,
   }

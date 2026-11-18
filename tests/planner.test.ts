@@ -10,8 +10,12 @@ import { changes, optimize } from '../src/optimizer.ts'
 import { preset } from '../src/presets.ts'
 import { deserialize, loadWorkspace, saveWorkspace, serialize } from '../src/storage.ts'
 
-const bundled = Object.fromEntries(['game', 'items', 'equipment', 'recipes', 'presets', 'seasons', 'crops'].map(name =>
-  [name, JSON.parse(readFileSync(new URL(`../public/games/coral-island/${name}.json`, import.meta.url), 'utf8'))]))
+const bundled = Object.fromEntries(
+  ['game', 'items', 'equipment', 'recipes', 'presets', 'seasons', 'crops'].map((name) => [
+    name,
+    JSON.parse(readFileSync(new URL(`../public/games/coral-island/${name}.json`, import.meta.url), 'utf8')),
+  ]),
+)
 const adapter = adaptGame(validatePackage(bundled))
 registerGame(adapter, true)
 const { placables: equipment, placedItems: items, presets } = adapter
@@ -27,31 +31,43 @@ for (const item of equipment) {
     plan.tiles[center] = item.id
     const map = coverage(plan)[item.kind]
     assert.equal(map[center], 0)
-    assert.equal(map.reduce((a, b) => a + b), (2 * radius + 1) ** 2 - 1)
+    assert.equal(
+      map.reduce((a, b) => a + b),
+      (2 * radius + 1) ** 2 - 1,
+    )
     assert.equal(map[(10 + radius) * 21 + 10 + radius], 1)
     assert.equal(map[(10 + radius + 1) * 21 + 10], 0)
   })
 }
 
 test('all 25 scarecrows have a source, an unlock and a calculable BOM', () => {
-  const scarecrows = equipment.filter(item => item.kind === 'guard')
+  const scarecrows = equipment.filter((item) => item.kind === 'guard')
   assert.equal(scarecrows.length, 25)
   for (const item of scarecrows) {
     assert.ok(item.unlock, item.name)
-    assert.match(adapter.recipeOptions.get(item.id)?.[0].source ?? '', /^https:\/\/coralisland\.fandom\.com\//)
-    assert.equal(calculateBom({ ...adapter, targets: [{ itemId: item.id, quantity: 1 }] }).shopping.some(row => row.unknown), false, item.name)
+    assert.match(
+      adapter.recipeOptions.get(item.id)?.[0].source ?? '',
+      /^https:\/\/coralisland\.fandom\.com\//,
+    )
+    assert.equal(
+      calculateBom({ ...adapter, targets: [{ itemId: item.id, quantity: 1 }] }).shopping.some(
+        (row) => row.unknown,
+      ),
+      false,
+      item.name,
+    )
   }
   const starter = calculateBom({ ...adapter, targets: [{ itemId: 'c1', quantity: 1 }] })
-  assert.equal(starter.shopping.find(row => row.id === 'wood')?.required, 15)
-  assert.equal(starter.shopping.find(row => row.id === 'trash')?.required, 10)
+  assert.equal(starter.shopping.find((row) => row.id === 'wood')?.required, 15)
+  assert.equal(starter.shopping.find((row) => row.id === 'trash')?.required, 10)
   const ultimate = calculateBom({ ...adapter, targets: [{ itemId: 'c3', quantity: 1 }] })
-  assert.equal(ultimate.shopping.find(row => row.id === 'osmium_ore')?.required, 5)
-  assert.equal(ultimate.shopping.find(row => row.id === 'battery')?.required, 2)
+  assert.equal(ultimate.shopping.find((row) => row.id === 'osmium_ore')?.required, 5)
+  assert.equal(ultimate.shopping.find((row) => row.id === 'battery')?.required, 2)
 })
 
 test('coverage clips to rectangular boundaries without row wrap', () => {
   const visited: number[] = []
-  visitCoverage(5, 3, 0, 2, index => visited.push(index))
+  visitCoverage(5, 3, 0, 2, (index) => visited.push(index))
   assert.deepEqual(visited, [1, 2, 5, 6, 7, 10, 11, 12])
 })
 
@@ -85,13 +101,14 @@ for (const [index, entry] of presets.entries()) {
 test('seven is the maximum possible for Minimal Resources', () => {
   const plan = newPlan(5, 5)
   let best = 0
-  for (let s = 0; s < 25; s++) for (let c = 0; c < 25; c++) {
-    if (s === c) continue
-    plan.tiles.fill('crop')
-    plan.tiles[s] = 's1'
-    plan.tiles[c] = 'c1'
-    best = Math.max(best, statistics(plan).full)
-  }
+  for (let s = 0; s < 25; s++)
+    for (let c = 0; c < 25; c++) {
+      if (s === c) continue
+      plan.tiles.fill('crop')
+      plan.tiles[s] = 's1'
+      plan.tiles[c] = 'c1'
+      best = Math.max(best, statistics(plan).full)
+    }
   assert.equal(best, 7)
   const minimal = preset('minimal')
   assert.ok(coverage(minimal).guard[minimal.tiles.indexOf('s1')])
@@ -106,12 +123,33 @@ test('JSON and local persistence round-trip named plans, terrain, tiers and lock
   plan.unlocked = ['s2', 'c2']
   assert.deepEqual(deserialize(serialize(plan)), plan)
   let data = ''
-  const storage = { setItem: (_key: string, value: string) => { data = value }, getItem: () => data }
-  const workspace = { current: plan, active: 'farm-id', saved: [{ id: 'farm-id', plan }, { id: 'other', plan: preset('mid') }] }
+  const storage = {
+    setItem: (_key: string, value: string) => {
+      data = value
+    },
+    getItem: () => data,
+  }
+  const workspace = {
+    current: plan,
+    active: 'farm-id',
+    saved: [
+      { id: 'farm-id', plan },
+      { id: 'other', plan: preset('mid') },
+    ],
+  }
   saveWorkspace(storage, workspace)
   assert.deepEqual(loadWorkspace(storage, newPlan(2, 2)), workspace)
-  assert.throws(() => deserialize(JSON.stringify({ version: 1, plan: { ...plan, tiles: ['bad'] } })), /Invalid farm tiles/)
-  assert.throws(() => deserialize(JSON.stringify({ version: 1, plan: { ...plan, inventory: { ...plan.inventory, s1: -1 } } })), /Invalid equipment/)
+  assert.throws(
+    () => deserialize(JSON.stringify({ version: 1, plan: { ...plan, tiles: ['bad'] } })),
+    /Invalid farm tiles/,
+  )
+  assert.throws(
+    () =>
+      deserialize(
+        JSON.stringify({ version: 1, plan: { ...plan, inventory: { ...plan.inventory, s1: -1 } } }),
+      ),
+    /Invalid equipment/,
+  )
 })
 
 test('resizing remaps overlapping coordinates without collision', () => {

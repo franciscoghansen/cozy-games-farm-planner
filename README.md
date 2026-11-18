@@ -10,11 +10,11 @@ A browser-based farm layout editor and crafting calculator built with React, Typ
 
 Download **Code → Download ZIP** from the [GitHub repository](https://github.com/franciscoghansen/cozy-games-farm-planner) and extract it. Install [Node.js LTS](https://nodejs.org/en/download) if needed. The launcher supports Node.js 22.16+ in the 22.x series and Node.js 24+. Node.js includes npm.
 
-| System | Start the planner |
-| --- | --- |
-| Windows 10/11 | Open the extracted folder and double-click **start.bat**. |
-| macOS | Double-click **start.command**. If it lacks permission, open Terminal in the folder and run `chmod +x start.command` first. You can also run `sh ./start.sh` from Terminal. |
-| Linux | Open a terminal in the extracted folder and run `chmod +x start.sh` if needed, then run `./start.sh`. |
+| System        | Start the planner                                                                                                                                                           |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Windows 10/11 | Open the extracted folder and double-click **start.bat**.                                                                                                                   |
+| macOS         | Double-click **start.command**. If it lacks permission, open Terminal in the folder and run `chmod +x start.command` first. You can also run `sh ./start.sh` from Terminal. |
+| Linux         | Open a terminal in the extracted folder and run `chmod +x start.sh` if needed, then run `./start.sh`.                                                                       |
 
 The first launch installs dependencies from the included lockfile and needs internet access. Later launches reuse the installation until dependencies or the Node.js runtime change. The launcher prints the local address and opens your default browser. Keep the terminal open while using the planner and press Ctrl+C to stop the server.
 
@@ -139,14 +139,14 @@ The original application code and documentation are available under the [MIT Lic
 
 The Web Worker tries deterministic greedy candidates, followed by pruning. The search preserves obstacles, paths, and locked equipment and reports the best result it found.
 
-| Strategy | Objective |
-| --- | --- |
-| Maximum production | Favor crop count, then fewer pieces of equipment. |
-| Low resources | Find a layout with fewer pieces that meets the target. Otherwise report the crop shortfall. |
-| Balanced | Trade crop coverage against equipment count, overlap and wasted applications. |
-| Minimal rework | Favor crop gains with fewer moves, removals and additions. |
-| Minimize raw resource cost | Prefer layouts meeting the crop target, then fewer unresolved units and fewer known leaf-material units. Compares raw quantities without market-price weights, using selected recipes and build-from-scratch costs. |
-| Use available materials | Try placements using reusable equipment, spare equipment and shared material stock. Revalidate the full proposed layout against one BOM, and show its crafting steps and stock allocation. This strategy uses a shared material budget in place of the equipment-only limit. |
+| Strategy                   | Objective                                                                                                                                                                                                                                                                    |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Maximum production         | Favor crop count, then fewer pieces of equipment.                                                                                                                                                                                                                            |
+| Low resources              | Find a layout with fewer pieces that meets the target. Otherwise report the crop shortfall.                                                                                                                                                                                  |
+| Balanced                   | Trade crop coverage against equipment count, overlap and wasted applications.                                                                                                                                                                                                |
+| Minimal rework             | Favor crop gains with fewer moves, removals and additions.                                                                                                                                                                                                                   |
+| Minimize raw resource cost | Prefer layouts meeting the crop target, then fewer unresolved units and fewer known leaf-material units. Compares raw quantities without market-price weights, using selected recipes and build-from-scratch costs.                                                          |
+| Use available materials    | Try placements using reusable equipment, spare equipment and shared material stock. Revalidate the full proposed layout against one BOM, and show its crafting steps and stock allocation. This strategy uses a shared material budget in place of the equipment-only limit. |
 
 The search is approximate. It does not prove that a missed target is impossible. The materials search assumes access to indicated stations and unlocked recipes. Recipe unlocks and processing times are displayed as metadata. Equipment unlocks are enforced by the selected progression or custom equipment choices. Unknown and external materials require stock on hand in the materials search.
 
@@ -158,7 +158,10 @@ Import `calculateBom` from `src/bom.ts` and pass item and recipe arrays from any
 const result = calculateBom({
   items,
   recipes,
-  targets: [{ itemId: 'radio', quantity: 2 }, { itemId: 'antenna', quantity: 1 }],
+  targets: [
+    { itemId: 'radio', quantity: 2 },
+    { itemId: 'antenna', quantity: 1 },
+  ],
   inventory: { copper: 12, wire: 3 },
   options: { selections: { wire: 'draw_wire' } },
 })
@@ -181,11 +184,18 @@ Either import a single package through **Game data**, or add a directory under `
 
 ```json
 {
-  "game": { "schemaVersion": 1, "contentVersion": "1.0.0", "id": "my-game", "name": "My Game",
-    "requiredCoverage": ["water"], "progressions": [],
-    "acquisitionMethods": {"gathering": "Gathering"}, "stations": [] },
-  "items": [{"id": "water_pump", "name": "Water Pump", "category": "equipment", "acquisition": []}],
-  "equipment": [{"itemId": "water_pump", "kind": "water", "radius": 2, "shape": "circle", "label": "WP"}],
+  "game": {
+    "schemaVersion": 1,
+    "contentVersion": "1.0.0",
+    "id": "my-game",
+    "name": "My Game",
+    "requiredCoverage": ["water"],
+    "progressions": [],
+    "acquisitionMethods": { "gathering": "Gathering" },
+    "stations": []
+  },
+  "items": [{ "id": "water_pump", "name": "Water Pump", "category": "equipment", "acquisition": [] }],
+  "equipment": [{ "itemId": "water_pump", "kind": "water", "radius": 2, "shape": "circle", "label": "WP" }],
   "recipes": [],
   "presets": []
 }
@@ -193,20 +203,20 @@ Either import a single package through **Game data**, or add a directory under `
 
 The example is fictional. Each top-level value lives in its own file for bundled games.
 
-| File | Fields |
-| --- | --- |
-| `game.json` | `schemaVersion: 1`, `contentVersion`, `id`, `name`, `acquisitionMethods` (ID-to-label map), `stations` (`id`, `name`), `progressions` (`id`, `name`, `equipment` ID array). Optional `description`, `requiredCoverage` (defaults to water and guard, can be empty), `defaultInventory` (equipment ID-to-count map), and `defaultPreset` (preset ID). With no progressions all equipment starts available in Custom. |
-| `items.json` | Array of `id`, `name`, `category`, and `acquisition` (method IDs). Categories are `raw_resource`, `refined_material`, `crafted_component`, `equipment`, `consumable`, and `miscellaneous`. Optional `description`, `icon` (short text or null), `craftable`, `purchasable`, `unlock`, `stationId`, and `recipeNote` for incomplete data. |
-| `equipment.json` | Array of `itemId` (an equipment-category item), `kind` (`water` or `guard`), `shape` (`square` or `circle`), `radius` (positive integer), and optional `label`. Squares use Chebyshev distance and circles use Euclidean distance. Both clip at board edges and exclude the item center. |
-| `recipes.json` | Array of `id`, `output` and `ingredients`. Each quantity entry is `{ "itemId": "...", "quantity": 1 }` with a positive integer. Optional `name`, `stationId`, `unlock`, `alternativeIds`, `byproducts` (quantity entries), `seconds` (per batch), and `source`. Recipes sharing an output are alternatives. The first is the default, and optional `alternativeIds` must reference recipes for the same output. An empty ingredient list is valid only when the known recipe produces an item without consumable input. |
-| `presets.json` | Array of `id`, `name`, `width`, `height`, and `placements` (`x`, `y`, `tile`). Coordinates start at zero. Optional `fill` (`crop`, the default, or `empty`) and `progression` (level ID). Tile values are `crop`, `empty`, `rock`, `path`, an equipment ID, or `!<id>` for locked equipment. |
+| File             | Fields                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `game.json`      | `schemaVersion: 1`, `contentVersion`, `id`, `name`, `acquisitionMethods` (ID-to-label map), `stations` (`id`, `name`), `progressions` (`id`, `name`, `equipment` ID array). Optional `description`, `requiredCoverage` (defaults to water and guard, can be empty), `defaultInventory` (equipment ID-to-count map), and `defaultPreset` (preset ID). With no progressions all equipment starts available in Custom.                                                                                                     |
+| `items.json`     | Array of `id`, `name`, `category`, and `acquisition` (method IDs). Categories are `raw_resource`, `refined_material`, `crafted_component`, `equipment`, `consumable`, and `miscellaneous`. Optional `description`, `icon` (short text or null), `craftable`, `purchasable`, `unlock`, `stationId`, and `recipeNote` for incomplete data.                                                                                                                                                                                |
+| `equipment.json` | Array of `itemId` (an equipment-category item), `kind` (`water` or `guard`), `shape` (`square` or `circle`), `radius` (positive integer), and optional `label`. Squares use Chebyshev distance and circles use Euclidean distance. Both clip at board edges and exclude the item center.                                                                                                                                                                                                                                |
+| `recipes.json`   | Array of `id`, `output` and `ingredients`. Each quantity entry is `{ "itemId": "...", "quantity": 1 }` with a positive integer. Optional `name`, `stationId`, `unlock`, `alternativeIds`, `byproducts` (quantity entries), `seconds` (per batch), and `source`. Recipes sharing an output are alternatives. The first is the default, and optional `alternativeIds` must reference recipes for the same output. An empty ingredient list is valid only when the known recipe produces an item without consumable input. |
+| `presets.json`   | Array of `id`, `name`, `width`, `height`, and `placements` (`x`, `y`, `tile`). Coordinates start at zero. Optional `fill` (`crop`, the default, or `empty`) and `progression` (level ID). Tile values are `crop`, `empty`, `rock`, `path`, an equipment ID, or `!<id>` for locked equipment.                                                                                                                                                                                                                            |
 
 A bundled package can opt in with `"cropData": true` in `game.json` and both optional files below. For a single-file import, provide the same definitions in the top-level `seasons` and `crops` properties. Games without crop data continue to load and can use the layout and crafting planners.
 
-| File | Fields |
-| --- | --- |
-| `seasons.json` | `schemaVersion: 1`, `contentVersion`, source URL, `currency`, `hasSeasons`, ordered `seasons` (`id`, `name`, `days`), `growthStart` (`planting-day` or `following-day`), `crossSeason` (`crop-specific` or `reset`), and ordered named lists for `environments`, `ranks`, and `qualities`. The first environment is the default planning area. Ranks run lowest to highest and quality definitions include `base`. For games without seasons, define one repeating calendar period. |
-| `crops.json` | `schemaVersion: 1`, `contentVersion`, and an array in `crops`. Each crop has a stable crop ID, existing `itemId` and `seedId`, name, category, environment ID, rectangular footprint, growing seasons, survival and replant flags, verification status, and source URL. Verified crops require growth days, yield, seed cost, and a base price. Optional fields cover shop seasons, rank, additional unlocks, regrowth, harvest limits, fixed-grade prices, and deterministic growth modifiers. See [the bundled crop catalog](public/games/coral-island/crops.json) for examples. |
+| File           | Fields                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `seasons.json` | `schemaVersion: 1`, `contentVersion`, source URL, `currency`, `hasSeasons`, ordered `seasons` (`id`, `name`, `days`), `growthStart` (`planting-day` or `following-day`), `crossSeason` (`crop-specific` or `reset`), and ordered named lists for `environments`, `ranks`, and `qualities`. The first environment is the default planning area. Ranks run lowest to highest and quality definitions include `base`. For games without seasons, define one repeating calendar period.                                                                                                |
+| `crops.json`   | `schemaVersion: 1`, `contentVersion`, and an array in `crops`. Each crop has a stable crop ID, existing `itemId` and `seedId`, name, category, environment ID, rectangular footprint, growing seasons, survival and replant flags, verification status, and source URL. Verified crops require growth days, yield, seed cost, and a base price. Optional fields cover shop seasons, rank, additional unlocks, regrowth, harvest limits, fixed-grade prices, and deterministic growth modifiers. See [the bundled crop catalog](public/games/coral-island/crops.json) for examples. |
 
 IDs use lowercase letters, digits, underscores and hyphens, start with a letter or digit, and have a maximum length of 64. Tile and editor tool names are reserved for equipment IDs. The validator rejects unsupported versions, duplicate IDs or placements, invalid shapes and quantities, missing references, and cycles in the recipe ingredient graph across possible alternatives. The fictional [Meadow Test package](tests/fixtures/meadow-test.game.json) provides a more complete import example. It is used by tests and does not ship in the game selector.
 

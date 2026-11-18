@@ -9,7 +9,7 @@ self.onmessage = (event: MessageEvent<{ plan: Plan; game: GamePackage; options: 
   try {
     const { plan, game, options } = event.data
     registerGame(adaptGame(game))
-    const result = optimize(plan, progress => self.postMessage({ progress }), options)
+    const result = optimize(plan, (progress) => self.postMessage({ progress }), options)
     self.postMessage({ result })
   } catch (error) {
     self.postMessage({ error: error instanceof Error ? error.message : 'Optimization failed.' })

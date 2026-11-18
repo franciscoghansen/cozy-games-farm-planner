@@ -19,5 +19,7 @@ export interface CraftingWorkspace {
 }
 
 export const emptyCrafting = (): CraftingWorkspace => ({
-  draft: { targets: [], useInventory: true, selections: {} }, saved: [], active: '',
+  draft: { targets: [], useInventory: true, selections: {} },
+  saved: [],
+  active: '',
 })

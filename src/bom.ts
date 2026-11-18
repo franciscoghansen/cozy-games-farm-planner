@@ -1,21 +1,30 @@
 import type { CraftingCatalog, Inventory, Quantity, Recipe } from './crafting-types.ts'
 
-export interface BomOptions { selections?: Readonly<Record<string, string>> }
+export interface BomOptions {
+  selections?: Readonly<Record<string, string>>
+}
 export interface BomRequest extends CraftingCatalog {
   targets: readonly Quantity[]
   inventory?: Readonly<Inventory>
   options?: BomOptions
 }
 export interface Requirement {
-  id: string; required: number; owned: number; remaining: number
+  id: string
+  required: number
+  owned: number
+  remaining: number
 }
 export interface Material extends Requirement {
-  recipe?: Recipe; batches: number; produced: number; unknown: boolean
+  recipe?: Recipe
+  batches: number
+  produced: number
+  unknown: boolean
 }
 
 function add(total: number, quantity: number) {
   const result = total + quantity
-  if (!Number.isSafeInteger(result)) throw new Error('The crafting quantities exceed the supported calculation range.')
+  if (!Number.isSafeInteger(result))
+    throw new Error('The crafting quantities exceed the supported calculation range.')
   return result
 }
 
@@ -26,13 +35,21 @@ export function dependencyOrder(edges: ReadonlyMap<string, ReadonlySet<string>>)
     for (const dep of dependencies) pending.set(dep, (pending.get(dep) ?? 0) + 1)
   }
   const order = [...pending].filter(([, count]) => count === 0).map(([id]) => id)
-  for (let i = 0; i < order.length; i++) for (const dep of edges.get(order[i]) ?? []) {
-    const count = pending.get(dep)! - 1
-    pending.set(dep, count)
-    if (count === 0) order.push(dep)
-  }
-  if (order.length !== pending.size) throw new Error('recipes: circular recipe dependencies involving ' +
-    [...pending].filter(([, count]) => count > 0).slice(0, 8).map(([id]) => id).join(', '))
+  for (let i = 0; i < order.length; i++)
+    for (const dep of edges.get(order[i]) ?? []) {
+      const count = pending.get(dep)! - 1
+      pending.set(dep, count)
+      if (count === 0) order.push(dep)
+    }
+  if (order.length !== pending.size)
+    throw new Error(
+      'recipes: circular recipe dependencies involving ' +
+        [...pending]
+          .filter(([, count]) => count > 0)
+          .slice(0, 8)
+          .map(([id]) => id)
+          .join(', '),
+    )
   return order
 }
 
@@ -47,7 +64,7 @@ export function recipeAlternatives(recipes: readonly Recipe[]) {
 }
 
 export function prepareBom({ items, recipes }: CraftingCatalog, { selections = {} }: BomOptions = {}) {
-  const catalog = new Map(items.map(item => [item.id, item]))
+  const catalog = new Map(items.map((item) => [item.id, item]))
   if (catalog.size !== items.length) throw new Error('Duplicate crafting item ID.')
   const ids = new Set<string>()
   for (const recipe of recipes) {
@@ -66,11 +83,12 @@ export function prepareBom({ items, recipes }: CraftingCatalog, { selections = {
   const alternatives = recipeAlternatives(recipes)
   for (const [id, options] of alternatives) {
     const selection = Object.hasOwn(selections, id) ? selections[id] : undefined
-    const match = options.find(option => option.id === selection)
-    if (selection && !match) warnings.push('Selected recipe is unavailable for ' + catalog.get(id)!.name + '. Using the default.')
+    const match = options.find((option) => option.id === selection)
+    if (selection && !match)
+      warnings.push('Selected recipe is unavailable for ' + catalog.get(id)!.name + '. Using the default.')
     const recipe = match ?? options[0]
     chosen.set(id, recipe)
-    dependencies.set(id, new Set(recipe.ingredients.map(ingredient => ingredient.itemId)))
+    dependencies.set(id, new Set(recipe.ingredients.map((ingredient) => ingredient.itemId)))
   }
   const order = dependencyOrder(dependencies)
   const orderedItems = new Set(order)
@@ -112,7 +130,7 @@ export function prepareBom({ items, recipes }: CraftingCatalog, { selections = {
     }
 
     // Consumers precede ingredients so shared demand is summed before rounding batches.
-    for (const id of [...order, ...[...demand.keys()].filter(id => !orderedItems.has(id))]) {
+    for (const id of [...order, ...[...demand.keys()].filter((id) => !orderedItems.has(id))]) {
       const requested = requirements.get(id) ?? 0
       const rootOwned = demand.has(id) ? (consumed.get(id) ?? 0) : 0
       const required = add(requested, rootOwned)
@@ -123,32 +141,61 @@ export function prepareBom({ items, recipes }: CraftingCatalog, { selections = {
       const batches = recipe ? Math.ceil(remaining / recipe.output.quantity) : 0
       const produced = recipe ? add(0, batches * recipe.output.quantity) : 0
       const item = catalog.get(id)!
-      const unknown = !recipe && (Boolean(item.recipeNote) || (item.category !== 'raw_resource'
-        && !item.purchasable && !item.acquisition.some(method => method !== 'crafting')))
-      materials.push({ id, required, owned: add(rootOwned, fromStock), remaining, recipe, batches, produced, unknown })
+      const unknown =
+        !recipe &&
+        (Boolean(item.recipeNote) ||
+          (item.category !== 'raw_resource' &&
+            !item.purchasable &&
+            !item.acquisition.some((method) => method !== 'crafting')))
+      materials.push({
+        id,
+        required,
+        owned: add(rootOwned, fromStock),
+        remaining,
+        recipe,
+        batches,
+        produced,
+        unknown,
+      })
       if (!recipe || !batches) continue
       if (produced > remaining) surplus.set(id, add(surplus.get(id) ?? 0, produced - remaining))
       for (const ingredient of recipe.ingredients) {
         ingredientIds.add(ingredient.itemId)
-        requirements.set(ingredient.itemId, add(requirements.get(ingredient.itemId) ?? 0, ingredient.quantity * batches))
+        requirements.set(
+          ingredient.itemId,
+          add(requirements.get(ingredient.itemId) ?? 0, ingredient.quantity * batches),
+        )
       }
       for (const byproduct of recipe.byproducts ?? []) {
         surplus.set(byproduct.itemId, add(surplus.get(byproduct.itemId) ?? 0, byproduct.quantity * batches))
       }
     }
 
-    const shopping = materials.filter(row => !row.recipe)
-    const steps = materials.filter(row => row.batches > 0).reverse()
-    const deficits = shopping.filter(row => row.remaining > 0)
-    const unresolved = deficits.filter(row => row.unknown)
+    const shopping = materials.filter((row) => !row.recipe)
+    const steps = materials.filter((row) => row.batches > 0).reverse()
+    const deficits = shopping.filter((row) => row.remaining > 0)
+    const unresolved = deficits.filter((row) => row.unknown)
     return {
-      roots, materials, shopping, steps, surplus, consumed, deficits, unresolved, selectedRecipes: new Map(chosen),
-      rawMaterials: shopping.filter(row => catalog.get(row.id)?.category === 'raw_resource'),
-      intermediates: materials.filter(row => row.recipe && ingredientIds.has(row.id)),
+      roots,
+      materials,
+      shopping,
+      steps,
+      surplus,
+      consumed,
+      deficits,
+      unresolved,
+      selectedRecipes: new Map(chosen),
+      rawMaterials: shopping.filter((row) => catalog.get(row.id)?.category === 'raw_resource'),
+      intermediates: materials.filter((row) => row.recipe && ingredientIds.has(row.id)),
       warnings: [...warnings],
       operations: steps.reduce((sum, row) => add(sum, row.batches), 0),
-      stations: [...new Set(steps.map(row => row.recipe?.stationId ?? catalog.get(row.id)?.stationId)
-        .filter((id): id is string => Boolean(id)))],
+      stations: [
+        ...new Set(
+          steps
+            .map((row) => row.recipe?.stationId ?? catalog.get(row.id)?.stationId)
+            .filter((id): id is string => Boolean(id)),
+        ),
+      ],
       feasible: deficits.length === 0,
     }
   }
