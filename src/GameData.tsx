@@ -69,7 +69,10 @@ export function GameData({
     } catch (error) {
       if (!(error instanceof Error)) throw error
       const label = edit.type === 'items' ? (item?.name ?? 'New item') : (edit.id ?? 'New recipe')
-      throw new Error(error.message.replace(edit.type + '[' + index + ']', () => label))
+      throw new Error(
+        error.message.replace(edit.type + '[' + index + ']', () => label),
+        { cause: error },
+      )
     }
     await onSave(next)
     setSelected(edit.type === 'items' ? value.id : (value as Recipe).output.itemId)

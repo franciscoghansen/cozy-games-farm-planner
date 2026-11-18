@@ -40,7 +40,7 @@ for (const item of equipment) {
   })
 }
 
-test('all 25 scarecrows have a source, an unlock and a calculable BOM', () => {
+void test('all 25 scarecrows have a source, an unlock and a calculable BOM', () => {
   const scarecrows = equipment.filter((item) => item.kind === 'guard')
   assert.equal(scarecrows.length, 25)
   for (const item of scarecrows) {
@@ -65,13 +65,13 @@ test('all 25 scarecrows have a source, an unlock and a calculable BOM', () => {
   assert.equal(ultimate.shopping.find((row) => row.id === 'battery')?.required, 2)
 })
 
-test('coverage clips to rectangular boundaries without row wrap', () => {
+void test('coverage clips to rectangular boundaries without row wrap', () => {
   const visited: number[] = []
   visitCoverage(5, 3, 0, 2, (index) => visited.push(index))
   assert.deepEqual(visited, [1, 2, 5, 6, 7, 10, 11, 12])
 })
 
-test('crop statistics exclude equipment and terrain and count overlap', () => {
+void test('crop statistics exclude equipment and terrain and count overlap', () => {
   const plan = preset('starter')
   plan.tiles[0] = 'rock'
   plan.tiles[2] = 'path'
@@ -98,7 +98,7 @@ for (const [index, entry] of presets.entries()) {
   })
 }
 
-test('seven is the maximum possible for Minimal Resources', () => {
+void test('seven is the maximum possible for Minimal Resources', () => {
   const plan = newPlan(5, 5)
   let best = 0
   for (let s = 0; s < 25; s++)
@@ -114,7 +114,7 @@ test('seven is the maximum possible for Minimal Resources', () => {
   assert.ok(coverage(minimal).guard[minimal.tiles.indexOf('s1')])
 })
 
-test('JSON and local persistence round-trip named plans, terrain, tiers and locks', () => {
+void test('JSON and local persistence round-trip named plans, terrain, tiers and locks', () => {
   const plan = preset('starter')
   plan.tiles.splice(0, 4, 'rock', 'path', 'empty', '!s1')
   plan.inventory.s2 = 7
@@ -152,7 +152,7 @@ test('JSON and local persistence round-trip named plans, terrain, tiers and lock
   )
 })
 
-test('resizing remaps overlapping coordinates without collision', () => {
+void test('resizing remaps overlapping coordinates without collision', () => {
   const plan = preset('starter')
   const result = resize(plan, 8, 6)
   assert.equal(result.tiles[2 * 8 + 2], 'c1')
@@ -160,7 +160,7 @@ test('resizing remaps overlapping coordinates without collision', () => {
   assert.equal(result.tiles.length, 48)
 })
 
-test('optimizer fits four early sprinklers around one scarecrow on a 5×5 farm', () => {
+void test('optimizer fits four early sprinklers around one scarecrow on a 5×5 farm', () => {
   const plan = newPlan(5, 5)
   plan.limited = true
   plan.inventory.s1 = 4
@@ -171,7 +171,7 @@ test('optimizer fits four early sprinklers around one scarecrow on a 5×5 farm',
   assert.deepEqual(usedOnly(result.plan), { s1: 4, c1: 1 })
 })
 
-test('all strategies enforce inventory and preserve obstacles, reserved paths and equipment locks', () => {
+void test('all strategies enforce inventory and preserve obstacles, reserved paths and equipment locks', () => {
   const plan = newPlan(16, 14)
   plan.progression = 'custom'
   plan.unlocked = ['s1', 's2', 'c2']
@@ -200,7 +200,7 @@ test('all strategies enforce inventory and preserve obstacles, reserved paths an
   }
 })
 
-test('optimizer uses mixed tiers when it can increase production', () => {
+void test('optimizer uses mixed tiers when it can increase production', () => {
   const plan = newPlan(9, 9)
   plan.progression = 'mid'
   plan.limited = true
@@ -212,7 +212,7 @@ test('optimizer uses mixed tiers when it can increase production', () => {
   assert.equal(used.c2, 1)
 })
 
-test('optimizer reports a target shortfall and rejects infeasible locked inventory', () => {
+void test('optimizer reports a target shortfall and rejects infeasible locked inventory', () => {
   const plan = newPlan(5, 5)
   plan.strategy = 'low'
   plan.target = 8
@@ -226,7 +226,7 @@ test('optimizer reports a target shortfall and rejects infeasible locked invento
   assert.throws(() => optimize(plan), /Locked equipment exceeds inventory/)
 })
 
-test('low resources prunes equipment while maintaining a reachable target', () => {
+void test('low resources prunes equipment while maintaining a reachable target', () => {
   const plan = preset('mid')
   plan.strategy = 'low'
   plan.target = 10
@@ -237,7 +237,7 @@ test('low resources prunes equipment while maintaining a reachable target', () =
   assert.equal(result.shortfall, 0)
 })
 
-test('upgrade comparison reports relocated equipment separately', () => {
+void test('upgrade comparison reports relocated equipment separately', () => {
   const before = preset('starter')
   const after = { ...before, tiles: [...before.tiles] }
   after.tiles[6] = 'crop'
@@ -246,6 +246,6 @@ test('upgrade comparison reports relocated equipment separately', () => {
   assert.deepEqual(changes(before, after), { added: 1, removed: 1, moved: 1 })
 })
 
-test('the Mid Game preset puts the unwatered cross outside usable farmland', () => {
+void test('the Mid Game preset puts the unwatered cross outside usable farmland', () => {
   assert.equal(statistics(preset('mid')).efficiency, 100)
 })

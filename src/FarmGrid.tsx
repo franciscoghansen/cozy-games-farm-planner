@@ -6,16 +6,9 @@ import { visitCoverage } from './coverage.ts'
 import { plotKey, rectangle } from './crops/crop-layout-adapter.ts'
 import { itemId } from './model.ts'
 import type { Plan, Tile } from './model.ts'
-import type { coverage } from './coverage.ts'
+import type { coverage, Overlays } from './coverage.ts'
 import { download } from './storage.ts'
 
-export interface Overlays {
-  combined: boolean
-  water: boolean
-  guard: boolean
-  equipment: boolean
-  coords: boolean
-}
 export interface GridHandle {
   downloadPng: () => void
 }

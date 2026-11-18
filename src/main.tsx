@@ -25,7 +25,8 @@ import { gameFor, isItem, registerGame } from './equipment.ts'
 import { adaptGame, boardLimit, quantityLimit, withBundledCrops } from './game.ts'
 import type { GamePackage } from './game.ts'
 import { FarmGrid } from './FarmGrid.tsx'
-import type { GridHandle, Overlays } from './FarmGrid.tsx'
+import type { GridHandle } from './FarmGrid.tsx'
+import type { Overlays } from './coverage.ts'
 import { itemId, mergedInventory, resize, unlockedItems, usable } from './model.ts'
 import type { Plan, Tile } from './model.ts'
 import { changes, optimizerFeedback } from './optimizer.ts'
@@ -563,7 +564,6 @@ function App({
         <a
           className="brand"
           href={location.pathname + location.search}
-          aria-label="Farm Planner home"
           onClick={(event) => {
             if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
             event.preventDefault()
@@ -588,7 +588,9 @@ function App({
               value={gameId}
               disabled={busy || switching}
               onChange={(event) => {
-                void switchGame(event.target.value).catch((error) => setNotice(error.message))
+                void switchGame(event.target.value).catch((error) =>
+                  setNotice(error instanceof Error ? error.message : String(error)),
+                )
               }}
             >
               {[...session.games.values()].map((entry) => (
@@ -769,7 +771,7 @@ function App({
                   [
                     JSON.stringify(
                       session.recovery,
-                      (_, value) => (typeof value === 'bigint' ? String(value) : value),
+                      (_, value: unknown) => (typeof value === 'bigint' ? String(value) : value),
                       2,
                     ),
                   ],
@@ -1086,9 +1088,14 @@ function App({
           </main>
         </>
       )}
-      <dialog ref={modal} onClose={() => setDialog(false)} className="layout-dialog">
+      <dialog
+        ref={modal}
+        onClose={() => setDialog(false)}
+        className="layout-dialog"
+        aria-labelledby="layout-dialog-title"
+      >
         <div className="dialog-title">
-          <h2>Farm layouts</h2>
+          <h2 id="layout-dialog-title">Farm layouts</h2>
           <button className="icon-button" aria-label="Close layouts" onClick={() => setDialog(false)}>
             <X size={18} />
           </button>
@@ -1233,6 +1240,7 @@ function Session({ initial }: { initial: Started }) {
       if (previous) registerGame(adaptGame(previous))
       throw new Error(
         'Game data could not be saved. ' + (error instanceof Error ? error.message : String(error)),
+        { cause: error },
       )
     }
     setSession((value) => ({ ...value, games: new Map(value.games).set(id, pack) }))

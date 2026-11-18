@@ -441,7 +441,7 @@ export function Statistics({
           <Sprout size={17} /> Production efficiency
         </div>
         <strong>{pct(stats.efficiency)}</strong>
-        <div className="meter" aria-label={pct(stats.efficiency)}>
+        <div className="meter" aria-hidden="true">
           <div style={{ width: stats.efficiency + '%' }} />
         </div>
         <p>

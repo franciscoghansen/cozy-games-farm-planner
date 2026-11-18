@@ -30,7 +30,7 @@ const calculate = (counts: Record<string, number>, inventory = {}, selections = 
     options: { selections },
   })
 
-test('shared dependency demand is aggregated before batching and surplus is recorded', () => {
+void test('shared dependency demand is aggregated before batching and surplus is recorded', () => {
   const result = calculate({ orb: 1, tower: 1 })
   const bar = row(result, 'bar')
   assert.equal(bar.required, 5)
@@ -47,7 +47,7 @@ test('shared dependency demand is aggregated before batching and surplus is reco
   assert.ok(order.indexOf('bar') < order.indexOf('tower'))
 })
 
-test('intermediate stock is consumed once across all roots and raw stock is deducted', () => {
+void test('intermediate stock is consumed once across all roots and raw stock is deducted', () => {
   const result = calculate({ orb: 1, tower: 1 }, { bar: 3, ore: 2 })
   assert.equal(row(result, 'bar').owned, 3)
   assert.equal(row(result, 'bar').batches, 1)
@@ -58,7 +58,7 @@ test('intermediate stock is consumed once across all roots and raw stock is dedu
   assert.equal(result.feasible, false)
 })
 
-test('alternative recipes change the bill and allow batch surplus on custom targets', () => {
+void test('alternative recipes change the bill and allow batch surplus on custom targets', () => {
   const result = calculate({ bar: 7 }, {}, { bar: 'whittle' })
   assert.equal(result.steps[0].recipe?.id, 'whittle')
   assert.equal(row(result, 'bar').batches, 3)
@@ -71,7 +71,7 @@ test('alternative recipes change the bill and allow batch surplus on custom targ
   )
 })
 
-test('unknown requirements remain real shortages and externally sourced items are identified', () => {
+void test('unknown requirements remain real shortages and externally sourced items are identified', () => {
   const result = calculate({ unknown: 2, wood: 3 }, { unknown: 1 })
   assert.equal(row(result, 'unknown').unknown, true)
   assert.equal(row(result, 'unknown').remaining, 1)
@@ -80,7 +80,7 @@ test('unknown requirements remain real shortages and externally sourced items ar
   assert.equal(result.feasible, false)
 })
 
-test('scratch ignores stock while upgrades reuse relocated equipment without refunds', () => {
+void test('scratch ignores stock while upgrades reuse relocated equipment without refunds', () => {
   const base = plan()
   base.tiles[0] = '!orb'
   base.tiles[2] = 'deluxe'
@@ -109,7 +109,7 @@ test('scratch ignores stock while upgrades reuse relocated equipment without ref
   assert.equal(upgrade.surplus.has('deluxe'), false)
 })
 
-test('standalone targets and the farm adapter return the same calculation for identical inputs', () => {
+void test('standalone targets and the farm adapter return the same calculation for identical inputs', () => {
   const target = plan()
   target.tiles[0] = '!orb'
   target.tiles[1] = 'tower'
@@ -137,7 +137,7 @@ test('standalone targets and the farm adapter return the same calculation for id
   assert.deepEqual(farmResult, standaloneResult)
 })
 
-test('game JSON validates references, cycles, duplicate IDs, coverage and versions', () => {
+void test('game JSON validates references, cycles, duplicate IDs, coverage and versions', () => {
   assert.deepEqual(validatePackage(JSON.parse(JSON.stringify(definition))), definition)
   assert.throws(() => validateManifest({ schemaVersion: 2 }), /unsupported schema/)
   assert.throws(
@@ -168,7 +168,7 @@ test('game JSON validates references, cycles, duplicate IDs, coverage and versio
   assert.throws(() => validatePackage(badShape), /square, circle/)
 })
 
-test('circular coverage excludes diagonals and water-only games use their own coverage goal', () => {
+void test('circular coverage excludes diagonals and water-only games use their own coverage goal', () => {
   const onlyWater = adaptGame(
     validatePackage({
       ...definition,
@@ -187,7 +187,7 @@ test('circular coverage excludes diagonals and water-only games use their own co
   assert.ok(optimize(layout).full > 4)
 })
 
-test('materials optimizer reserves shared resources across watering and protection', () => {
+void test('materials optimizer reserves shared resources across watering and protection', () => {
   const target = plan()
   target.strategy = 'materials'
   target.tiles[0] = 'rock'
@@ -205,7 +205,7 @@ test('materials optimizer reserves shared resources across watering and protecti
   assert.equal(strict.crafting?.feasible, true)
 })
 
-test('resource-cost optimizer can choose cheaper stock for the same crop target', () => {
+void test('resource-cost optimizer can choose cheaper stock for the same crop target', () => {
   const target = plan()
   target.tiles[6] = 'deluxe'
   target.tiles[12] = 'tower'
@@ -217,7 +217,7 @@ test('resource-cost optimizer can choose cheaper stock for the same crop target'
   assert.ok(countEquipment(result.plan).orb > 0)
 })
 
-test('IndexedDB stores layouts, inventory, overrides, BOM settings and selected game independently', async () => {
+void test('IndexedDB stores layouts, inventory, overrides, BOM settings and selected game independently', async () => {
   const copy = { ...definition, game: { ...definition.game, id: 'other-farm', name: 'Other Farm' } }
   registerGame(adaptGame(copy))
   const db = await openDatabase(new IDBFactory())
@@ -268,7 +268,7 @@ test('IndexedDB stores layouts, inventory, overrides, BOM settings and selected 
   db.close()
 })
 
-test('packages reject byproducts that are consumed as recipe ingredients', () => {
+void test('packages reject byproducts that are consumed as recipe ingredients', () => {
   const invalid = structuredClone(definition)
   invalid.recipes[0].ingredients.push({ itemId: 'slag', quantity: 1 })
   assert.throws(() => validatePackage(invalid), /byproduct slag is also used as a recipe ingredient/)

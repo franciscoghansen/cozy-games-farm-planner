@@ -14,7 +14,7 @@ pack.equipment.find((item) => item.itemId === 'deluxe')!.radius = 4
 pack.game.defaultInventory = { deluxe: 4 }
 registerGame(adaptGame(pack), true)
 
-test('optimized high-tier equipment is removed when deselected, even at lower production', () => {
+void test('optimized high-tier equipment is removed when deselected, even at lower production', () => {
   const before = newPlan(7, 7)
   before.unlocked = ['orb', 'tower', 'deluxe']
   const upgraded = optimize(before).plan
@@ -24,7 +24,7 @@ test('optimized high-tier equipment is removed when deselected, even at lower pr
   assert.ok(statistics(result).used.orb > 0)
 })
 
-test('preserve variants keep manual locks and drop other deselected placements', () => {
+void test('preserve variants keep manual locks and drop other deselected placements', () => {
   const before = newPlan(7, 7)
   before.tiles[10] = 'deluxe'
   before.tiles[25] = '!deluxe'
@@ -36,7 +36,7 @@ test('preserve variants keep manual locks and drop other deselected placements',
   assert.match(warnings.join(' '), /1 manually locked Deluxe Orb/)
 })
 
-test('optimizer rejects missing required kinds before doing work', () => {
+void test('optimizer rejects missing required kinds before doing work', () => {
   const plan = newPlan(5, 5)
   plan.unlocked = ['orb']
   assert.throws(
@@ -45,7 +45,7 @@ test('optimizer rejects missing required kinds before doing work', () => {
   )
 })
 
-test('new stock starts empty and limited optimization uses nonzero material stock without hiding zero counts', () => {
+void test('new stock starts empty and limited optimization uses nonzero material stock without hiding zero counts', () => {
   const plan = newPlan(5, 5)
   plan.limited = true
   assert.equal(plan.inventory.deluxe, 0)

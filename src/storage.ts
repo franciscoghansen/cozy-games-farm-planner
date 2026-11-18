@@ -4,6 +4,7 @@ import type { Game } from './game.ts'
 import { maxSize } from './model.ts'
 import type { Plan } from './model.ts'
 
+// Preserve the original storage key so the first IndexedDB run can still migrate old workspaces.
 const key = 'coral-island-farm-planner/v1'
 const integer = (value: unknown, min: number, max: number) =>
   typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max
@@ -28,7 +29,7 @@ export function validatePlan(value: unknown, fallbackGame?: string, adapter?: Ga
   if (typeof value !== 'object' || !value) throw new Error('Expected a farm plan object.')
   const p = value as Record<string, unknown>
   if (p.gameId !== undefined && typeof p.gameId !== 'string') throw new Error('Invalid game ID.')
-  const requestedGame = (p.gameId as string | undefined) ?? fallbackGame
+  const requestedGame = p.gameId ?? fallbackGame
   const game = adapter ?? gameFor(requestedGame)
   const gameId = game.game.id
   if ((requestedGame && gameId !== requestedGame) || (fallbackGame && gameId !== fallbackGame)) {
@@ -59,15 +60,15 @@ export function validatePlan(value: unknown, fallbackGame?: string, adapter?: Ga
   ) {
     throw new Error('Invalid farm tiles.')
   }
+  const inventory = asRecord(p.inventory)
   if (
     !(p.progression === 'custom' || game.game.progressions.some((level) => level.id === p.progression)) ||
     !Array.isArray(p.unlocked) ||
     !p.unlocked.every((id) => typeof id === 'string' && isItem(id)) ||
     typeof p.limited !== 'boolean' ||
-    !p.inventory ||
-    typeof p.inventory !== 'object' ||
+    !inventory ||
     Array.isArray(p.inventory) ||
-    !Object.entries(p.inventory).every(([id, count]) => isItem(id) && integer(count, 0, quantityLimit)) ||
+    !Object.entries(inventory).every(([id, count]) => isItem(id) && integer(count, 0, quantityLimit)) ||
     !['maximum', 'low', 'balanced', 'rework', 'cost', 'materials'].includes(String(p.strategy)) ||
     !integer(p.target, 0, maxSize ** 2)
   ) {
@@ -84,9 +85,7 @@ export function validatePlan(value: unknown, fallbackGame?: string, adapter?: Ga
     progression: p.progression,
     unlocked: p.unlocked,
     limited: p.limited,
-    inventory: Object.fromEntries(
-      game.placables.map((item) => [item.id, (p.inventory as Record<string, unknown>)[item.id] ?? 0]),
-    ),
+    inventory: Object.fromEntries(game.placables.map((item) => [item.id, inventory[item.id] ?? 0])),
     strategy: p.strategy,
     target: p.target,
   } as Plan
@@ -103,28 +102,34 @@ export interface Workspace {
 }
 export const serialize = (plan: Plan) => JSON.stringify({ version: 2, plan }, null, 2)
 
+function asRecord(value: unknown): Record<string, unknown> | undefined {
+  return value !== null && typeof value === 'object' ? (value as Record<string, unknown>) : undefined
+}
+
 export function deserialize(text: string, gameId?: string) {
-  const value = JSON.parse(text)
-  if (![1, 2].includes(value?.version)) throw new Error('Unsupported plan format.')
-  if (value.version === 1 && !value.plan?.gameId) {
+  const value = asRecord(JSON.parse(text))
+  if (value?.version !== 1 && value?.version !== 2) throw new Error('Unsupported plan format.')
+  const plan = asRecord(value.plan)
+  if (value.version === 1 && !plan?.gameId) {
     const legacy = getLayoutV1Game()
     if (gameId && gameId !== legacy)
       throw new Error('Switch to the original game to import this legacy layout.')
     return validatePlan(value.plan, legacy)
   }
-  if (!value.plan?.gameId) throw new Error('Layout is missing its game ID.')
+  if (!plan?.gameId) throw new Error('Layout is missing its game ID.')
   return validatePlan(value.plan, gameId)
 }
 
 export function loadWorkspace(storage: Pick<Storage, 'getItem'>, fallback: Plan): Workspace {
   try {
-    const data = JSON.parse(storage.getItem(key) || 'null')
+    const data = asRecord(JSON.parse(storage.getItem(key) || 'null'))
     if (!data) return { current: fallback, active: null, saved: [] }
     const saved: Saved[] = []
     if (Array.isArray(data.saved)) {
-      for (const entry of data.saved) {
+      for (const value of data.saved as readonly unknown[]) {
+        const entry = asRecord(value)
         try {
-          if (typeof entry.id === 'string')
+          if (typeof entry?.id === 'string')
             saved.push({ id: entry.id, plan: validatePlan(entry.plan, fallback.gameId) })
         } catch {
           /* Preserve other plans if one entry is invalid. */
@@ -137,7 +142,8 @@ export function loadWorkspace(storage: Pick<Storage, 'getItem'>, fallback: Plan)
     } catch {
       /* Open the default farm. */
     }
-    return { current, active: saved.some((entry) => entry.id === data.active) ? data.active : null, saved }
+    const active = saved.find((entry) => entry.id === data.active)?.id ?? null
+    return { current, active, saved }
   } catch {
     return { current: fallback, active: null, saved: [] }
   }

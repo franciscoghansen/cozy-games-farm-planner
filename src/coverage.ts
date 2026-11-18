@@ -90,3 +90,11 @@ export function statistics(plan: Plan, { water, guard } = coverage(plan)) {
     perEquipment: sprinklers + scarecrows ? stats.full / (sprinklers + scarecrows) : 0,
   }
 }
+
+export interface Overlays {
+  combined: boolean
+  water: boolean
+  guard: boolean
+  equipment: boolean
+  coords: boolean
+}

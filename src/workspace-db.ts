@@ -1,5 +1,6 @@
-import { adaptGame, validateManifest, validatePackage, withBundledCrops } from './game.ts'
-import type { GamePackage, Inventory } from './game.ts'
+import { adaptGame, validatePackage, withBundledCrops } from './game.ts'
+import type { Inventory } from './game.ts'
+import { loadBundledGames } from './bundled-games.ts'
 import { gameFor, registerGame, setLayoutV1Game } from './equipment.ts'
 import { loadWorkspace } from './storage.ts'
 import type { Workspace } from './storage.ts'
@@ -9,7 +10,7 @@ import type { BomConfiguration, BomSettings } from './farm-bom.ts'
 import type { CraftingWorkspace } from './crafting-plans.ts'
 import { validateState } from './workspace-state.ts'
 import type { CropPlan } from './crops/types.ts'
-import type { Overlays } from './FarmGrid.tsx'
+import type { Overlays } from './coverage.ts'
 
 export interface GameState {
   workspace: Workspace
@@ -102,7 +103,7 @@ export async function dbWrite(db: WorkspaceDatabase, store: Store, key: IDBValid
   })
 }
 
-async function getJson(path: string) {
+async function getJson(path: string): Promise<unknown> {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '')
   const response = await fetch(base + '/games/' + path, { cache: 'no-cache' })
   if (!response.ok) throw new Error('Could not load game data: ' + path)
@@ -138,29 +139,8 @@ export async function loadGameState(db: WorkspaceDatabase, id: string) {
 }
 
 export async function bootstrap(open = openDatabase, json = getJson) {
-  const manifest = validateManifest(await json('manifest.json'))
-  const [packages, stored] = await Promise.all([
-    Promise.all(
-      manifest.games.map(async (id) => {
-        const [game, items, equipment, recipes, presets] = await Promise.all(
-          ['game', 'items', 'equipment', 'recipes', 'presets'].map((file) => json(id + '/' + file + '.json')),
-        )
-        const cropData = (game as GamePackage['game'] | null)?.cropData === true
-        const [seasons, crops] = cropData
-          ? await Promise.all(['seasons', 'crops'].map((file) => json(id + '/' + file + '.json')))
-          : []
-        const pack = validatePackage({
-          game,
-          items,
-          equipment,
-          recipes,
-          presets,
-          ...(cropData && { seasons, crops }),
-        })
-        if (pack.game.id !== id) throw new Error('Game ID does not match its manifest directory: ' + id)
-        return pack
-      }),
-    ),
+  const [{ manifest, packages }, stored] = await Promise.all([
+    loadBundledGames(json),
     (async () => {
       try {
         const db = await open()

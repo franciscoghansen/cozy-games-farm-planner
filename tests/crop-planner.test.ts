@@ -97,7 +97,7 @@ const dates = (crop: Crop, start = 0, end = 4, replant = false, definition = cal
     .events.filter(isHarvest)
     .map((event) => event.day)
 
-test('crop files are optional and versioned, validate links and distinguish incomplete data', () => {
+void test('crop files are optional and versioned, validate links and distinguish incomplete data', () => {
   assert.equal(legacy.crops, undefined)
   assert.equal(
     withBundledCrops(legacy, pack).items.some((item) => item.id === bean.seedId),
@@ -120,7 +120,7 @@ test('crop files are optional and versioned, validate links and distinguish inco
   assert.match(planner.comparisons[1].warnings.join(' '), /environment/)
 })
 
-test('game-specific periods round-trip across year transitions and full season starts at day 1', () => {
+void test('game-specific periods round-trip across year transitions and full season starts at day 1', () => {
   const clock = calendarMath(calendar)
   assert.equal(clock.ordinal({ year: 1, season: 'sun', day: 8 }), 12)
   assert.deepEqual(clock.date(13), { year: 2, season: 'rain', day: 1 })
@@ -140,7 +140,7 @@ test('game-specific periods round-trip across year transitions and full season s
   assert.deepEqual(dates({ ...berry, seasons: [] }, 4, 9, false, seasonless), [6, 8])
 })
 
-test('growth handles last-day harvest, regrowth, explicit replanting, and rollover', () => {
+void test('growth handles last-day harvest, regrowth, explicit replanting, and rollover', () => {
   assert.deepEqual(dates(bean), [2])
   assert.deepEqual(dates(bean, 2), [4])
   assert.deepEqual(dates(bean, 3), [])
@@ -161,7 +161,7 @@ test('growth handles last-day harvest, regrowth, explicit replanting, and rollov
   assert.equal(result.tileDays, 5)
 })
 
-test('economics distinguishes seed costs, future purchases, yields, and fixed quality', () => {
+void test('economics distinguishes seed costs, future purchases, yields, and fixed quality', () => {
   const simulate = (crop: Crop) => simulateCrop(calendar, crop, { start: 0, end: 4, replant: true })
   const input = { inventory: { 'bean-seed': 1 }, start: 0, budget: 4, quality: 'fine' }
   const result = calculateEconomics(calendar, [{ crop: bean, quantity: 2, ...simulate(bean) }], input)
@@ -192,7 +192,7 @@ test('economics distinguishes seed costs, future purchases, yields, and fixed qu
   assert.deepEqual([growth.events.at(-1)?.day, withExpense.initial, withExpense.expenses], [1, 2, 2])
 })
 
-test('optimizer enforces budgets, locked seed sales, and shared stock across crops', () => {
+void test('optimizer enforces budgets, locked seed sales, and shared stock across crops', () => {
   const locked = { ...berry, rank: 'expert' }
   const planner = cropPlanner(
     calendar,
@@ -221,7 +221,7 @@ test('optimizer enforces budgets, locked seed sales, and shared stock across cro
   assert.equal(cropPlanner(calendar, [seasonalSale], offSale, { [bean.seedId]: 2 }).plan().tiles, 2)
 })
 
-test('recommendations use profitable owned seeds without expanding into loss-making purchases', () => {
+void test('recommendations use profitable owned seeds without expanding into loss-making purchases', () => {
   const costly = { ...bean, seedCost: 20 }
   const planner = cropPlanner(
     calendar,
@@ -235,7 +235,7 @@ test('recommendations use profitable owned seeds without expanding into loss-mak
   assert.equal(planner.plan([{ cropId: bean.id, quantity: 6 }]).tiles, 6)
 })
 
-test('farm adapter preserves equipment and avoids overlapping or fragmented footprints', () => {
+void test('farm adapter preserves equipment and avoids overlapping or fragmented footprints', () => {
   const farm = newPlan(4, 3, 'Fixture plot', game.game.id)
   farm.tiles[5] = '!orb'
   farm.tiles[6] = 'path'
@@ -260,7 +260,7 @@ test('farm adapter preserves equipment and avoids overlapping or fragmented foot
   assert.deepEqual(resize({ ...farm, cropPlots: plots }, 5, 3).cropPlots, plots)
 })
 
-test('seed shopping and existing BOM share booked inventory without mutating it', () => {
+void test('seed shopping and existing BOM share booked inventory without mutating it', () => {
   const stock = { [bean.seedId]: 1, ore: 3 }
   const plan = cropPlanner(calendar, [bean], settings, stock).plan()
   assert.equal(seedShopping(game, plan)[0].required, 3)
@@ -284,7 +284,7 @@ test('seed shopping and existing BOM share booked inventory without mutating it'
   assert.deepEqual(stock, { [bean.seedId]: 1, ore: 3 })
 })
 
-test('crop annotations, saved schedules and checklist survive backup restore and stay game-scoped', async () => {
+void test('crop annotations, saved schedules and checklist survive backup restore and stay game-scoped', async () => {
   const db = await openDatabase(new IDBFactory())
   const otherDb = await openDatabase(new IDBFactory())
   const state = emptyState(game.game.id)

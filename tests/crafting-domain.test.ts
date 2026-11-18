@@ -29,7 +29,7 @@ const catalog: CraftingCatalog = {
   ],
 }
 
-test('BOM and its generic types have no planner, UI or storage imports', () => {
+void test('BOM and its generic types have no planner, UI or storage imports', () => {
   const moduleReferences = (name: string) => {
     const source = readFileSync(new URL('../src/' + name, import.meta.url), 'utf8')
     const file = ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true)
@@ -59,7 +59,7 @@ test('BOM and its generic types have no planner, UI or storage imports', () => {
   assert.deepEqual(moduleReferences('crafting-types.ts'), [])
 })
 
-test('arbitrary non-farm targets share stock, intermediates and rounding in one calculation', () => {
+void test('arbitrary non-farm targets share stock, intermediates and rounding in one calculation', () => {
   const inventory = { copper: 1, wire: 1, circuit: 1 }
   const targets = [quantity('radio', 1), quantity('antenna', 1), quantity('antenna', 1)]
   const request = { ...catalog, targets, inventory, options: { selections: { wire: 'missing-choice' } } }
@@ -100,7 +100,7 @@ test('arbitrary non-farm targets share stock, intermediates and rounding in one 
   assert.deepEqual(request, original)
 })
 
-test('missing recipes are unresolved and invalid recipe data fails safely without a game loader', () => {
+void test('missing recipes are unresolved and invalid recipe data fails safely without a game loader', () => {
   const result = calculateBom({ ...catalog, targets: [quantity('unknown', 2)] })
   assert.deepEqual(
     result.unresolved.map((row) => [row.id, row.remaining]),

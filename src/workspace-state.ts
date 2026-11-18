@@ -79,7 +79,7 @@ export function validateState(value: unknown, game: Game, repair = false): GameS
           : 'custom',
         tiles:
           Array.isArray(entry.tiles) && entry.tiles.length <= boardLimit ** 2
-            ? entry.tiles.map((tile) =>
+            ? entry.tiles.map((tile: unknown) =>
                 typeof tile === 'string' && itemId(tile) !== undefined && !game.placedItems.has(itemId(tile)!)
                   ? 'crop'
                   : tile,

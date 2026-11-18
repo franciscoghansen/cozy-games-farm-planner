@@ -14,7 +14,7 @@ const pack = validatePackage(
 const gameId = pack.game.id
 registerGame(adaptGame(pack))
 
-test('workspace backup moves layouts, materials, crafting plans, and custom games between databases', async () => {
+void test('workspace backup moves layouts, materials, crafting plans, and custom games between databases', async () => {
   const source = await openDatabase(new IDBFactory())
   const destination = await openDatabase(new IDBFactory())
   const state = emptyState(gameId)
@@ -45,7 +45,7 @@ test('workspace backup moves layouts, materials, crafting plans, and custom game
   destination.close()
 })
 
-test('backup validation rejects bad tiles, versions and quantities before restoration', async () => {
+void test('backup validation rejects bad tiles, versions and quantities before restoration', async () => {
   const db = await openDatabase(new IDBFactory())
   const state = emptyState(gameId)
   await dbWrite(db, 'states', gameId, state)
@@ -66,7 +66,7 @@ test('backup validation rejects bad tiles, versions and quantities before restor
   db.close()
 })
 
-test('backup rejects unknown inventory, BOM targets, crafting targets, and recipe choices', () => {
+void test('backup rejects unknown inventory, BOM targets, crafting targets, and recipe choices', () => {
   const bundled = new Map([[gameId, pack]])
   const makeBackup = () => ({
     format: 'cozy-games-farm-planner',
@@ -131,7 +131,7 @@ test('backup rejects unknown inventory, BOM targets, crafting targets, and recip
   assert.throws(() => parseBackup(JSON.stringify(backup), bundled), /Too many entries in saved layouts/)
 })
 
-test('load migrates legacy defaults and repairs stale catalog IDs in stored states', async () => {
+void test('load migrates legacy defaults and repairs stale catalog IDs in stored states', async () => {
   const db = await openDatabase(new IDBFactory())
   const { workspace } = emptyState(gameId)
   const { gameId: _legacy, ...current } = workspace.current
@@ -179,7 +179,7 @@ const fixtureJson = async (path: string) =>
     ? { schemaVersion: 1, games: [gameId], defaultGame: gameId }
     : pack[path.split('/')[1].replace('.json', '') as keyof typeof pack]
 
-test('bootstrap skips broken overrides and preserves unrecoverable state for export', async () => {
+void test('bootstrap skips broken overrides and preserves unrecoverable state for export', async () => {
   const db = await openDatabase(new IDBFactory())
   const malformed = { workspace: { current: { tiles: null } } }
   await dbWrite(db, 'games', gameId, { game: { id: gameId } })
@@ -194,7 +194,7 @@ test('bootstrap skips broken overrides and preserves unrecoverable state for exp
   db.close()
 })
 
-test('bootstrap opens with exportable in-memory state when IndexedDB rejects', async () => {
+void test('bootstrap opens with exportable in-memory state when IndexedDB rejects', async () => {
   const session = await bootstrap(async () => {
     throw new Error('Storage blocked')
   }, fixtureJson)
