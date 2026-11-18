@@ -407,10 +407,6 @@ function App({ session, switchGame, replaceGame, switching, removeInvalid, reloa
           aria-label="GitHub" title="View source code on GitHub">
           <Github size={15} aria-hidden="true" /> <span>GitHub</span>
         </a>
-        <a className="secondary kofi-button" href="https://ko-fi.com/Z3C12AU1YN" target="_blank" rel="noopener noreferrer">
-          <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" width={20} height={20} referrerPolicy="no-referrer" />
-          Buy me a Coffee
-        </a>
         <input hidden ref={imported} type="file" accept=".json,application/json" onChange={e => {
           const file = e.target.files?.[0]
           e.target.value = ''
