@@ -329,6 +329,9 @@ summary::-webkit-details-marker { display: none; }
 .crop-controls { display: grid; gap: 9px; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); }
 .crop-controls input, .crop-controls select { width: 100%; }
 .crop-actions, .crop-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 9px 15px; }
+.crop-save-form, .crop-save-actions { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; }
+.crop-save-name { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 8px; flex: 0 1 365px; }
+.crop-save-name input { width: 100%; height: 36px; }
 .crop-tools { padding: 7px 12px; border-bottom: 1px solid var(--line); }
 .crop-tools [aria-pressed="true"] { background: var(--mint); }
 .crop-tools .check { margin: 0; }

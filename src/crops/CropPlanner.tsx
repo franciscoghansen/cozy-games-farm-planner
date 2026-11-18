@@ -349,12 +349,16 @@ function CropWorkspace({ game, calendar, catalog, farm, inventory, saved, onSave
 
     <section className="feature-card crop-section">
       <h3>Saved crop plans</h3>
-      <form className="crop-actions" onSubmit={event => { event.preventDefault(); save(false) }}>
-        <label className="stack">Plan name<input required maxLength={100} value={name} onChange={event => setName(event.target.value)} /></label>
-        <button className="primary">Save crop plan</button>
-        <button className="secondary" type="button" onClick={() => save(true)}>Duplicate current plan</button>
-        <button className="secondary" type="button" onClick={() => download(json(makePlan()), 'crop-plan.json')}>Export plan JSON</button>
-        <button className="secondary" type="button" onClick={() => input.current?.click()}>Import plan JSON</button>
+      <form className="crop-save-form" onSubmit={event => { event.preventDefault(); save(false) }}>
+        <div className="crop-save-name">
+          <label className="stack">Plan name<input required maxLength={100} value={name} onChange={event => setName(event.target.value)} /></label>
+          <button className="primary">Save crop plan</button>
+        </div>
+        <div className="crop-save-actions">
+          <button className="secondary" type="button" onClick={() => save(true)}>Duplicate current plan</button>
+          <button className="secondary" type="button" onClick={() => download(json(makePlan()), 'crop-plan.json')}>Export plan JSON</button>
+          <button className="secondary" type="button" onClick={() => input.current?.click()}>Import plan JSON</button>
+        </div>
         <input ref={input} hidden type="file" accept=".json,application/json" onChange={async event => {
           const file = event.target.files?.[0]
           event.target.value = ''
