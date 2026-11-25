@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
-    "@eslint-react/eslint-plugin": "^5.30.4",
+    "@eslint-react/eslint-plugin": "^5.30.6",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.65.1",
     "@types/node": "^22.20.5",
@@ -37,7 +37,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
     "fake-indexeddb": "^6.2.8",
-    "knip": "^6.45.1",
+    "knip": "^6.47.0",
     "prettier": "^3.10.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.73.0",
